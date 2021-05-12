@@ -1,0 +1,48 @@
+{
+  "name": "kovan",
+  "chainId": "42",
+  "contracts": {
+    "Greeter": {
+      "address": "0xBc21Adc9823e79583e5bC59A8Fe80f5174AE7a31",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_greeting",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [],
+          "name": "greet",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_greeting",
+              "type": "string"
+            }
+          ],
+          "name": "setGreeting",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ]
+    }
+  }
+}
