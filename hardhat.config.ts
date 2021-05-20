@@ -15,6 +15,7 @@ import { HttpNetworkUserConfig } from "hardhat/types";
 
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-ethers";
+import "@nomiclabs/hardhat-etherscan";
 import "@typechain/hardhat";
 import "hardhat-deploy";
 
@@ -81,6 +82,9 @@ const config: HardhatUserConfig = {
     typechain: {
         outDir: "src/types",
         target: "ethers-v5",
+    },
+    etherscan: {
+        apiKey: process.env.ETHERSCAN_API_KEY,
     },
     namedAccounts: {
         deployer: {
