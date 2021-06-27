@@ -23,7 +23,8 @@
         "prettier": "prettier --check src/**/*.ts test/**/*.ts contracts/**/*.sol",
         "solhint": "solhint contracts/**/*.sol",
         "start": "hardhat node",
-        "test": "hardhat test"
+        "test": "hardhat test",
+        "test:coverage": "hardhat coverage"
     },
     "scripts-info": {
         "build": "Build contracts and typescript code",
@@ -44,7 +45,8 @@
         "prettier": "Check code style",
         "solhint": "Run solidity linter",
         "start": "Start hardhat node server",
-        "test": "Run unit tests"
+        "test": "Run unit tests",
+        "test:coverage": "Run test coverage report"
     },
     "dependencies": {},
     "devDependencies": {
@@ -70,6 +72,7 @@
         "rimraf": "^3.0.2",
         "solhint": "^3.3.6",
         "solhint-plugin-prettier": "^0.0.5",
+        "solidity-coverage": "^0.7.16",
         "ts-generator": "^0.1.1",
         "ts-node": "^10.0.0",
         "typechain": "^5.1.1",

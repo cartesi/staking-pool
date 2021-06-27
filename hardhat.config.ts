@@ -18,6 +18,7 @@ import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-etherscan";
 import "@typechain/hardhat";
 import "hardhat-deploy";
+import "solidity-coverage";
 
 // read MNEMONIC from file or from env variable
 let mnemonic = process.env.MNEMONIC;
