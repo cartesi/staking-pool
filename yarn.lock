@@ -30,10 +30,10 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@cartesi/pos@^1.1.1-beta.2":
-  version "1.1.1-beta.2"
-  resolved "https://registry.yarnpkg.com/@cartesi/pos/-/pos-1.1.1-beta.2.tgz#79bf35122a133f6ae3fb9b1b70a13cf79383b654"
-  integrity sha512-lG0i9cXi875I6xEL+HfM7KHzuIsND1HGCfvORBOQV1IYx8gNyTUvV6EoF+/Z8xpyNcUtP4HfZSBi4KdftZ77Ag==
+"@cartesi/pos@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@cartesi/pos/-/pos-1.1.1.tgz#521b2a8c34fc509a177b1ecb8d931e9f83c17af7"
+  integrity sha512-P2mpDnGOwblB6F0eHyTFxxsnnX+fA2fHskdvDNLmgRfR7fRJXIg5wYam9WWrxkTbNz9iMphRU7wG3n4YunEGxQ==
   dependencies:
     "@cartesi/token" "^1.3.0"
     "@cartesi/util" "^1.0.1"
