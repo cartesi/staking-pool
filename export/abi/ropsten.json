@@ -1,9 +1,9 @@
 {
-  "name": "matic_testnet",
-  "chainId": "80001",
+  "name": "ropsten",
+  "chainId": "3",
   "contracts": {
     "MockAggregator": {
-      "address": "0x39DA93Ec7ed8F4b051b97AF66eFe0c313995A241",
+      "address": "0xb1344A1c32eAD3042280FD1999efbA9F7c207431",
       "abi": [
         {
           "anonymous": false,
@@ -148,7 +148,7 @@
       ]
     },
     "MockUniswapV2Pair": {
-      "address": "0x2091312df50f04fEdf5B1a4ee274e26e0fB3FF4f",
+      "address": "0xE9672a1b38E28b2c6BC8E2539F8BbE15cCff505C",
       "abi": [
         {
           "inputs": [],
@@ -827,7 +827,7 @@
       ]
     },
     "StakingPoolFactoryImpl": {
-      "address": "0xAf5153Eb12eBbcB80025E309C4839d100b97695D",
+      "address": "0xe9dB0c8458ec176F3A0ba060201a1f71a4832f34",
       "abi": [
         {
           "inputs": [
@@ -1073,7 +1073,7 @@
       ]
     },
     "StakingPoolImpl": {
-      "address": "0xf67782821d4b64adB2837baFfd9F3273AE9E9F88",
+      "address": "0xe913123c7e73C9ab46dAf00803286372946693B1",
       "abi": [
         {
           "inputs": [
@@ -1994,7 +1994,7 @@
       ]
     },
     "BitsManipulationLibrary": {
-      "address": "0xc411FDBCac6537051A4339FD30823467D573bE64",
+      "address": "0x377B3a0870a904874D8eD43CEAc66b53963c0111",
       "abi": [
         {
           "inputs": [
@@ -2085,7 +2085,7 @@
       ]
     },
     "Merkle": {
-      "address": "0xD47860593fe40b3D0E04460e54bFE0b84E1E6922",
+      "address": "0x4EAA9603EF57709aB92CE09F02240844632B4076",
       "abi": [
         {
           "inputs": [
@@ -2229,7 +2229,7 @@
       ]
     },
     "WorkerAuthManagerImpl": {
-      "address": "0x85C1929cC1794dd7c25d16d095a09318Cc57d174",
+      "address": "0xeE156390b68c01aF14cD581dfc4f45b8555916F0",
       "abi": [
         {
           "inputs": [
@@ -2374,7 +2374,7 @@
       ]
     },
     "WorkerManagerAuthManagerImpl": {
-      "address": "0x7001C93E443D7D9950A9ff71A82FD258132c72Ef",
+      "address": "0x67bCf226F2Ca830e463a697be09ba97a89B37D3F",
       "abi": [
         {
           "anonymous": false,
@@ -2750,7 +2750,7 @@
       ]
     },
     "WorkerManagerImpl": {
-      "address": "0x767F4294434be981447B6d23f9565d02A6858fF2",
+      "address": "0x96aEbc275B3c3693b1B7367CA62c3f784568D332",
       "abi": [
         {
           "anonymous": false,
@@ -2998,7 +2998,7 @@
       ]
     },
     "CartesiToken": {
-      "address": "0x8B3ae9F9E61Ed278c17d45517fEFb52191ab2683",
+      "address": "0x20d9Fe4FbE713500EeE487B828576A8c7A0522B9",
       "abi": [
         {
           "constant": true,
@@ -3445,83 +3445,8 @@
         }
       ]
     },
-    "CartesiTokenTimelock": {
-      "address": "0xD0c5b5fD1Cc6e2D04B156B2A891c39289fa1D3c1",
-      "abi": [
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "beneficiary",
-          "outputs": [
-            {
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [],
-          "name": "release",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "releaseTime",
-          "outputs": [
-            {
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "token",
-          "outputs": [
-            {
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "name": "token",
-              "type": "address"
-            },
-            {
-              "name": "beneficiary",
-              "type": "address"
-            },
-            {
-              "name": "releaseTime",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "constructor"
-        }
-      ]
-    },
     "MineTimelock": {
-      "address": "0x87916D9A2D492a416F5185dDb7936517b05219DE",
+      "address": "0x8db22d926Cff5Ff2B67cf9E3bC475BF65EA3b789",
       "abi": [
         {
           "constant": true,
@@ -3690,7 +3615,7 @@
       ]
     },
     "SimpleFaucet": {
-      "address": "0x5D0b6484ead30c79A1f5bF9a0E3722A41b97d44f",
+      "address": "0x0F3D7Dbaf7125885D8dd80dA4327feF54A030fe5",
       "abi": [
         {
           "constant": true,
@@ -3776,7 +3701,7 @@
       ]
     },
     "BlockSelector": {
-      "address": "0x8c1b4ab7788f0191e0338Bf4250c617Eb60cbf28",
+      "address": "0x812aAe0735F4E921A9CDb0468Ff4A501cc4b5Ba9",
       "abi": [
         {
           "anonymous": false,
@@ -4176,7 +4101,7 @@
       ]
     },
     "PoS": {
-      "address": "0x3b9650f193f577526A810084689Db301B895129b",
+      "address": "0x9650F4A4ABd237659d1378415fddBdC17442efFd",
       "abi": [
         {
           "anonymous": false,
@@ -4669,7 +4594,7 @@
       ]
     },
     "StakingImpl": {
-      "address": "0xE41CeAA87523E7ebFe34aE310F5E576C26e824C1",
+      "address": "0xeb7fa967714953E2C493bFe033F7A02eF43B3c8A",
       "abi": [
         {
           "inputs": [

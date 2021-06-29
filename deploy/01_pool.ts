@@ -76,8 +76,14 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     // XXX: Uniswap V3 is at https://info.uniswap.org/#/pools/0x01949723055a451229c7ba3a817937c966748f76
 
     // deploy reference pool
-    const timeToStake = hre.network.name == "mainnet" ? 6 * HOUR : 2 * MINUTE;
-    const timeToRelease = hre.network.name == "mainnet" ? 2 * DAY : 2 * MINUTE;
+    const timeToStake =
+        network.name == "mainnet" || network.name == "ropsten"
+            ? 6 * HOUR
+            : 2 * MINUTE;
+    const timeToRelease =
+        network.name == "mainnet" || network.name == "ropsten"
+            ? 2 * DAY
+            : 2 * MINUTE;
     const StakingPool = await deploy("StakingPoolImpl", {
         args: [
             CartesiToken.address,
