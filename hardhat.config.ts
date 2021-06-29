@@ -66,7 +66,7 @@ const config: HardhatUserConfig = {
     solidity: {
         compilers: [
             {
-                version: "0.8.4",
+                version: "0.8.6",
                 settings: {
                     optimizer: {
                         enabled: true,
@@ -80,6 +80,64 @@ const config: HardhatUserConfig = {
         deploy: "deploy",
         deployments: "deployments",
     },
+    external: {
+        contracts: [
+            {
+                artifacts: "node_modules/@cartesi/token/export/artifacts",
+                deploy: "node_modules/@cartesi/token/dist/deploy",
+            },
+            {
+                artifacts: "node_modules/@cartesi/util/export/artifacts",
+                deploy: "node_modules/@cartesi/util/dist/deploy",
+            },
+            {
+                artifacts: "node_modules/@cartesi/pos/export/artifacts",
+                deploy: "node_modules/@cartesi/pos/dist/deploy",
+            },
+        ],
+        deployments: {
+            localhost: [
+                "node_modules/@cartesi/util/deployments/localhost",
+                "node_modules/@cartesi/token/deployments/localhost",
+                "node_modules/@cartesi/pos/deployments/localhost",
+            ],
+            mainnet: [
+                "node_modules/@cartesi/util/deployments/mainnet",
+                "node_modules/@cartesi/token/deployments/mainnet",
+                "node_modules/@cartesi/pos/deployments/mainnet",
+            ],
+            ropsten: [
+                "node_modules/@cartesi/util/deployments/ropsten",
+                "node_modules/@cartesi/token/deployments/ropsten",
+                "node_modules/@cartesi/pos/deployments/ropsten",
+            ],
+            rinkeby: [
+                "node_modules/@cartesi/util/deployments/rinkeby",
+                "node_modules/@cartesi/token/deployments/rinkeby",
+                "node_modules/@cartesi/pos/deployments/rinkeby",
+            ],
+            kovan: [
+                "node_modules/@cartesi/util/deployments/kovan",
+                "node_modules/@cartesi/token/deployments/kovan",
+                "node_modules/@cartesi/pos/deployments/kovan",
+            ],
+            goerli: [
+                "node_modules/@cartesi/util/deployments/goerli",
+                "node_modules/@cartesi/token/deployments/goerli",
+                "node_modules/@cartesi/pos/deployments/goerli",
+            ],
+            matic_testnet: [
+                "node_modules/@cartesi/util/deployments/matic_testnet",
+                "node_modules/@cartesi/token/deployments/matic_testnet",
+                "node_modules/@cartesi/pos/deployments/matic_testnet",
+            ],
+            bsc_testnet: [
+                "node_modules/@cartesi/util/deployments/bsc_testnet",
+                "node_modules/@cartesi/token/deployments/bsc_testnet",
+                "node_modules/@cartesi/pos/deployments/bsc_testnet",
+            ],
+        },
+    },
     typechain: {
         outDir: "src/types",
         target: "ethers-v5",
@@ -90,6 +148,9 @@ const config: HardhatUserConfig = {
     namedAccounts: {
         deployer: {
             default: 0,
+        },
+        beneficiary: {
+            default: 1,
         },
     },
 };

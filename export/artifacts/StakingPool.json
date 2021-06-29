@@ -1,0 +1,619 @@
+{
+  "contractName": "StakingPool",
+  "sourceName": "contracts/StakingPool.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "commission",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "queued",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "notStaked",
+          "type": "uint256"
+        }
+      ],
+      "name": "BlockProduced",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "maturationDate",
+          "type": "uint256"
+        }
+      ],
+      "name": "Stake",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "StakingPoolRenamed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "maturationDate",
+          "type": "uint256"
+        }
+      ],
+      "name": "Unstake",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Withdraw",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "canCycleStakeMaturation",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "available",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_currentQueuedTotal",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_currentMaturingTotal",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "canCycleWithdrawRelease",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "available",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_totalToUnstakeValue",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_totalUnstaking",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "cancelHire",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "cycleStakeMaturation",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "cycleWithdrawRelease",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getMaturingBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getMaturingTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getReleasingBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getReleasingTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getStakedBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "hire",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "produceBlock",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "retire",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "selfhire",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "setName",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "stake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "unstake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "canCycleStakeMaturation()": {
+        "returns": {
+          "available": "true if cycleStakeMaturation can bee called                   false if it can not         _currentQueuedTotal how much is waiting to be staked"
+        }
+      },
+      "canCycleWithdrawRelease()": {
+        "returns": {
+          "available": "true if cycleWithdrawRelease can bee called                   false if it can not         _totalToUnstakeValue how much is waiting to be unstaked"
+        }
+      },
+      "cancelHire(address)": {
+        "params": {
+          "workerAddress": "address of the worker node"
+        }
+      },
+      "getMaturingBalance(address)": {
+        "returns": {
+          "_0": "amount that will get staked after finalization"
+        }
+      },
+      "getMaturingTimestamp(address)": {
+        "returns": {
+          "_0": "timestamp of when finalizeStakes() is callable"
+        }
+      },
+      "getReleasingBalance(address)": {
+        "returns": {
+          "_0": "amount that will get withdrew after finalization"
+        }
+      },
+      "getReleasingTimestamp(address)": {
+        "returns": {
+          "_0": "timestamp of when finalizeWithdraw() is callable"
+        }
+      },
+      "getStakedBalance(address)": {
+        "params": {
+          "_userAddress": "user to retrieve staked balance from"
+        },
+        "returns": {
+          "_0": "finalized staked of _userAddress"
+        }
+      },
+      "hire(address)": {
+        "params": {
+          "workerAddress": "address of the worker"
+        }
+      },
+      "produceBlock(uint256)": {
+        "returns": {
+          "_0": "true when everything went fine"
+        }
+      },
+      "retire(address)": {
+        "details": "this also removes all authorizations in place",
+        "params": {
+          "workerAddress": "address of the worker to be retired"
+        }
+      },
+      "stake(uint256)": {
+        "params": {
+          "_amount": "The amount of tokens that are gonna be deposited."
+        }
+      },
+      "unstake(uint256)": {
+        "params": {
+          "_amount": "The amount of tokens that are gonna be unstaked."
+        }
+      },
+      "withdraw(uint256)": {
+        "params": {
+          "_amount": "The amount of tokens that are gonna be transferred."
+        }
+      }
+    },
+    "version": 1
+  },
+  "evm": {
+    "bytecode": {
+      "functionDebugData": {},
+      "generatedSources": [],
+      "linkReferences": {},
+      "object": "",
+      "opcodes": "",
+      "sourceMap": ""
+    },
+    "deployedBytecode": {
+      "functionDebugData": {},
+      "generatedSources": [],
+      "immutableReferences": {},
+      "linkReferences": {},
+      "object": "",
+      "opcodes": "",
+      "sourceMap": ""
+    },
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "canCycleStakeMaturation()": "3b8beb8a",
+      "canCycleWithdrawRelease()": "134d92c8",
+      "cancelHire(address)": "b64b3bed",
+      "cycleStakeMaturation()": "fc57d44c",
+      "cycleWithdrawRelease()": "56cbf7b9",
+      "getMaturingBalance(address)": "419be624",
+      "getMaturingTimestamp(address)": "9a051545",
+      "getReleasingBalance(address)": "8e9f04b5",
+      "getReleasingTimestamp(address)": "67ba9b91",
+      "getStakedBalance(address)": "3a02a42d",
+      "hire(address)": "d9d6bd86",
+      "pause()": "8456cb59",
+      "produceBlock(uint256)": "a5a6cd0b",
+      "retire(address)": "9e6371ba",
+      "selfhire()": "6ff46a6c",
+      "setName(string)": "c47f0027",
+      "stake(uint256)": "a694fc3a",
+      "unpause()": "3f4ba83a",
+      "unstake(uint256)": "2e17de78",
+      "withdraw(uint256)": "2e1a7d4d"
+    }
+  },
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"commission\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"queued\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"notStaked\",\"type\":\"uint256\"}],\"name\":\"BlockProduced\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"maturationDate\",\"type\":\"uint256\"}],\"name\":\"Stake\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"StakingPoolRenamed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"maturationDate\",\"type\":\"uint256\"}],\"name\":\"Unstake\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Withdraw\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"canCycleStakeMaturation\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"available\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"_currentQueuedTotal\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_currentMaturingTotal\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"canCycleWithdrawRelease\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"available\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"_totalToUnstakeValue\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_totalUnstaking\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"workerAddress\",\"type\":\"address\"}],\"name\":\"cancelHire\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"cycleStakeMaturation\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"cycleWithdrawRelease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"}],\"name\":\"getMaturingBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"}],\"name\":\"getMaturingTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"}],\"name\":\"getReleasingBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"}],\"name\":\"getReleasingTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"}],\"name\":\"getStakedBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"workerAddress\",\"type\":\"address\"}],\"name\":\"hire\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"produceBlock\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"workerAddress\",\"type\":\"address\"}],\"name\":\"retire\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"selfhire\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"setName\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"stake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unpause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"unstake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"canCycleStakeMaturation()\":{\"returns\":{\"available\":\"true if cycleStakeMaturation can bee called                   false if it can not         _currentQueuedTotal how much is waiting to be staked\"}},\"canCycleWithdrawRelease()\":{\"returns\":{\"available\":\"true if cycleWithdrawRelease can bee called                   false if it can not         _totalToUnstakeValue how much is waiting to be unstaked\"}},\"cancelHire(address)\":{\"params\":{\"workerAddress\":\"address of the worker node\"}},\"getMaturingBalance(address)\":{\"returns\":{\"_0\":\"amount that will get staked after finalization\"}},\"getMaturingTimestamp(address)\":{\"returns\":{\"_0\":\"timestamp of when finalizeStakes() is callable\"}},\"getReleasingBalance(address)\":{\"returns\":{\"_0\":\"amount that will get withdrew after finalization\"}},\"getReleasingTimestamp(address)\":{\"returns\":{\"_0\":\"timestamp of when finalizeWithdraw() is callable\"}},\"getStakedBalance(address)\":{\"params\":{\"_userAddress\":\"user to retrieve staked balance from\"},\"returns\":{\"_0\":\"finalized staked of _userAddress\"}},\"hire(address)\":{\"params\":{\"workerAddress\":\"address of the worker\"}},\"produceBlock(uint256)\":{\"returns\":{\"_0\":\"true when everything went fine\"}},\"retire(address)\":{\"details\":\"this also removes all authorizations in place\",\"params\":{\"workerAddress\":\"address of the worker to be retired\"}},\"stake(uint256)\":{\"params\":{\"_amount\":\"The amount of tokens that are gonna be deposited.\"}},\"unstake(uint256)\":{\"params\":{\"_amount\":\"The amount of tokens that are gonna be unstaked.\"}},\"withdraw(uint256)\":{\"params\":{\"_amount\":\"The amount of tokens that are gonna be transferred.\"}}},\"version\":1},\"userdoc\":{\"events\":{\"BlockProduced(uint256,uint256,uint256,uint256)\":{\"notice\":\"this events is emitted at every produceBlock call     reward is the block reward     commission is how much CTSI is directed to the poolManager     queued is how much currently is being queued to be staked     notStaked is how much is directed to withdrawal\"},\"Stake(address,uint256,uint256)\":{\"notice\":\"CTSI tokens were deposited, they count as stake after _maturationDate\"},\"StakingPoolRenamed(string)\":{\"notice\":\"Event emmited when a pool is rename\"},\"Unstake(address,uint256,uint256)\":{\"notice\":\"Unstake tokens, moving them to releasing structure\"},\"Withdraw(address,uint256)\":{\"notice\":\"Withdraw process was finalized\"}},\"kind\":\"user\",\"methods\":{\"canCycleStakeMaturation()\":{\"notice\":\"checks whether or not a call can be made to cycleStakeMaturation and be successful\"},\"canCycleWithdrawRelease()\":{\"notice\":\"checks whether or not a call can be made to cycleWithdrawRelease and be successful\"},\"cancelHire(address)\":{\"notice\":\"Called by the user to cancel a job offer\"},\"cycleStakeMaturation()\":{\"notice\":\"enables pool manager to update staking balances as they mature on the (main) Staking contract\"},\"cycleWithdrawRelease()\":{\"notice\":\"enables pool manager to update releasing balances as they get freed on the (main) Staking contract\"},\"getMaturingBalance(address)\":{\"notice\":\"Returns the balance waiting/ready to be matured\"},\"getMaturingTimestamp(address)\":{\"notice\":\"Returns the timestamp when next deposit can be finalized\"},\"getReleasingBalance(address)\":{\"notice\":\"Returns the balance waiting/ready to be released\"},\"getReleasingTimestamp(address)\":{\"notice\":\"Returns the timestamp when next withdraw can be finalized\"},\"getStakedBalance(address)\":{\"notice\":\"Returns total amount of tokens counted as stake\"},\"hire(address)\":{\"notice\":\"Asks the worker to work for the sender. Sender needs to pay something.\"},\"pause()\":{\"notice\":\"pauses new staking on the pool\"},\"produceBlock(uint256)\":{\"notice\":\"routes produceBlock to POS contract and updates internal states of the pool\"},\"retire(address)\":{\"notice\":\"Called by the user to retire his worker.\"},\"selfhire()\":{\"notice\":\"allows for the pool to act on its own behalf when producing blocks.\"},\"setName(string)\":{\"notice\":\"sets a name for the pool using ENS service\"},\"stake(uint256)\":{\"notice\":\"Deposit CTSI to be staked. The money will turn into staked         balance after timeToStake days\"},\"unpause()\":{\"notice\":\"unpauses new staking on the pool\"},\"unstake(uint256)\":{\"notice\":\"Remove tokens from staked balance. The money can         be released after timeToRelease seconds, if the         function withdraw is called.\"},\"withdraw(uint256)\":{\"notice\":\"Transfer tokens to user's wallet.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/StakingPool.sol\":\"StakingPool\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@cartesi/pos/contracts/IStaking.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface Staking\\npragma solidity >=0.7.0 <0.9.0;\\n\\ninterface IStaking {\\n    /// @notice Returns total amount of tokens counted as stake\\n    /// @param _userAddress user to retrieve staked balance from\\n    /// @return finalized staked of _userAddress\\n    function getStakedBalance(address _userAddress)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Returns the timestamp when next deposit can be finalized\\n    /// @return timestamp of when finalizeStakes() is callable\\n    function getMaturingTimestamp(address _userAddress)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Returns the timestamp when next withdraw can be finalized\\n    /// @return timestamp of when finalizeWithdraw() is callable\\n    function getReleasingTimestamp(address _userAddress)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Returns the balance waiting/ready to be matured\\n    /// @return amount that will get staked after finalization\\n    function getMaturingBalance(address _userAddress)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Returns the balance waiting/ready to be released\\n    /// @return amount that will get withdrew after finalization\\n    function getReleasingBalance(address _userAddress)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Deposit CTSI to be staked. The money will turn into staked\\n    ///         balance after timeToStake days\\n    /// @param _amount The amount of tokens that are gonna be deposited.\\n    function stake(uint256 _amount) external;\\n\\n    /// @notice Remove tokens from staked balance. The money can\\n    ///         be released after timeToRelease seconds, if the\\n    ///         function withdraw is called.\\n    /// @param _amount The amount of tokens that are gonna be unstaked.\\n    function unstake(uint256 _amount) external;\\n\\n    /// @notice Transfer tokens to user's wallet.\\n    /// @param _amount The amount of tokens that are gonna be transferred.\\n    function withdraw(uint256 _amount) external;\\n\\n    // events\\n    /// @notice CTSI tokens were deposited, they count as stake after _maturationDate\\n    /// @param user address of msg.sender\\n    /// @param amount amount deposited for staking\\n    /// @param maturationDate date when the stake can be finalized\\n    event Stake(address indexed user, uint256 amount, uint256 maturationDate);\\n\\n    /// @notice Unstake tokens, moving them to releasing structure\\n    /// @param user address of msg.sender\\n    /// @param amount amount of tokens to be released\\n    /// @param maturationDate date when the tokens can be withdrew\\n    event Unstake(address indexed user, uint256 amount, uint256 maturationDate);\\n\\n    /// @notice Withdraw process was finalized\\n    /// @param user address of msg.sender\\n    /// @param amount amount of tokens withdrawn\\n    event Withdraw(address indexed user, uint256 amount);\\n}\\n\",\"keccak256\":\"0xda69ecab096249069100cd857133f717045d19422061ea06d87eca606ac62dd3\",\"license\":\"Apache-2.0\"},\"contracts/StakingPool.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface staking contract\\npragma solidity ^0.8.0;\\n\\nimport \\\"@cartesi/pos/contracts/IStaking.sol\\\";\\nimport \\\"./StakingPoolManagement.sol\\\";\\n\\ninterface StakingPool is IStaking, StakingPoolManagement {\\n    ///@notice this events is emitted at every produceBlock call\\n    ///     reward is the block reward\\n    ///     commission is how much CTSI is directed to the poolManager\\n    ///     queued is how much currently is being queued to be staked\\n    ///     notStaked is how much is directed to withdrawal\\n    event BlockProduced(\\n        uint256 reward,\\n        uint256 commission,\\n        uint256 queued,\\n        uint256 notStaked\\n    );\\n\\n    /// @notice routes produceBlock to POS contract and\\n    /// updates internal states of the pool\\n    /// @return true when everything went fine\\n    function produceBlock(uint256 _index) external returns (bool);\\n\\n    /// @notice enables pool manager to update staking balances as they mature\\n    /// on the (main) Staking contract\\n    function cycleStakeMaturation() external;\\n\\n    /// @notice enables pool manager to update releasing balances as they get freed\\n    /// on the (main) Staking contract\\n    function cycleWithdrawRelease() external;\\n\\n    /// @notice checks whether or not a call can be made to cycleStakeMaturation\\n    /// and be successful\\n    /// @return available true if cycleStakeMaturation can bee called\\n    ///                   false if it can not\\n    ///         _currentQueuedTotal how much is waiting to be staked\\n    function canCycleStakeMaturation()\\n        external\\n        view\\n        returns (bool available, uint256 _currentQueuedTotal, uint256 _currentMaturingTotal);\\n\\n    /// @notice checks whether or not a call can be made to cycleWithdrawRelease\\n    /// and be successful\\n    /// @return available true if cycleWithdrawRelease can bee called\\n    ///                   false if it can not\\n    ///         _totalToUnstakeValue how much is waiting to be unstaked\\n    function canCycleWithdrawRelease()\\n        external\\n        view\\n        returns (bool available, uint256 _totalToUnstakeValue, uint256 _totalUnstaking);\\n}\\n\",\"keccak256\":\"0x97758e1e0c614c8e6b2614601d906b0cecfdcecd56acd8595bd907a1ccfb92ae\",\"license\":\"Apache-2.0\"},\"contracts/StakingPoolManagement.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface staking contract\\npragma solidity ^0.8.0;\\n\\ninterface StakingPoolManagement {\\n    /// @notice sets a name for the pool using ENS service\\n    function setName(string memory name) external;\\n\\n    /// @notice pauses new staking on the pool\\n    function pause() external;\\n\\n    /// @notice unpauses new staking on the pool\\n    function unpause() external;\\n\\n    /// @notice Event emmited when a pool is rename\\n    event StakingPoolRenamed(string name);\\n\\n    /// @notice allows for the pool to act on its own behalf when producing blocks.\\n    function selfhire() external payable;\\n\\n    /// @notice Asks the worker to work for the sender. Sender needs to pay something.\\n    /// @param workerAddress address of the worker\\n    function hire(address payable workerAddress) external payable;\\n\\n    /// @notice Called by the user to cancel a job offer\\n    /// @param workerAddress address of the worker node\\n    function cancelHire(address workerAddress) external;\\n\\n    /// @notice Called by the user to retire his worker.\\n    /// @param workerAddress address of the worker to be retired\\n    /// @dev this also removes all authorizations in place\\n    function retire(address payable workerAddress) external;\\n}\\n\",\"keccak256\":\"0xec0e9343c5cfbe93b7443e6786d8d1e7a6cfe8f57526afcb0e02ff426e8de02b\",\"license\":\"Apache-2.0\"}},\"version\":1}",
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  },
+  "userdoc": {
+    "events": {
+      "BlockProduced(uint256,uint256,uint256,uint256)": {
+        "notice": "this events is emitted at every produceBlock call     reward is the block reward     commission is how much CTSI is directed to the poolManager     queued is how much currently is being queued to be staked     notStaked is how much is directed to withdrawal"
+      },
+      "Stake(address,uint256,uint256)": {
+        "notice": "CTSI tokens were deposited, they count as stake after _maturationDate"
+      },
+      "StakingPoolRenamed(string)": {
+        "notice": "Event emmited when a pool is rename"
+      },
+      "Unstake(address,uint256,uint256)": {
+        "notice": "Unstake tokens, moving them to releasing structure"
+      },
+      "Withdraw(address,uint256)": {
+        "notice": "Withdraw process was finalized"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "canCycleStakeMaturation()": {
+        "notice": "checks whether or not a call can be made to cycleStakeMaturation and be successful"
+      },
+      "canCycleWithdrawRelease()": {
+        "notice": "checks whether or not a call can be made to cycleWithdrawRelease and be successful"
+      },
+      "cancelHire(address)": {
+        "notice": "Called by the user to cancel a job offer"
+      },
+      "cycleStakeMaturation()": {
+        "notice": "enables pool manager to update staking balances as they mature on the (main) Staking contract"
+      },
+      "cycleWithdrawRelease()": {
+        "notice": "enables pool manager to update releasing balances as they get freed on the (main) Staking contract"
+      },
+      "getMaturingBalance(address)": {
+        "notice": "Returns the balance waiting/ready to be matured"
+      },
+      "getMaturingTimestamp(address)": {
+        "notice": "Returns the timestamp when next deposit can be finalized"
+      },
+      "getReleasingBalance(address)": {
+        "notice": "Returns the balance waiting/ready to be released"
+      },
+      "getReleasingTimestamp(address)": {
+        "notice": "Returns the timestamp when next withdraw can be finalized"
+      },
+      "getStakedBalance(address)": {
+        "notice": "Returns total amount of tokens counted as stake"
+      },
+      "hire(address)": {
+        "notice": "Asks the worker to work for the sender. Sender needs to pay something."
+      },
+      "pause()": {
+        "notice": "pauses new staking on the pool"
+      },
+      "produceBlock(uint256)": {
+        "notice": "routes produceBlock to POS contract and updates internal states of the pool"
+      },
+      "retire(address)": {
+        "notice": "Called by the user to retire his worker."
+      },
+      "selfhire()": {
+        "notice": "allows for the pool to act on its own behalf when producing blocks."
+      },
+      "setName(string)": {
+        "notice": "sets a name for the pool using ENS service"
+      },
+      "stake(uint256)": {
+        "notice": "Deposit CTSI to be staked. The money will turn into staked         balance after timeToStake days"
+      },
+      "unpause()": {
+        "notice": "unpauses new staking on the pool"
+      },
+      "unstake(uint256)": {
+        "notice": "Remove tokens from staked balance. The money can         be released after timeToRelease seconds, if the         function withdraw is called."
+      },
+      "withdraw(uint256)": {
+        "notice": "Transfer tokens to user's wallet."
+      }
+    },
+    "version": 1
+  }
+}

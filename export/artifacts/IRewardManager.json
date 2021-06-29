@@ -1,0 +1,112 @@
+{
+  "contractName": "IRewardManager",
+  "sourceName": "@cartesi/pos/contracts/IRewardManager.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCurrentReward",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "reward",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "reward(address,uint256)": {
+        "details": "only the pos contract can call this",
+        "params": {
+          "_address": "address be rewarded",
+          "_amount": "reward"
+        }
+      }
+    },
+    "version": 1
+  },
+  "evm": {
+    "bytecode": {
+      "functionDebugData": {},
+      "generatedSources": [],
+      "linkReferences": {},
+      "object": "",
+      "opcodes": "",
+      "sourceMap": ""
+    },
+    "deployedBytecode": {
+      "functionDebugData": {},
+      "generatedSources": [],
+      "immutableReferences": {},
+      "linkReferences": {},
+      "object": "",
+      "opcodes": "",
+      "sourceMap": ""
+    },
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "getBalance()": "12065fe0",
+      "getCurrentReward()": "8aec8542",
+      "reward(address,uint256)": "21670f22"
+    }
+  },
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getCurrentReward\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"reward\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"reward(address,uint256)\":{\"details\":\"only the pos contract can call this\",\"params\":{\"_address\":\"address be rewarded\",\"_amount\":\"reward\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"getBalance()\":{\"notice\":\"Get RewardManager's balance\"},\"getCurrentReward()\":{\"notice\":\"Get current reward amount\"},\"reward(address,uint256)\":{\"notice\":\"Rewards address\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@cartesi/pos/contracts/IRewardManager.sol\":\"IRewardManager\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@cartesi/pos/contracts/IRewardManager.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface RewardManager\\npragma solidity >=0.7.0 <0.9.0;\\n\\ninterface IRewardManager {\\n    /// @notice Rewards address\\n    /// @param _address address be rewarded\\n    /// @param _amount reward\\n    /// @dev only the pos contract can call this\\n    function reward(address _address, uint256 _amount) external;\\n\\n    /// @notice Get RewardManager's balance\\n    function getBalance() external view returns (uint256);\\n\\n    /// @notice Get current reward amount\\n    function getCurrentReward() external view returns (uint256);\\n}\\n\",\"keccak256\":\"0xf3d3fb9853d55c0658f45dfd072032291c975138e99cd8cedb0d6550848e2813\",\"license\":\"Apache-2.0\"}},\"version\":1}",
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "getBalance()": {
+        "notice": "Get RewardManager's balance"
+      },
+      "getCurrentReward()": {
+        "notice": "Get current reward amount"
+      },
+      "reward(address,uint256)": {
+        "notice": "Rewards address"
+      }
+    },
+    "version": 1
+  }
+}

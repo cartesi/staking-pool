@@ -10,20 +10,14 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the
 // specific language governing permissions and limitations under the License.
 
+/// @title Interface staking contract
 pragma solidity ^0.8.0;
 
-contract Greeter {
-    string greeting;
-
-    constructor(string memory _greeting) {
-        greeting = _greeting;
-    }
-
-    function greet() public view returns (string memory) {
-        return greeting;
-    }
-
-    function setGreeting(string memory _greeting) public {
-        greeting = _greeting;
-    }
+interface Fee {
+    /// @notice calculates the total amount of the reward that will be directed to the PoolManager
+    /// @return commissionTotal is the amount subtracted from the rewardAmount
+    function getCommission(uint256 posIndex, uint256 rewardAmount)
+        external
+        view
+        returns (uint256);
 }
