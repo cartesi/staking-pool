@@ -1,0 +1,1436 @@
+{
+  "address": "0xd1731fd52e373905b4Bf02bC4A435EB8ebDe1fcD",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_ctsi",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_staking",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_pos",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_timeToStake",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_timeToRelease",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_ens",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_workerManager",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "commission",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "queued",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "notStaked",
+          "type": "uint256"
+        }
+      ],
+      "name": "BlockProduced",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Paused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "maturationDate",
+          "type": "uint256"
+        }
+      ],
+      "name": "Stake",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "StakingPoolRenamed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Unpaused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "maturationDate",
+          "type": "uint256"
+        }
+      ],
+      "name": "Unstake",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Withdraw",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "FIXED_POINT_DECIMALS",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "canCycleStakeMaturation",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "available",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_currentQueuedTotal",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_currentMaturingTotal",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "canCycleWithdrawRelease",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "available",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_totalToUnstakeValue",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_totalUnstaking",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "cancelHire",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ctsi",
+      "outputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "currentMaturingTotal",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "currentQueuedTotal",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "currentStakeEpoch",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "currentUnstakeEpoch",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "cycleStakeMaturation",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "cycleWithdrawRelease",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ens",
+      "outputs": [
+        {
+          "internalType": "contract ENS",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "fee",
+      "outputs": [
+        {
+          "internalType": "contract Fee",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getMaturingBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getMaturingTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getReleasingBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getReleasingTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getStakedBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stakedBalance",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "hire",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_feeAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "paused",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pos",
+      "outputs": [
+        {
+          "internalType": "contract IPoS",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "produceBlock",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "retire",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rewardMaturing",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rewardNotStaked",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rewardQueued",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "selfhire",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "setName",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "stake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "staking",
+      "outputs": [
+        {
+          "internalType": "contract IStaking",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "stakingVoucherValueAtEpoch",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "timeToRelease",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "timeToStake",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalStaked",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalStakedShares",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalToUnstakeShares",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalUnstakedShares",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalUnstaking",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalWithdrawable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "unstake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "userBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stakedPoolShares",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "amountQueued",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountStaked",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "queueEpoch",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct StakingPoolImpl.StakingVoucher",
+          "name": "stakingVoucher",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "poolShares",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "queueEpoch",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct StakingPoolImpl.UnstakingVoucher",
+          "name": "unstakingVoucher",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "workerManager",
+      "outputs": [
+        {
+          "internalType": "contract IWorkerManagerAuthManager",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0xe1b61b341e9eecb04114b32dc46beebeede3c5bf0d54b6e74e5815a2ff15609a",
+  "receipt": {
+    "to": null,
+    "from": "0x18930e8a66a1DbE21D00581216789AAB7460Afd0",
+    "contractAddress": "0xd1731fd52e373905b4Bf02bC4A435EB8ebDe1fcD",
+    "transactionIndex": 2,
+    "gasUsed": "3080780",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000080800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000400000000000000000000000000020000000000000000000800001000010000000000000000000000400000000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000020000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x073d53f268c1f72aa7df1500628591045d570d8b12d3484303f25c01572747e4",
+    "transactionHash": "0xe1b61b341e9eecb04114b32dc46beebeede3c5bf0d54b6e74e5815a2ff15609a",
+    "logs": [
+      {
+        "transactionIndex": 2,
+        "blockNumber": 8846881,
+        "transactionHash": "0xe1b61b341e9eecb04114b32dc46beebeede3c5bf0d54b6e74e5815a2ff15609a",
+        "address": "0xd1731fd52e373905b4Bf02bC4A435EB8ebDe1fcD",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "data": "0x",
+        "logIndex": 5,
+        "blockHash": "0x073d53f268c1f72aa7df1500628591045d570d8b12d3484303f25c01572747e4"
+      },
+      {
+        "transactionIndex": 2,
+        "blockNumber": 8846881,
+        "transactionHash": "0xe1b61b341e9eecb04114b32dc46beebeede3c5bf0d54b6e74e5815a2ff15609a",
+        "address": "0xd1731fd52e373905b4Bf02bC4A435EB8ebDe1fcD",
+        "topics": [
+          "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258"
+        ],
+        "data": "0x00000000000000000000000018930e8a66a1dbe21d00581216789aab7460afd0",
+        "logIndex": 6,
+        "blockHash": "0x073d53f268c1f72aa7df1500628591045d570d8b12d3484303f25c01572747e4"
+      }
+    ],
+    "blockNumber": 8846881,
+    "cumulativeGasUsed": "3251934",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0xD3f1070B1Edb400204246D0a543DF21722FdB8C0",
+    "0x75d93c94e46f3FAE92f78c3B9FD51F2DBCC51a6A",
+    "0xeb7fa967714953E2C493bFe033F7A02eF43B3c8A",
+    120,
+    120,
+    "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+    "0x3f4DB36BB955ea8192018C1a0d4588b2ae455077"
+  ],
+  "solcInputHash": "a2db77ccf663f13c899232604d70a49b",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_ctsi\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_staking\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_pos\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_timeToStake\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_timeToRelease\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_ens\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_workerManager\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"commission\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"queued\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"notStaked\",\"type\":\"uint256\"}],\"name\":\"BlockProduced\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Paused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"maturationDate\",\"type\":\"uint256\"}],\"name\":\"Stake\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"StakingPoolRenamed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Unpaused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"maturationDate\",\"type\":\"uint256\"}],\"name\":\"Unstake\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Withdraw\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"FIXED_POINT_DECIMALS\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"canCycleStakeMaturation\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"available\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"_currentQueuedTotal\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_currentMaturingTotal\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"canCycleWithdrawRelease\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"available\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"_totalToUnstakeValue\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_totalUnstaking\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"workerAddress\",\"type\":\"address\"}],\"name\":\"cancelHire\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ctsi\",\"outputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentMaturingTotal\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentQueuedTotal\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentStakeEpoch\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentUnstakeEpoch\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"cycleStakeMaturation\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"cycleWithdrawRelease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ens\",\"outputs\":[{\"internalType\":\"contract ENS\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"fee\",\"outputs\":[{\"internalType\":\"contract Fee\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"}],\"name\":\"getMaturingBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"}],\"name\":\"getMaturingTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"}],\"name\":\"getReleasingBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"}],\"name\":\"getReleasingTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"}],\"name\":\"getStakedBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"stakedBalance\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"workerAddress\",\"type\":\"address\"}],\"name\":\"hire\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_feeAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pos\",\"outputs\":[{\"internalType\":\"contract IPoS\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"produceBlock\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"workerAddress\",\"type\":\"address\"}],\"name\":\"retire\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"rewardMaturing\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"rewardNotStaked\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"rewardQueued\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"selfhire\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"setName\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"stake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"staking\",\"outputs\":[{\"internalType\":\"contract IStaking\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"stakingVoucherValueAtEpoch\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"timeToRelease\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"timeToStake\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalStaked\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalStakedShares\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalToUnstakeShares\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalUnstakedShares\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalUnstaking\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalWithdrawable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unpause\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"unstake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"stakedPoolShares\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"amountQueued\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountStaked\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"queueEpoch\",\"type\":\"uint256\"}],\"internalType\":\"struct StakingPoolImpl.StakingVoucher\",\"name\":\"stakingVoucher\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"poolShares\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"queueEpoch\",\"type\":\"uint256\"}],\"internalType\":\"struct StakingPoolImpl.UnstakingVoucher\",\"name\":\"unstakingVoucher\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"workerManager\",\"outputs\":[{\"internalType\":\"contract IWorkerManagerAuthManager\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"canCycleStakeMaturation()\":{\"returns\":{\"available\":\"true if cycleStakeMaturation can bee called                   false if it can not         _currentQueuedTotal how much is waiting to be staked\"}},\"canCycleWithdrawRelease()\":{\"returns\":{\"available\":\"true if cycleWithdrawRelease can bee called                   false if it can not         _totalToUnstakeValue how much is waiting to be unstaked\"}},\"cancelHire(address)\":{\"params\":{\"workerAddress\":\"address of the worker node\"}},\"getMaturingBalance(address)\":{\"returns\":{\"_0\":\"amount that will get staked after finalization\"}},\"getMaturingTimestamp(address)\":{\"returns\":{\"_0\":\"timestamp of when cycleStakeMaturation() is callable\"}},\"getReleasingBalance(address)\":{\"returns\":{\"_0\":\"amount that will get withdrawn after finalization\"}},\"getReleasingTimestamp(address)\":{\"returns\":{\"_0\":\"timestamp of when withdraw() is callable\"}},\"getStakedBalance(address)\":{\"params\":{\"_userAddress\":\"user to retrieve staked balance from\"},\"returns\":{\"stakedBalance\":\"is the finalized staked of _userAddress\"}},\"hire(address)\":{\"params\":{\"workerAddress\":\"address of the worker\"}},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"paused()\":{\"details\":\"Returns true if the contract is paused, and false otherwise.\"},\"produceBlock(uint256)\":{\"returns\":{\"_0\":\"true when everything went fine\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"retire(address)\":{\"details\":\"this also removes all authorizations in place\",\"params\":{\"workerAddress\":\"address of the worker to be retired\"}},\"stake(uint256)\":{\"params\":{\"_amount\":\"The amount of tokens that are gonna be additionally deposited.\"}},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"},\"unstake(uint256)\":{\"params\":{\"_amount\":\"The amount of tokens that are gonna be unstaked.\"}},\"withdraw(uint256)\":{\"params\":{\"_amount\":\"The amount of tokens that are gonna be transferred.\"}}},\"version\":1},\"userdoc\":{\"events\":{\"BlockProduced(uint256,uint256,uint256,uint256)\":{\"notice\":\"this events is emitted at every produceBlock call     reward is the block reward     commission is how much CTSI is directed to the poolManager     queued is how much currently is being queued to be staked     notStaked is how much is directed to withdrawal\"},\"Stake(address,uint256,uint256)\":{\"notice\":\"CTSI tokens were deposited, they count as stake after _maturationDate\"},\"StakingPoolRenamed(string)\":{\"notice\":\"Event emmited when a pool is rename\"},\"Unstake(address,uint256,uint256)\":{\"notice\":\"Unstake tokens, moving them to releasing structure\"},\"Withdraw(address,uint256)\":{\"notice\":\"Withdraw process was finalized\"}},\"kind\":\"user\",\"methods\":{\"canCycleStakeMaturation()\":{\"notice\":\"checks whether or not a call can be made to cycleStakeMaturation and be successful\"},\"canCycleWithdrawRelease()\":{\"notice\":\"checks whether or not a call can be made to cycleWithdrawRelease and be successful\"},\"cancelHire(address)\":{\"notice\":\"Called by the user to cancel a job offer\"},\"cycleStakeMaturation()\":{\"notice\":\"enables pool manager to update staking balances as they mature on the (main) Staking contract\"},\"cycleWithdrawRelease()\":{\"notice\":\"enables pool manager to update staking balances as they mature on the (main) Staking contract\"},\"getMaturingBalance(address)\":{\"notice\":\"Returns the balance waiting/ready to be matured\"},\"getMaturingTimestamp(address)\":{\"notice\":\"Returns the timestamp when next deposit can be finalized\"},\"getReleasingBalance(address)\":{\"notice\":\"Returns the balance waiting/ready to be released\"},\"getReleasingTimestamp(address)\":{\"notice\":\"Returns the timestamp when next withdraw can be finalized\"},\"getStakedBalance(address)\":{\"notice\":\"Returns total amount of tokens counted as stake\"},\"hire(address)\":{\"notice\":\"Asks the worker to work for the sender. Sender needs to pay something.\"},\"pause()\":{\"notice\":\"pauses new staking on the pool\"},\"produceBlock(uint256)\":{\"notice\":\"routes produceBlock to POS contract and updates internal states of the pool\"},\"retire(address)\":{\"notice\":\"Called by the user to retire his worker.\"},\"selfhire()\":{\"notice\":\"allows for the pool to act on its own behalf when producing blocks.\"},\"setName(string)\":{\"notice\":\"sets a name for the pool using ENS service\"},\"stake(uint256)\":{\"notice\":\"Deposit CTSI to be staked. The money will turn into staked         balance after timeToStake days\"},\"unpause()\":{\"notice\":\"unpauses new staking on the pool\"},\"unstake(uint256)\":{\"notice\":\"Remove tokens from staked balance. The money can         be released after timeToRelease seconds, if the         function withdraw is called.\"},\"withdraw(uint256)\":{\"notice\":\"Transfer tokens to user's wallet.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/StakingPoolImpl.sol\":\"StakingPoolImpl\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@cartesi/pos/contracts/IPoS.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface PoS\\npragma solidity >=0.7.0 <0.9.0;\\n\\ninterface IPoS {\\n    /// @notice Produce a block\\n    /// @param _index the index of the instance of pos you want to interact with\\n    /// @dev this function can only be called by a worker, user never calls it directly\\n    function produceBlock(uint256 _index) external returns (bool);\\n\\n    /// @notice Get reward manager address\\n    /// @param _index index of instance\\n    /// @return address of instance's RewardManager\\n    function getRewardManagerAddress(uint256 _index)\\n        external\\n        view\\n        returns (address);\\n\\n    /// @notice Get block selector address\\n    /// @param _index index of instance\\n    /// @return address of instance's block selector\\n    function getBlockSelectorAddress(uint256 _index)\\n        external\\n        view\\n        returns (address);\\n\\n    /// @notice Get block selector index\\n    /// @param _index index of instance\\n    /// @return index of instance's block selector\\n    function getBlockSelectorIndex(uint256 _index)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Get staking address\\n    /// @param _index index of instance\\n    /// @return address of instance's staking contract\\n    function getStakingAddress(uint256 _index) external view returns (address);\\n\\n    /// @notice Get state of a particular instance\\n    /// @param _index index of instance\\n    /// @param _user address of user\\n    /// @return bool if user is eligible to produce next block\\n    /// @return address of user that was chosen to build the block\\n    /// @return current reward paid by the network for that block\\n    function getState(uint256 _index, address _user)\\n        external\\n        view\\n        returns (\\n            bool,\\n            address,\\n            uint256\\n        );\\n\\n    function terminate(uint256 _index) external;\\n}\\n\",\"keccak256\":\"0xf22d440f723b8d80ef60a20bf38f5a3ea16fd604a2c485e1c969bec0b24e8889\",\"license\":\"Apache-2.0\"},\"@cartesi/pos/contracts/IRewardManager.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface RewardManager\\npragma solidity >=0.7.0 <0.9.0;\\n\\ninterface IRewardManager {\\n    /// @notice Rewards address\\n    /// @param _address address be rewarded\\n    /// @param _amount reward\\n    /// @dev only the pos contract can call this\\n    function reward(address _address, uint256 _amount) external;\\n\\n    /// @notice Get RewardManager's balance\\n    function getBalance() external view returns (uint256);\\n\\n    /// @notice Get current reward amount\\n    function getCurrentReward() external view returns (uint256);\\n}\\n\",\"keccak256\":\"0xf3d3fb9853d55c0658f45dfd072032291c975138e99cd8cedb0d6550848e2813\",\"license\":\"Apache-2.0\"},\"@cartesi/pos/contracts/IStaking.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface Staking\\npragma solidity >=0.7.0 <0.9.0;\\n\\ninterface IStaking {\\n    /// @notice Returns total amount of tokens counted as stake\\n    /// @param _userAddress user to retrieve staked balance from\\n    /// @return finalized staked of _userAddress\\n    function getStakedBalance(address _userAddress)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Returns the timestamp when next deposit can be finalized\\n    /// @return timestamp of when finalizeStakes() is callable\\n    function getMaturingTimestamp(address _userAddress)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Returns the timestamp when next withdraw can be finalized\\n    /// @return timestamp of when finalizeWithdraw() is callable\\n    function getReleasingTimestamp(address _userAddress)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Returns the balance waiting/ready to be matured\\n    /// @return amount that will get staked after finalization\\n    function getMaturingBalance(address _userAddress)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Returns the balance waiting/ready to be released\\n    /// @return amount that will get withdrew after finalization\\n    function getReleasingBalance(address _userAddress)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /// @notice Deposit CTSI to be staked. The money will turn into staked\\n    ///         balance after timeToStake days\\n    /// @param _amount The amount of tokens that are gonna be deposited.\\n    function stake(uint256 _amount) external;\\n\\n    /// @notice Remove tokens from staked balance. The money can\\n    ///         be released after timeToRelease seconds, if the\\n    ///         function withdraw is called.\\n    /// @param _amount The amount of tokens that are gonna be unstaked.\\n    function unstake(uint256 _amount) external;\\n\\n    /// @notice Transfer tokens to user's wallet.\\n    /// @param _amount The amount of tokens that are gonna be transferred.\\n    function withdraw(uint256 _amount) external;\\n\\n    // events\\n    /// @notice CTSI tokens were deposited, they count as stake after _maturationDate\\n    /// @param user address of msg.sender\\n    /// @param amount amount deposited for staking\\n    /// @param maturationDate date when the stake can be finalized\\n    event Stake(address indexed user, uint256 amount, uint256 maturationDate);\\n\\n    /// @notice Unstake tokens, moving them to releasing structure\\n    /// @param user address of msg.sender\\n    /// @param amount amount of tokens to be released\\n    /// @param maturationDate date when the tokens can be withdrew\\n    event Unstake(address indexed user, uint256 amount, uint256 maturationDate);\\n\\n    /// @notice Withdraw process was finalized\\n    /// @param user address of msg.sender\\n    /// @param amount amount of tokens withdrawn\\n    event Withdraw(address indexed user, uint256 amount);\\n}\\n\",\"keccak256\":\"0xda69ecab096249069100cd857133f717045d19422061ea06d87eca606ac62dd3\",\"license\":\"Apache-2.0\"},\"@cartesi/pos/contracts/IWorkerManagerAuthManager.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface WorkerManager\\n/// @author Danilo Tuler\\npragma solidity >=0.7.0 <0.9.0;\\n\\ninterface IWorkerManagerAuthManager {\\n    /// @notice Asks the worker to work for the sender. Sender needs to pay something.\\n    /// @param workerAddress address of the worker\\n    function hire(address payable workerAddress) external payable;\\n\\n    /// @notice Called by the user to cancel a job offer\\n    /// @param workerAddress address of the worker node\\n    function cancelHire(address workerAddress) external;\\n\\n    /// @notice Called by the user to retire his worker.\\n    /// @param workerAddress address of the worker to be retired\\n    /// @dev this also removes all authorizations in place\\n    function retire(address payable workerAddress) external;\\n\\n    /// @notice Gives worker permission to act on a DApp\\n    /// @param _workerAddress address of the worker node to given permission\\n    /// @param _dappAddress address of the dapp that permission will be given to\\n    function authorize(address _workerAddress, address _dappAddress) external;\\n\\n    /// @notice Called by the worker to accept the job\\n    function acceptJob() external;\\n\\n    /// @notice Called by the worker to reject a job offer\\n    function rejectJob() external payable;\\n}\\n\",\"keccak256\":\"0x81c78ff7141cedf3cb3c70537b557baf88070a4d374a5967c5a65e0b865e9b46\",\"license\":\"Apache-2.0\"},\"@ensdomains/ens-contracts/contracts/registry/ENS.sol\":{\"content\":\"pragma solidity >=0.8.4;\\n\\ninterface ENS {\\n\\n    // Logged when the owner of a node assigns a new owner to a subnode.\\n    event NewOwner(bytes32 indexed node, bytes32 indexed label, address owner);\\n\\n    // Logged when the owner of a node transfers ownership to a new account.\\n    event Transfer(bytes32 indexed node, address owner);\\n\\n    // Logged when the resolver for a node changes.\\n    event NewResolver(bytes32 indexed node, address resolver);\\n\\n    // Logged when the TTL of a node changes\\n    event NewTTL(bytes32 indexed node, uint64 ttl);\\n\\n    // Logged when an operator is added or removed.\\n    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);\\n\\n    function setRecord(bytes32 node, address owner, address resolver, uint64 ttl) external virtual;\\n    function setSubnodeRecord(bytes32 node, bytes32 label, address owner, address resolver, uint64 ttl) external virtual;\\n    function setSubnodeOwner(bytes32 node, bytes32 label, address owner) external virtual returns(bytes32);\\n    function setResolver(bytes32 node, address resolver) external virtual;\\n    function setOwner(bytes32 node, address owner) external virtual;\\n    function setTTL(bytes32 node, uint64 ttl) external virtual;\\n    function setApprovalForAll(address operator, bool approved) external virtual;\\n    function owner(bytes32 node) external virtual view returns (address);\\n    function resolver(bytes32 node) external virtual view returns (address);\\n    function ttl(bytes32 node) external virtual view returns (uint64);\\n    function recordExists(bytes32 node) external virtual view returns (bool);\\n    function isApprovedForAll(address owner, address operator) external virtual view returns (bool);\\n}\\n\",\"keccak256\":\"0x942ef29bd7c0f62228aeb91879ddd1ba101f52a2162970d3e48adffa498f4483\"},\"@ensdomains/ens-contracts/contracts/registry/ReverseRegistrar.sol\":{\"content\":\"pragma solidity >=0.8.4;\\n\\nimport \\\"./ENS.sol\\\";\\n\\nabstract contract NameResolver {\\n    function setName(bytes32 node, string memory name) public virtual;\\n}\\n\\ncontract ReverseRegistrar {\\n    // namehash('addr.reverse')\\n    bytes32 public constant ADDR_REVERSE_NODE = 0x91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e2;\\n\\n    ENS public ens;\\n    NameResolver public defaultResolver;\\n\\n    /**\\n     * @dev Constructor\\n     * @param ensAddr The address of the ENS registry.\\n     * @param resolverAddr The address of the default reverse resolver.\\n     */\\n    constructor(ENS ensAddr, NameResolver resolverAddr) public {\\n        ens = ensAddr;\\n        defaultResolver = resolverAddr;\\n\\n        // Assign ownership of the reverse record to our deployer\\n        ReverseRegistrar oldRegistrar = ReverseRegistrar(ens.owner(ADDR_REVERSE_NODE));\\n        if (address(oldRegistrar) != address(0x0)) {\\n            oldRegistrar.claim(msg.sender);\\n        }\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the reverse ENS record associated with the\\n     *      calling account.\\n     * @param owner The address to set as the owner of the reverse record in ENS.\\n     * @return The ENS node hash of the reverse record.\\n     */\\n    function claim(address owner) public returns (bytes32) {\\n        return claimWithResolver(owner, address(0x0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the reverse ENS record associated with the\\n     *      calling account.\\n     * @param owner The address to set as the owner of the reverse record in ENS.\\n     * @param resolver The address of the resolver to set; 0 to leave unchanged.\\n     * @return The ENS node hash of the reverse record.\\n     */\\n    function claimWithResolver(address owner, address resolver) public returns (bytes32) {\\n        bytes32 label = sha3HexAddress(msg.sender);\\n        bytes32 node = keccak256(abi.encodePacked(ADDR_REVERSE_NODE, label));\\n        address currentOwner = ens.owner(node);\\n\\n        // Update the resolver if required\\n        if (resolver != address(0x0) && resolver != ens.resolver(node)) {\\n            // Transfer the name to us first if it's not already\\n            if (currentOwner != address(this)) {\\n                ens.setSubnodeOwner(ADDR_REVERSE_NODE, label, address(this));\\n                currentOwner = address(this);\\n            }\\n            ens.setResolver(node, resolver);\\n        }\\n\\n        // Update the owner if required\\n        if (currentOwner != owner) {\\n            ens.setSubnodeOwner(ADDR_REVERSE_NODE, label, owner);\\n        }\\n\\n        return node;\\n    }\\n\\n    /**\\n     * @dev Sets the `name()` record for the reverse ENS record associated with\\n     * the calling account. First updates the resolver to the default reverse\\n     * resolver if necessary.\\n     * @param name The name to set for this address.\\n     * @return The ENS node hash of the reverse record.\\n     */\\n    function setName(string memory name) public returns (bytes32) {\\n        bytes32 node = claimWithResolver(address(this), address(defaultResolver));\\n        defaultResolver.setName(node, name);\\n        return node;\\n    }\\n\\n    /**\\n     * @dev Returns the node hash for a given account's reverse records.\\n     * @param addr The address to hash\\n     * @return The ENS node hash.\\n     */\\n    function node(address addr) public pure returns (bytes32) {\\n        return keccak256(abi.encodePacked(ADDR_REVERSE_NODE, sha3HexAddress(addr)));\\n    }\\n\\n    /**\\n     * @dev An optimised function to compute the sha3 of the lower-case\\n     *      hexadecimal representation of an Ethereum address.\\n     * @param addr The address to hash\\n     * @return ret The SHA3 hash of the lower-case hexadecimal encoding of the\\n     *         input address.\\n     */\\n    function sha3HexAddress(address addr) private pure returns (bytes32 ret) {\\n        addr;\\n        ret; // Stop warning us about unused variables\\n        assembly {\\n            let lookup := 0x3031323334353637383961626364656600000000000000000000000000000000\\n\\n            for { let i := 40 } gt(i, 0) { } {\\n                i := sub(i, 1)\\n                mstore8(i, byte(and(addr, 0xf), lookup))\\n                addr := div(addr, 0x10)\\n                i := sub(i, 1)\\n                mstore8(i, byte(and(addr, 0xf), lookup))\\n                addr := div(addr, 0x10)\\n            }\\n\\n            ret := keccak256(0, 40)\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x0954bb8471f1f58353106f19c05b57f75349579afc5ab296b800b3df906907ee\"},\"@openzeppelin/contracts/proxy/utils/Initializable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\n// solhint-disable-next-line compiler-version\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed\\n * behind a proxy. Since a proxied contract can't have a constructor, it's common to move constructor logic to an\\n * external initializer function, usually called `initialize`. It then becomes necessary to protect this initializer\\n * function so it can only be called once. The {initializer} modifier provided by this contract will have this effect.\\n *\\n * TIP: To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as\\n * possible by providing the encoded function call as the `_data` argument to {ERC1967Proxy-constructor}.\\n *\\n * CAUTION: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure\\n * that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.\\n */\\nabstract contract Initializable {\\n\\n    /**\\n     * @dev Indicates that the contract has been initialized.\\n     */\\n    bool private _initialized;\\n\\n    /**\\n     * @dev Indicates that the contract is in the process of being initialized.\\n     */\\n    bool private _initializing;\\n\\n    /**\\n     * @dev Modifier to protect an initializer function from being invoked twice.\\n     */\\n    modifier initializer() {\\n        require(_initializing || !_initialized, \\\"Initializable: contract is already initialized\\\");\\n\\n        bool isTopLevelCall = !_initializing;\\n        if (isTopLevelCall) {\\n            _initializing = true;\\n            _initialized = true;\\n        }\\n\\n        _;\\n\\n        if (isTopLevelCall) {\\n            _initializing = false;\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x67d2f282a9678e58e878a0b774041ba7a01e2740a262aea97a3f681339914713\",\"license\":\"MIT\"},\"@openzeppelin/contracts/security/Pausable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which allows children to implement an emergency stop\\n * mechanism that can be triggered by an authorized account.\\n *\\n * This module is used through inheritance. It will make available the\\n * modifiers `whenNotPaused` and `whenPaused`, which can be applied to\\n * the functions of your contract. Note that they will not be pausable by\\n * simply including this module, only once the modifiers are put in place.\\n */\\nabstract contract Pausable is Context {\\n    /**\\n     * @dev Emitted when the pause is triggered by `account`.\\n     */\\n    event Paused(address account);\\n\\n    /**\\n     * @dev Emitted when the pause is lifted by `account`.\\n     */\\n    event Unpaused(address account);\\n\\n    bool private _paused;\\n\\n    /**\\n     * @dev Initializes the contract in unpaused state.\\n     */\\n    constructor () {\\n        _paused = false;\\n    }\\n\\n    /**\\n     * @dev Returns true if the contract is paused, and false otherwise.\\n     */\\n    function paused() public view virtual returns (bool) {\\n        return _paused;\\n    }\\n\\n    /**\\n     * @dev Modifier to make a function callable only when the contract is not paused.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must not be paused.\\n     */\\n    modifier whenNotPaused() {\\n        require(!paused(), \\\"Pausable: paused\\\");\\n        _;\\n    }\\n\\n    /**\\n     * @dev Modifier to make a function callable only when the contract is paused.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must be paused.\\n     */\\n    modifier whenPaused() {\\n        require(paused(), \\\"Pausable: not paused\\\");\\n        _;\\n    }\\n\\n    /**\\n     * @dev Triggers stopped state.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must not be paused.\\n     */\\n    function _pause() internal virtual whenNotPaused {\\n        _paused = true;\\n        emit Paused(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Returns to normal state.\\n     *\\n     * Requirements:\\n     *\\n     * - The contract must be paused.\\n     */\\n    function _unpause() internal virtual whenPaused {\\n        _paused = false;\\n        emit Unpaused(_msgSender());\\n    }\\n}\\n\",\"keccak256\":\"0xab1f67e4c96dfe0e3875d22883c3dee5411914f40ce0c54ef407f030d803512e\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Interface of the ERC20 standard as defined in the EIP.\\n */\\ninterface IERC20 {\\n    /**\\n     * @dev Returns the amount of tokens in existence.\\n     */\\n    function totalSupply() external view returns (uint256);\\n\\n    /**\\n     * @dev Returns the amount of tokens owned by `account`.\\n     */\\n    function balanceOf(address account) external view returns (uint256);\\n\\n    /**\\n     * @dev Moves `amount` tokens from the caller's account to `recipient`.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transfer(address recipient, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Returns the remaining number of tokens that `spender` will be\\n     * allowed to spend on behalf of `owner` through {transferFrom}. This is\\n     * zero by default.\\n     *\\n     * This value changes when {approve} or {transferFrom} are called.\\n     */\\n    function allowance(address owner, address spender) external view returns (uint256);\\n\\n    /**\\n     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * IMPORTANT: Beware that changing an allowance with this method brings the risk\\n     * that someone may use both the old and the new allowance by unfortunate\\n     * transaction ordering. One possible solution to mitigate this race\\n     * condition is to first reduce the spender's allowance to 0 and set the\\n     * desired value afterwards:\\n     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729\\n     *\\n     * Emits an {Approval} event.\\n     */\\n    function approve(address spender, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Moves `amount` tokens from `sender` to `recipient` using the\\n     * allowance mechanism. `amount` is then deducted from the caller's\\n     * allowance.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Emitted when `value` tokens are moved from one account (`from`) to\\n     * another (`to`).\\n     *\\n     * Note that `value` may be zero.\\n     */\\n    event Transfer(address indexed from, address indexed to, uint256 value);\\n\\n    /**\\n     * @dev Emitted when the allowance of a `spender` for an `owner` is set by\\n     * a call to {approve}. `value` is the new allowance.\\n     */\\n    event Approval(address indexed owner, address indexed spender, uint256 value);\\n}\\n\",\"keccak256\":\"0xf8e8d118a7a8b2e134181f7da655f6266aa3a0f9134b2605747139fcb0c5d835\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\n/*\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691\\n        return msg.data;\\n    }\\n}\\n\",\"keccak256\":\"0xf930d2df426bfcfc1f7415be724f04081c96f4fb9ec8d0e3a521c07692dface0\",\"license\":\"MIT\"},\"contracts/Fee.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface staking contract\\npragma solidity ^0.8.0;\\n\\ninterface Fee {\\n    /// @notice calculates the total amount of the reward that will be directed to the PoolManager\\n    /// @return commissionTotal is the amount subtracted from the rewardAmount\\n    function getCommission(uint256 posIndex, uint256 rewardAmount)\\n        external\\n        view\\n        returns (uint256);\\n}\\n\",\"keccak256\":\"0xd17a0058b5ef0f8734e102538622187c99d00d19f49ae7c4946004e55c1b9f6e\",\"license\":\"Apache-2.0\"},\"contracts/StakingPool.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface staking contract\\npragma solidity ^0.8.0;\\n\\nimport \\\"@cartesi/pos/contracts/IStaking.sol\\\";\\nimport \\\"./StakingPoolManagement.sol\\\";\\n\\ninterface StakingPool is IStaking, StakingPoolManagement {\\n    ///@notice this events is emitted at every produceBlock call\\n    ///     reward is the block reward\\n    ///     commission is how much CTSI is directed to the poolManager\\n    ///     queued is how much currently is being queued to be staked\\n    ///     notStaked is how much is directed to withdrawal\\n    event BlockProduced(\\n        uint256 reward,\\n        uint256 commission,\\n        uint256 queued,\\n        uint256 notStaked\\n    );\\n\\n    /// @notice routes produceBlock to POS contract and\\n    /// updates internal states of the pool\\n    /// @return true when everything went fine\\n    function produceBlock(uint256 _index) external returns (bool);\\n\\n    /// @notice enables pool manager to update staking balances as they mature\\n    /// on the (main) Staking contract\\n    function cycleStakeMaturation() external;\\n\\n    /// @notice enables pool manager to update releasing balances as they get freed\\n    /// on the (main) Staking contract\\n    function cycleWithdrawRelease() external;\\n\\n    /// @notice checks whether or not a call can be made to cycleStakeMaturation\\n    /// and be successful\\n    /// @return available true if cycleStakeMaturation can bee called\\n    ///                   false if it can not\\n    ///         _currentQueuedTotal how much is waiting to be staked\\n    function canCycleStakeMaturation()\\n        external\\n        view\\n        returns (bool available, uint256 _currentQueuedTotal, uint256 _currentMaturingTotal);\\n\\n    /// @notice checks whether or not a call can be made to cycleWithdrawRelease\\n    /// and be successful\\n    /// @return available true if cycleWithdrawRelease can bee called\\n    ///                   false if it can not\\n    ///         _totalToUnstakeValue how much is waiting to be unstaked\\n    function canCycleWithdrawRelease()\\n        external\\n        view\\n        returns (bool available, uint256 _totalToUnstakeValue, uint256 _totalUnstaking);\\n}\\n\",\"keccak256\":\"0x97758e1e0c614c8e6b2614601d906b0cecfdcecd56acd8595bd907a1ccfb92ae\",\"license\":\"Apache-2.0\"},\"contracts/StakingPoolImpl.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface staking contract\\npragma experimental ABIEncoderV2;\\npragma solidity ^0.8.0;\\n\\nimport \\\"@openzeppelin/contracts/token/ERC20/IERC20.sol\\\";\\nimport \\\"@cartesi/pos/contracts/IRewardManager.sol\\\";\\nimport \\\"@cartesi/pos/contracts/IStaking.sol\\\";\\nimport \\\"./StakingPool.sol\\\";\\nimport \\\"./Fee.sol\\\";\\nimport \\\"./StakingPoolManagementImpl.sol\\\";\\n\\ncontract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {\\n    IERC20 public immutable ctsi;\\n    IStaking public immutable staking;\\n\\n    Fee public fee;\\n    uint256 public rewardQueued;\\n    uint256 public rewardNotStaked;\\n    uint256 public rewardMaturing;\\n    uint256 public currentStakeEpoch;\\n    uint256 public currentUnstakeEpoch;\\n\\n    uint256 public immutable timeToStake;\\n    uint256 public immutable timeToRelease;\\n\\n    struct StakingVoucher {\\n        uint256 amountQueued;\\n        uint256 amountStaked;\\n        uint256 queueEpoch;\\n    }\\n\\n    struct UnstakingVoucher {\\n        uint256 poolShares;\\n        uint256 queueEpoch;\\n    }\\n\\n    struct UserBalance {\\n        // @TODO improve state usage reducing variable sizes\\n        uint256 stakedPoolShares;\\n        StakingVoucher stakingVoucher;\\n        UnstakingVoucher unstakingVoucher;\\n    }\\n    mapping(address => UserBalance) public userBalance;\\n    uint256 public immutable FIXED_POINT_DECIMALS = 10E5; //@DEV is this enough zero/precision?\\n    // this gets updated on every reward income\\n    uint256[] public stakingVoucherValueAtEpoch; // correction factor for balances outdated by new rewards\\n    uint256 public currentQueuedTotal; // next cycle staking amout\\n    uint256 public currentMaturingTotal; // current cycle staking maturing\\n    uint256 public totalStaked; // \\\"same as\\\" StakeImp.getStakedBalance(this)\\n    uint256 public totalStakedShares;\\n    // this tracks the ratio of balances to actual CTSI value\\n    // withdraw related variables\\n    uint256 public totalToUnstakeShares; // next withdraw cycle unstake amount\\n    uint256 public totalUnstaking; // current withdraw cycle unstaking amount\\n    uint256 public totalWithdrawable; // ready to withdraw user balances\\n    uint256 public totalUnstakedShares; // tracks shares balances\\n\\n    // all immutable variables can stay at the constructor\\n    constructor(\\n        address _ctsi,\\n        address _staking,\\n        address _pos,\\n        uint256 _timeToStake,\\n        uint256 _timeToRelease,\\n        address _ens,\\n        address _workerManager\\n    ) StakingPoolManagementImpl(_ens, _workerManager, _pos) {\\n        require(_ctsi != address(0), \\\"parameter can not be zero address\\\");\\n        require(_staking != address(0), \\\"parameter can not be zero address\\\");\\n\\n        ctsi = IERC20(_ctsi);\\n        staking = IStaking(_staking);\\n        timeToStake = _timeToStake;\\n        timeToRelease = _timeToRelease;\\n    }\\n\\n    function initialize(address _feeAddress, address owner) public initializer {\\n        super.initialize(owner);\\n        require(\\n            ctsi.approve(address(staking), type(uint256).max),\\n            \\\"Failed to approve CTSI for staking contract\\\"\\n        );\\n        fee = Fee(_feeAddress);\\n    }\\n\\n    /// @notice Returns total amount of tokens counted as stake\\n    /// @param _userAddress user to retrieve staked balance from\\n    /// @return stakedBalance is the finalized staked of _userAddress\\n    function getStakedBalance(address _userAddress)\\n        external\\n        view\\n        override\\n        returns (uint256 stakedBalance)\\n    {\\n        UserBalance storage b = userBalance[_userAddress];\\n        uint256 shares = _getUserMaturatedShares(b.stakingVoucher);\\n        uint256 withdrawBalance;\\n        uint256 stakedValue = 0;\\n        // since it didn't call staking.unstake() yet, it's balance still counts for reward\\n        if (b.unstakingVoucher.queueEpoch < currentUnstakeEpoch)\\n            withdrawBalance = b.unstakingVoucher.poolShares;\\n        if (totalStakedShares > 0) {\\n            shares += b.stakedPoolShares - withdrawBalance;\\n            stakedValue = _getStakedSharesInValue(shares);\\n        }\\n        if (staking.getMaturingTimestamp(address(this)) < block.timestamp) {\\n            // effectively 1 cycle has passed and we didn't compute yet\\n            uint256 _currentStakeEpoch = currentStakeEpoch + 1;\\n            if (b.stakingVoucher.queueEpoch + 1 == _currentStakeEpoch) {\\n                stakedValue += b.stakingVoucher.amountStaked;\\n            } else if (b.stakingVoucher.queueEpoch + 2 == _currentStakeEpoch) {\\n                stakedValue += b.stakingVoucher.amountQueued;\\n            }\\n        }\\n\\n        return stakedValue;\\n    }\\n\\n    /// @notice Returns the timestamp when next deposit can be finalized\\n    /// @return timestamp of when cycleStakeMaturation() is callable\\n    function getMaturingTimestamp(address _userAddress)\\n        external\\n        view\\n        override\\n        returns (uint256)\\n    {\\n        if (\\n            userBalance[_userAddress].stakingVoucher.queueEpoch + 1 ==\\n            currentStakeEpoch\\n        ) return staking.getMaturingTimestamp(address(this));\\n        if (\\n            userBalance[_userAddress].stakingVoucher.queueEpoch ==\\n            currentStakeEpoch\\n        ) return staking.getMaturingTimestamp(address(this)) + timeToStake;\\n        return 0;\\n    }\\n\\n    /// @notice Returns the timestamp when next withdraw can be finalized\\n    /// @return timestamp of when withdraw() is callable\\n    function getReleasingTimestamp(address _userAddress)\\n        external\\n        view\\n        override\\n        returns (uint256)\\n    {\\n        uint256 wEpoch = userBalance[_userAddress].unstakingVoucher.queueEpoch;\\n        if (wEpoch + 1 == currentUnstakeEpoch) {\\n            return staking.getReleasingTimestamp(address(this));\\n        } else if (\\n            staking.getReleasingBalance(address(this)) > 0 &&\\n            wEpoch == currentUnstakeEpoch\\n        ) {\\n            return staking.getReleasingTimestamp(address(this)) + timeToRelease;\\n        } else if (wEpoch == currentUnstakeEpoch) {\\n            return block.timestamp + timeToRelease;\\n        }\\n        return 0;\\n    }\\n\\n    /// @notice Returns the balance waiting/ready to be matured\\n    /// @return amount that will get staked after finalization\\n    function getMaturingBalance(address _userAddress)\\n        external\\n        view\\n        override\\n        returns (uint256)\\n    {\\n        UserBalance storage b = userBalance[_userAddress];\\n        uint256 maturingBalance = 0;\\n        uint256 _currentStakeEpoch = currentStakeEpoch;\\n        if (staking.getMaturingTimestamp(address(this)) < block.timestamp)\\n            _currentStakeEpoch++;\\n        // if more than one cycle has passed for amountStaked then it's vested already\\n        if (b.stakingVoucher.queueEpoch + 1 > _currentStakeEpoch)\\n            maturingBalance += b.stakingVoucher.amountStaked;\\n        // if more than 2 cycles has passed for amountQueued then it's vested already\\n        if (b.stakingVoucher.queueEpoch + 2 > _currentStakeEpoch)\\n            maturingBalance += b.stakingVoucher.amountQueued;\\n        return maturingBalance;\\n    }\\n\\n    /// @notice Returns the balance waiting/ready to be released\\n    /// @return amount that will get withdrawn after finalization\\n    function getReleasingBalance(address _userAddress)\\n        external\\n        view\\n        override\\n        returns (uint256)\\n    {\\n        UnstakingVoucher storage voucher =\\n            userBalance[_userAddress].unstakingVoucher;\\n        // releasing balance still was not unstaked on IStaking\\n        if (voucher.queueEpoch == currentUnstakeEpoch && totalStakedShares != 0)\\n            return _getStakedSharesInValue(voucher.poolShares);\\n\\n        // releasing(ed) balance was unstaked on IStaking\\n        if (\\n            voucher.queueEpoch + 1 <= currentUnstakeEpoch &&\\n            totalUnstakedShares != 0\\n        ) return _getUnstakedSharesInValue(voucher.poolShares);\\n        // avoid division by zero in some scenarios\\n        return 0;\\n    }\\n\\n    /// @notice Deposit CTSI to be staked. The money will turn into staked\\n    ///         balance after timeToStake days\\n    /// @param _amount The amount of tokens that are gonna be additionally deposited.\\n    function stake(uint256 _amount) external override whenNotPaused {\\n        require(\\n            ctsi.transferFrom(msg.sender, address(this), _amount),\\n            \\\"Allowance of CTSI tokens not enough to match amount sent\\\"\\n        );\\n        _stakeUpdates(msg.sender, _amount);\\n    }\\n\\n    /// @notice routes produceBlock to POS contract and\\n    /// updates internal states of the pool\\n    /// @return true when everything went fine\\n    function produceBlock(uint256 _index) external override returns (bool) {\\n        bool isLastStakeCycleOver =\\n            staking.getMaturingTimestamp(address(this)) <= block.timestamp;\\n        if (isLastStakeCycleOver) computeFinishedStake();\\n\\n        uint256 reward =\\n            IRewardManager(pos.getRewardManagerAddress(_index))\\n                .getCurrentReward();\\n\\n        pos.produceBlock(_index);\\n\\n        uint256 commission = fee.getCommission(_index, reward);\\n        _stakeUpdates(owner(), commission); // directs the commission to the pool manager\\n\\n        uint256 remainingReward = reward - commission; // this is also a safety check\\n        // if commission is over the reward amount, it will underflow\\n\\n        // we first route rewards related to unstakingShares to withdrawal\\n        // then we add the rest to the staking queue\\n        uint256 additionalRewardsWithdrawal =\\n            _calcUnstakingRewards(remainingReward + rewardQueued);\\n        rewardNotStaked += additionalRewardsWithdrawal;\\n\\n        // update the possible remaining reward to be staked\\n        rewardQueued =\\n            (remainingReward + rewardQueued) -\\n            additionalRewardsWithdrawal;\\n\\n        emit BlockProduced(reward, commission, rewardQueued, rewardNotStaked);\\n\\n        if (isLastStakeCycleOver) startNewStakeCycle();\\n        cycleWithdrawRelease();\\n        return true;\\n    }\\n\\n    /// @notice Remove tokens from staked balance. The money can\\n    ///         be released after timeToRelease seconds, if the\\n    ///         function withdraw is called.\\n    /// @param _amount The amount of tokens that are gonna be unstaked.\\n    function unstake(uint256 _amount) external override {\\n        UserBalance storage user = userBalance[msg.sender];\\n        require(\\n            user.unstakingVoucher.poolShares == 0 ||\\n                user.unstakingVoucher.queueEpoch == currentUnstakeEpoch,\\n            \\\"You have withdraw being processed\\\"\\n        );\\n\\n        _updateUserBalances(msg.sender); // makes sure balances are updated to shares\\n\\n        uint256 _amountInShares = _getStakedValueInShares(_amount);\\n        require(_amountInShares > 0, \\\"there are no shares to be unstaked\\\");\\n        user.unstakingVoucher.poolShares += _amountInShares;\\n\\n        require(\\n            user.stakedPoolShares >= user.unstakingVoucher.poolShares,\\n            \\\"Unstake amount is over staked balance\\\"\\n        );\\n\\n        totalToUnstakeShares += _amountInShares;\\n        user.unstakingVoucher.queueEpoch = currentUnstakeEpoch;\\n\\n        uint256 releaseTimestamp;\\n        if (staking.getReleasingBalance(address(this)) > 0)\\n            releaseTimestamp = staking.getReleasingTimestamp(address(this));\\n        else {\\n            releaseTimestamp = block.timestamp;\\n        }\\n\\n        emit Unstake(msg.sender, _amount, releaseTimestamp + timeToRelease);\\n    }\\n\\n    /// @notice Transfer tokens to user's wallet.\\n    /// @param _amount The amount of tokens that are gonna be transferred.\\n    function withdraw(uint256 _amount) external override {\\n        UserBalance storage user = userBalance[msg.sender];\\n        require(\\n            user.unstakingVoucher.poolShares > 0 &&\\n                user.unstakingVoucher.queueEpoch + 2 <= currentUnstakeEpoch,\\n            \\\"You don't have realeased balance\\\"\\n        );\\n        _updateUserBalances(msg.sender); // makes sure balances are updated to matured\\n        uint256 shares = _getUnstakedValueInShares(_amount);\\n        require(\\n            user.unstakingVoucher.poolShares >= shares,\\n            \\\"Not enough balance for this withdraw amount\\\"\\n        );\\n        user.unstakingVoucher.poolShares -= shares;\\n        user.stakedPoolShares -= shares;\\n\\n        totalWithdrawable -= _amount;\\n        totalUnstakedShares -= shares;\\n        ctsi.transfer(msg.sender, _amount);\\n        emit Withdraw(msg.sender, _amount);\\n    }\\n\\n    function _calcUnstakingRewards(uint256 rewards)\\n        internal\\n        view\\n        returns (uint256)\\n    {\\n        // @dev review this function when totalStakedShares is Zero.\\n        // total value related to totalStakedShares\\n        uint256 totalAccumulatedValue =\\n            totalStaked + rewardMaturing + rewardNotStaked + rewards;\\n        // value that will be made available to withdraw in the next full withdraw cycle\\n        uint256 totalToUnstakeValue =\\n            (totalToUnstakeShares * totalAccumulatedValue) / totalStakedShares;\\n        // additional value related to current rewards yet to be set aside\\n        uint256 toUnstakeValueNotAccounted =\\n            totalToUnstakeValue - rewardNotStaked;\\n        if (rewards > toUnstakeValueNotAccounted)\\n            return toUnstakeValueNotAccounted;\\n        return rewards; // all this reward will be added to rewardNotStaked\\n    }\\n\\n    function _calcValueAtEpoch() internal view returns (uint256) {\\n        // first time weight is 1\\n        if (currentStakeEpoch == 1) {\\n            return FIXED_POINT_DECIMALS;\\n        }\\n        // the `ValueAtEpoch` factor is the same as 1 unit of value in shares\\n        return _getStakedValueInShares(1);\\n    }\\n\\n    function _calcTotalShares(uint256 valueAtEpoch)\\n        internal\\n        view\\n        returns (uint256)\\n    {\\n        // rewards do not count shares, so we subtract them\\n        uint256 newStakedValue = currentMaturingTotal - rewardMaturing;\\n        uint256 additionalShares = newStakedValue * valueAtEpoch;\\n        return totalStakedShares + additionalShares;\\n    }\\n\\n    /// @notice called when a stake is matured in StakeImpl\\n    /// updating internal state related to it\\n    function computeFinishedStake() internal {\\n        if (currentStakeEpoch >= 1) {\\n            uint256 _valueAtEpoch = _calcValueAtEpoch();\\n            totalStakedShares = _calcTotalShares(_valueAtEpoch);\\n            stakingVoucherValueAtEpoch.push(_valueAtEpoch);\\n            totalStaked = totalStaked + currentMaturingTotal;\\n            // now we add this because we migth have intermediate\\n            // calculations that use this state var\\n            currentMaturingTotal = 0;\\n        }\\n    }\\n\\n    /// @notice called after the finish of cycle\\n    /// to start with a new stake and reset global state vars\\n    function startNewStakeCycle() internal {\\n        currentMaturingTotal = currentQueuedTotal + rewardQueued;\\n        if (currentMaturingTotal != 0) staking.stake(currentMaturingTotal);\\n        rewardMaturing = rewardQueued;\\n        rewardQueued = 0;\\n        currentQueuedTotal = 0;\\n        currentStakeEpoch++;\\n    }\\n\\n    /// @notice enables pool manager to update staking balances as they mature\\n    /// on the (main) Staking contract\\n    function cycleStakeMaturation() public override {\\n        bool isLastStakeCycleOver =\\n            staking.getMaturingTimestamp(address(this)) <= block.timestamp;\\n        if (!isLastStakeCycleOver) return;\\n        computeFinishedStake();\\n        startNewStakeCycle();\\n    }\\n\\n    /// @notice enables pool manager to update staking balances as they mature\\n    /// on the (main) Staking contract\\n    function cycleWithdrawRelease() public override {\\n        uint256 releasingBalance = staking.getReleasingBalance(address(this));\\n        if (\\n            releasingBalance > 0 &&\\n            staking.getReleasingTimestamp(address(this)) > block.timestamp\\n        ) return; // last release cycle hasn't finished\\n\\n        if (totalToUnstakeShares == 0 && totalUnstaking == 0) return; // nothing to do\\n\\n        // withdraw everything to this contract before reseting the clock\\n        if (releasingBalance > 0) staking.withdraw(releasingBalance);\\n\\n        uint256 totalToUnstake = 0;\\n        if (totalToUnstakeShares > 0) {\\n            totalToUnstake =\\n                _getStakedSharesInValue(totalToUnstakeShares) -\\n                rewardNotStaked;\\n            if (totalToUnstake > 0) {\\n                staking.unstake(totalToUnstake);\\n                totalStaked = totalStaked - totalToUnstake;\\n            }\\n        }\\n\\n        // reset the cycle\\n        totalStakedShares -= totalToUnstakeShares;\\n        totalUnstakedShares += totalToUnstakeShares;\\n        totalToUnstakeShares = 0;\\n        totalWithdrawable += totalUnstaking + rewardNotStaked;\\n        rewardNotStaked = 0;\\n        totalUnstaking = totalToUnstake;\\n        currentUnstakeEpoch += 1;\\n    }\\n\\n    /// @notice this function updates stale balance structure for a user\\n    /// it has basically 2 scenarios: user is staking since 1 epoch\\n    /// or it's staking since 2 or more epochs\\n    function _updateUserBalances(address _user) internal {\\n        UserBalance storage user = userBalance[_user];\\n        uint256 userLastUpdateEpoch = user.stakingVoucher.queueEpoch;\\n        if (\\n            (user.stakingVoucher.amountQueued == 0 &&\\n                user.stakingVoucher.amountStaked == 0) ||\\n            userLastUpdateEpoch == currentStakeEpoch\\n        ) return; // nothing to do; all up-to-date\\n\\n        user.stakedPoolShares += _getUserMaturatedShares(user.stakingVoucher);\\n        // checks for any outdated balances\\n        if (userLastUpdateEpoch + 1 == currentStakeEpoch) {\\n            user.stakingVoucher.amountStaked = user.stakingVoucher.amountQueued;\\n            user.stakingVoucher.amountQueued = 0;\\n            user.stakingVoucher.queueEpoch = currentStakeEpoch;\\n        } else if (userLastUpdateEpoch + 2 <= currentStakeEpoch) {\\n            user.stakingVoucher.amountStaked = 0;\\n            user.stakingVoucher.amountQueued = 0;\\n        }\\n    }\\n\\n    function _stakeUpdates(address user, uint256 _amount) internal {\\n        _updateUserBalances(user);\\n\\n        userBalance[user].stakingVoucher.amountQueued =\\n            userBalance[user].stakingVoucher.amountQueued +\\n            _amount;\\n        userBalance[user].stakingVoucher.queueEpoch = currentStakeEpoch;\\n\\n        currentQueuedTotal = currentQueuedTotal + _amount;\\n\\n        emit Stake(\\n            user,\\n            _amount,\\n            staking.getMaturingTimestamp(address(this)) + timeToStake\\n        );\\n    }\\n\\n    function _getStakedValueInShares(uint256 value)\\n        internal\\n        view\\n        returns (uint256 shares)\\n    {\\n        uint256 rewardsNotStaked =\\n            rewardMaturing + rewardQueued + rewardNotStaked;\\n        // total value related to totalStakedShares\\n        uint256 totalAccumulatedValue = totalStaked + rewardsNotStaked;\\n        if (totalAccumulatedValue == 0) return 0;\\n        return (value * totalStakedShares) / totalAccumulatedValue;\\n    }\\n\\n    function _getStakedSharesInValue(uint256 shares)\\n        internal\\n        view\\n        returns (uint256 value)\\n    {\\n        if (totalStakedShares == 0) return 0;\\n        uint256 rewardsNotStaked =\\n            rewardMaturing + rewardNotStaked + rewardQueued;\\n        // total value related to totalStakedShares\\n        uint256 totalAccumulatedValue = totalStaked + rewardsNotStaked;\\n        return (shares * totalAccumulatedValue) / totalStakedShares;\\n    }\\n\\n    function _getUnstakedSharesInValue(uint256 shares)\\n        internal\\n        view\\n        returns (uint256 value)\\n    {\\n        if (totalUnstakedShares == 0) return 0;\\n        // total value related to totalUnstakedShares\\n        uint256 totalAccumulatedValue = totalUnstaking + totalWithdrawable;\\n        return (shares * totalAccumulatedValue) / totalUnstakedShares;\\n    }\\n\\n    function _getUnstakedValueInShares(uint256 value)\\n        internal\\n        view\\n        returns (uint256 shares)\\n    {\\n        // total value related to totalUnstakedShares\\n        uint256 totalAccumulatedValue = totalUnstaking + totalWithdrawable;\\n        if (totalAccumulatedValue == 0) return 0;\\n        return (value * totalUnstakedShares) / totalAccumulatedValue;\\n    }\\n\\n    function _getUserMaturatedShares(StakingVoucher storage v)\\n        internal\\n        view\\n        returns (uint256 shares)\\n    {\\n        // check whether any balance under 'amountQueued' is already mature\\n        if (v.queueEpoch + 2 <= currentStakeEpoch) {\\n            shares = v.amountQueued * stakingVoucherValueAtEpoch[v.queueEpoch];\\n        }\\n        // check whether any balance under 'amountStaked' is already mature\\n        if (v.queueEpoch > 0 && v.queueEpoch + 1 <= currentStakeEpoch) {\\n            shares +=\\n                v.amountStaked *\\n                stakingVoucherValueAtEpoch[v.queueEpoch - 1];\\n        }\\n    }\\n\\n    function canCycleStakeMaturation()\\n        external\\n        view\\n        override\\n        returns (\\n            bool available,\\n            uint256 _currentQueuedTotal,\\n            uint256 _currentMaturingTotal\\n        )\\n    {\\n        if (staking.getMaturingTimestamp(address(this)) > block.timestamp)\\n            return (false, currentQueuedTotal, currentMaturingTotal);\\n        return (true, currentQueuedTotal, currentMaturingTotal);\\n    }\\n\\n    function canCycleWithdrawRelease()\\n        external\\n        view\\n        override\\n        returns (\\n            bool available,\\n            uint256 _totalToUnstakeValue,\\n            uint256 _totalUnstaking\\n        )\\n    {\\n        _totalToUnstakeValue = _getStakedSharesInValue(totalToUnstakeShares);\\n        if (\\n            staking.getReleasingBalance(address(this)) > 0 &&\\n            staking.getReleasingTimestamp(address(this)) > block.timestamp\\n        ) return (false, _totalToUnstakeValue, totalUnstaking);\\n        return (true, _totalToUnstakeValue, totalUnstaking);\\n    }\\n}\\n\",\"keccak256\":\"0x7b107d63870148e300e3f82deae2388660971641641dafd9216cc88b9a071add\",\"license\":\"Apache-2.0\"},\"contracts/StakingPoolManagement.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface staking contract\\npragma solidity ^0.8.0;\\n\\ninterface StakingPoolManagement {\\n    /// @notice sets a name for the pool using ENS service\\n    function setName(string memory name) external;\\n\\n    /// @notice pauses new staking on the pool\\n    function pause() external;\\n\\n    /// @notice unpauses new staking on the pool\\n    function unpause() external;\\n\\n    /// @notice Event emmited when a pool is rename\\n    event StakingPoolRenamed(string name);\\n\\n    /// @notice allows for the pool to act on its own behalf when producing blocks.\\n    function selfhire() external payable;\\n\\n    /// @notice Asks the worker to work for the sender. Sender needs to pay something.\\n    /// @param workerAddress address of the worker\\n    function hire(address payable workerAddress) external payable;\\n\\n    /// @notice Called by the user to cancel a job offer\\n    /// @param workerAddress address of the worker node\\n    function cancelHire(address workerAddress) external;\\n\\n    /// @notice Called by the user to retire his worker.\\n    /// @param workerAddress address of the worker to be retired\\n    /// @dev this also removes all authorizations in place\\n    function retire(address payable workerAddress) external;\\n}\\n\",\"keccak256\":\"0xec0e9343c5cfbe93b7443e6786d8d1e7a6cfe8f57526afcb0e02ff426e8de02b\",\"license\":\"Apache-2.0\"},\"contracts/StakingPoolManagementImpl.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface staking contract\\npragma solidity ^0.8.0;\\n\\nimport \\\"@cartesi/pos/contracts/IPoS.sol\\\";\\nimport \\\"@cartesi/pos/contracts/IWorkerManagerAuthManager.sol\\\";\\nimport \\\"@ensdomains/ens-contracts/contracts/registry/ReverseRegistrar.sol\\\";\\nimport \\\"@ensdomains/ens-contracts/contracts/registry/ENS.sol\\\";\\nimport \\\"@openzeppelin/contracts/proxy/utils/Initializable.sol\\\";\\nimport \\\"@openzeppelin/contracts/security/Pausable.sol\\\";\\n\\nimport \\\"./StakingPoolManagement.sol\\\";\\n\\ncontract StakingPoolManagementImpl is\\n    StakingPoolManagement,\\n    Initializable,\\n    Pausable\\n{\\n    bytes32 private constant ADDR_REVERSE_NODE =\\n        0x91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e2;\\n\\n    ENS public immutable ens;\\n    IPoS public immutable pos;\\n\\n    IWorkerManagerAuthManager public immutable workerManager;\\n\\n    event OwnershipTransferred(\\n        address indexed previousOwner,\\n        address indexed newOwner\\n    );\\n\\n    address private _owner;\\n\\n    // all immutable variables can stay at the constructor\\n    constructor(\\n        address _ens,\\n        address _workerManager,\\n        address _pos\\n    ) {\\n        require(_ens != address(0), \\\"parameter can not be zero address\\\");\\n        require(\\n            _workerManager != address(0),\\n            \\\"parameter can not be zero address\\\"\\n        );\\n        require(_pos != address(0), \\\"parameter can not be zero address\\\");\\n\\n        ens = ENS(_ens);\\n        workerManager = IWorkerManagerAuthManager(_workerManager);\\n        pos = IPoS(_pos);\\n        // make sure reference code is pause so noone stake to it\\n        initialize(address(0));\\n        _pause();\\n    }\\n\\n    function initialize(address ownerSender) internal initializer {\\n        _owner = ownerSender;\\n        emit OwnershipTransferred(address(0), ownerSender);\\n    }\\n\\n    receive() external payable {}\\n\\n    /// @notice sets a name for the pool using ENS service\\n    function setName(string memory name) external override onlyOwner {\\n        ReverseRegistrar ensReverseRegistrar =\\n            ReverseRegistrar(ens.owner(ADDR_REVERSE_NODE));\\n\\n        // call the ENS reverse registrar resolving pool address to name\\n        ensReverseRegistrar.setName(name);\\n\\n        // emit event, for subgraph processing\\n        emit StakingPoolRenamed(name);\\n    }\\n\\n    /// @notice pauses new staking on the pool\\n    function pause() public override onlyOwner {\\n        _pause();\\n    }\\n\\n    /// @notice unpauses new staking on the pool\\n    function unpause() external override onlyOwner {\\n        _unpause();\\n    }\\n\\n    /// @notice allows for the pool to act on its own behalf when producing blocks.\\n    function selfhire() external payable override {\\n        // pool needs to be both user and worker\\n        workerManager.hire{value: msg.value}(payable(address(this)));\\n        workerManager.authorize(address(this), address(pos));\\n        workerManager.acceptJob();\\n        payable(_owner).transfer(msg.value);\\n    }\\n\\n    /// @notice Asks the worker to work for the sender. Sender needs to pay something.\\n    /// @param workerAddress address of the worker\\n    function hire(address payable workerAddress) external payable override {\\n        workerManager.hire{value: msg.value}(workerAddress);\\n        workerManager.authorize(workerAddress, address(pos));\\n    }\\n\\n    /// @notice Called by the user to cancel a job offer\\n    /// @param workerAddress address of the worker node\\n    function cancelHire(address workerAddress) external override {\\n        workerManager.cancelHire(workerAddress);\\n    }\\n\\n    /// @notice Called by the user to retire his worker.\\n    /// @param workerAddress address of the worker to be retired\\n    /// @dev this also removes all authorizations in place\\n    function retire(address payable workerAddress) external override {\\n        workerManager.retire(workerAddress);\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        require(_owner == msg.sender, \\\"Ownable: caller is not the owner\\\");\\n        _;\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        require(\\n            newOwner != address(0),\\n            \\\"Ownable: new owner is the zero address\\\"\\n        );\\n        emit OwnershipTransferred(_owner, newOwner);\\n        _owner = newOwner;\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions anymore. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby removing any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        emit OwnershipTransferred(_owner, address(0));\\n        _owner = address(0);\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n}\\n\",\"keccak256\":\"0x9fbb4c85625a591d46db2d1174d41ca86c3e23a30486d615834f082e67e76ac4\",\"license\":\"Apache-2.0\"}},\"version\":1}",
+  "bytecode": "0x610180604052620f4240610160523480156200001a57600080fd5b5060405162003c8838038062003c888339810160408190526200003d9162000425565b6000805462ff0000191690558181866001600160a01b038316620000a15760405162461bcd60e51b8152602060048201526021602482015260008051602062003c688339815191526044820152607360f81b60648201526084015b60405180910390fd5b6001600160a01b038216620000f25760405162461bcd60e51b8152602060048201526021602482015260008051602062003c688339815191526044820152607360f81b606482015260840162000098565b6001600160a01b038116620001435760405162461bcd60e51b8152602060048201526021602482015260008051602062003c688339815191526044820152607360f81b606482015260840162000098565b6001600160601b0319606084811b821660805283811b821660c05282901b1660a0526200017160006200024f565b6200017b6200035c565b5050506001600160a01b038716620001cf5760405162461bcd60e51b8152602060048201526021602482015260008051602062003c688339815191526044820152607360f81b606482015260840162000098565b6001600160a01b038616620002205760405162461bcd60e51b8152602060048201526021602482015260008051602062003c688339815191526044820152607360f81b606482015260840162000098565b50506001600160601b0319606095861b811660e0529390941b90921661010052506101205261014052620004a8565b600054610100900460ff168062000269575060005460ff16155b620002ce5760405162461bcd60e51b815260206004820152602e60248201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160448201526d191e481a5b9a5d1a585b1a5e995960921b606482015260840162000098565b600054610100900460ff16158015620002f1576000805461ffff19166101011790555b600080546301000000600160b81b03191663010000006001600160a01b0385169081029190911782556040519091907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a3801562000358576000805461ff00191690555b5050565b6200036f60005462010000900460ff1690565b15620003b15760405162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015260640162000098565b6000805462ff00001916620100001790557f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258620003eb3390565b6040516001600160a01b03909116815260200160405180910390a1565b80516001600160a01b03811681146200042057600080fd5b919050565b600080600080600080600060e0888a0312156200044157600080fd5b6200044c8862000408565b96506200045c6020890162000408565b95506200046c6040890162000408565b945060608801519350608088015192506200048a60a0890162000408565b91506200049a60c0890162000408565b905092959891949750929550565b60805160601c60a05160601c60c05160601c60e05160601c6101005160601c61012051610140516101605161362562000643600039600081816106b4015261325b0152600081816108ff01528181610dd501528181611a6e0152611b2b01526000818161075801528181611f6a015261305201526000818161058e0152818161099f01528181610a3801528181610c8401528181610d21015281816110e1015281816112060152818161131d01528181611480015281816115d60152818161167c0152818161173c015281816117e201528181611923015281816119c401528181611a9001528181611ea801528181611f8c015281816120c301528181612a070152818161307401526131bf01526000818161060101528181610f9b015281816114b001526124d80152600081816103e401528181611b6e01528181611c1601528181611c780152818161203f015281816125f70152818161280e01526128b001526000818161087801528181611bee015281816121670152818161227201526128880152600081816104ef015261268f01526136256000f3fe6080604052600436106102b25760003560e01c8063715018a611610175578063a694fc3a116100dc578063cf39203711610095578063eca7fe171161006f578063eca7fe17146108ed578063effb839614610921578063f2fde38b14610937578063fc57d44c1461095757600080fd5b8063cf3920371461089a578063d9d6bd86146108ba578063ddca3f43146108cd57600080fd5b8063a694fc3a146107da578063b64b3bed146107fa578063bc598eef1461081a578063be2cfdff14610830578063c47f002714610846578063c56551b61461086657600080fd5b80638da5cb5b1161012e5780638da5cb5b146107015780638e9f04b51461072657806394381556146107465780639a0515451461077a5780639e6371ba1461079a578063a5a6cd0b146107ba57600080fd5b8063715018a61461066157806373a4f33b146106765780637c0de72b1461068c5780637e15d8c7146106a2578063817b1cd2146106d65780638456cb59146106ec57600080fd5b80633f15457f1161021957806356cbf7b9116101d257806356cbf7b9146105b05780635c975abb146105c557806364ffc3f4146105ef57806367ba9b91146106235780636a5030c2146106435780636ff46a6c1461065957600080fd5b80633f15457f146104dd5780633f4ba83a14610511578063419be624146105265780634779525b14610546578063485cc9551461055c5780634cf088d91461057c57600080fd5b8063134d92c81161026b578063134d92c81461041e57806327d49695146104505780632e17de78146104665780632e1a7d4d146104885780633a02a42d146104a85780633b8beb8a146104c857600080fd5b80630103c92b146102be578063030650481461036c5780630600a865146103905780630698607d146103a65780630b41aafd146103bc5780630d36533c146103d257600080fd5b366102b957005b600080fd5b3480156102ca57600080fd5b5061032f6102d93660046132bd565b600760209081526000918252604091829020805483516060810185526001830154815260028301548185015260038301548186015284518086019095526004830154855260059092015492840192909252909183565b6040805193845282516020808601919091528084015185830152920151606084015280516080840152015160a082015260c0015b60405180910390f35b34801561037857600080fd5b5061038260065481565b604051908152602001610363565b34801561039c57600080fd5b50610382600f5481565b3480156103b257600080fd5b50610382600e5481565b3480156103c857600080fd5b5061038260045481565b3480156103de57600080fd5b506104067f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b039091168152602001610363565b34801561042a57600080fd5b5061043361096c565b604080519315158452602084019290925290820152606001610363565b34801561045c57600080fd5b50610382600d5481565b34801561047257600080fd5b5061048661048136600461341c565b610adb565b005b34801561049457600080fd5b506104866104a336600461341c565b610e18565b3480156104b457600080fd5b506103826104c33660046132bd565b61105a565b3480156104d457600080fd5b506104336111e0565b3480156104e957600080fd5b506104067f000000000000000000000000000000000000000000000000000000000000000081565b34801561051d57600080fd5b506104866112a8565b34801561053257600080fd5b506103826105413660046132bd565b6112e3565b34801561055257600080fd5b5061038260105481565b34801561056857600080fd5b506104866105773660046132f7565b611409565b34801561058857600080fd5b506104067f000000000000000000000000000000000000000000000000000000000000000081565b3480156105bc57600080fd5b506104866115be565b3480156105d157600080fd5b5060005462010000900460ff165b6040519015158152602001610363565b3480156105fb57600080fd5b506104067f000000000000000000000000000000000000000000000000000000000000000081565b34801561062f57600080fd5b5061038261063e3660046132bd565b6118de565b34801561064f57600080fd5b5061038260025481565b610486611b59565b34801561066d57600080fd5b50610486611d2e565b34801561068257600080fd5b5061038260055481565b34801561069857600080fd5b5061038260035481565b3480156106ae57600080fd5b506103827f000000000000000000000000000000000000000000000000000000000000000081565b3480156106e257600080fd5b50610382600b5481565b3480156106f857600080fd5b50610486611db2565b34801561070d57600080fd5b50600054630100000090046001600160a01b0316610406565b34801561073257600080fd5b506103826107413660046132bd565b611deb565b34801561075257600080fd5b506103827f000000000000000000000000000000000000000000000000000000000000000081565b34801561078657600080fd5b506103826107953660046132bd565b611e60565b3480156107a657600080fd5b506104866107b53660046132bd565b612020565b3480156107c657600080fd5b506105df6107d536600461341c565b61209f565b3480156107e657600080fd5b506104866107f536600461341c565b61246a565b34801561080657600080fd5b506104866108153660046132bd565b6125d8565b34801561082657600080fd5b50610382600a5481565b34801561083c57600080fd5b50610382600c5481565b34801561085257600080fd5b5061048661086136600461336b565b612626565b34801561087257600080fd5b506104067f000000000000000000000000000000000000000000000000000000000000000081565b3480156108a657600080fd5b506103826108b536600461341c565b6127ce565b6104866108c83660046132bd565b6127ef565b3480156108d957600080fd5b50600154610406906001600160a01b031681565b3480156108f957600080fd5b506103827f000000000000000000000000000000000000000000000000000000000000000081565b34801561092d57600080fd5b5061038260095481565b34801561094357600080fd5b506104866109523660046132bd565b6128e3565b34801561096357600080fd5b506104866129e5565b600080600061097c600d54612a9d565b604051638e9f04b560e01b81523060048201529092506000906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690638e9f04b59060240160206040518083038186803b1580156109e157600080fd5b505afa1580156109f5573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610a199190613352565b118015610abc57506040516367ba9b9160e01b815230600482015242907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906367ba9b919060240160206040518083038186803b158015610a8257600080fd5b505afa158015610a96573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610aba9190613352565b115b15610ace5750600e5460009391925090565b50600e5460019391925090565b33600090815260076020526040902060048101541580610b0057506006546005820154145b610b5b5760405162461bcd60e51b815260206004820152602160248201527f596f752068617665207769746864726177206265696e672070726f63657373656044820152601960fa1b60648201526084015b60405180910390fd5b610b6433612b05565b6000610b6f83612bc6565b905060008111610bcc5760405162461bcd60e51b815260206004820152602260248201527f746865726520617265206e6f2073686172657320746f20626520756e7374616b604482015261195960f21b6064820152608401610b52565b80826004016000016000828254610be3919061350d565b9091555050600482015482541015610c4b5760405162461bcd60e51b815260206004820152602560248201527f556e7374616b6520616d6f756e74206973206f766572207374616b65642062616044820152646c616e636560d81b6064820152608401610b52565b80600d6000828254610c5d919061350d565b90915550506006546005830155604051638e9f04b560e01b815230600482015260009081907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690638e9f04b59060240160206040518083038186803b158015610cce57600080fd5b505afa158015610ce2573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610d069190613352565b1115610daa576040516367ba9b9160e01b81523060048201527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906367ba9b919060240160206040518083038186803b158015610d6b57600080fd5b505afa158015610d7f573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610da39190613352565b9050610dad565b50425b337ff960dbf9e5d0682f7a298ed974e33a28b4464914b7a2bfac12ae419a9afeb28085610dfa7f00000000000000000000000000000000000000000000000000000000000000008561350d565b6040805192835260208301919091520160405180910390a250505050565b336000908152600760205260409020600481015415801590610e4b57506006546005820154610e4890600261350d565b11155b610e975760405162461bcd60e51b815260206004820181905260248201527f596f7520646f6e27742068617665207265616c65617365642062616c616e63656044820152606401610b52565b610ea033612b05565b6000610eab83612c18565b90508082600401600001541015610f185760405162461bcd60e51b815260206004820152602b60248201527f4e6f7420656e6f7567682062616c616e636520666f722074686973207769746860448201526a191c985dc8185b5bdd5b9d60aa1b6064820152608401610b52565b80826004016000016000828254610f2f9190613566565b9091555050815481908390600090610f48908490613566565b9250508190555082600f6000828254610f619190613566565b925050819055508060106000828254610f7a9190613566565b909155505060405163a9059cbb60e01b8152336004820152602481018490527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063a9059cbb90604401602060405180830381600087803b158015610fe757600080fd5b505af1158015610ffb573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061101f9190613330565b5060405183815233907f884edad9ce6fa2440d8a54cc123490eb96d2768479d49ff9c7366125a94243649060200160405180910390a2505050565b6001600160a01b03811660009081526007602052604081208161107f60018301612c54565b60065460058401549192506000918291111561109d57600484015491505b600c54156110ca5783546110b2908390613566565b6110bc908461350d565b92506110c783612a9d565b90505b604051639a05154560e01b815230600482015242907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690639a0515459060240160206040518083038186803b15801561112b57600080fd5b505afa15801561113f573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906111639190613352565b10156111d7576000600554600161117a919061350d565b6003860154909150819061118f90600161350d565b14156111ab5760028501546111a4908361350d565b91506111d5565b600385015481906111bd90600261350d565b14156111d55760018501546111d2908361350d565b91505b505b95945050505050565b604051639a05154560e01b81523060048201526000908190819042906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690639a0515459060240160206040518083038186803b15801561124857600080fd5b505afa15801561125c573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906112809190613352565b1115611297575050600954600a5460009391925090565b5050600954600a5460019391925090565b600054630100000090046001600160a01b031633146112d95760405162461bcd60e51b8152600401610b52906134d8565b6112e1612d19565b565b6001600160a01b038181166000908152600760205260408082206005549151639a05154560e01b81523060048201529293909284929142917f000000000000000000000000000000000000000000000000000000000000000090911690639a0515459060240160206040518083038186803b15801561136157600080fd5b505afa158015611375573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906113999190613352565b10156113ad57806113a98161357d565b9150505b600383015481906113bf90600161350d565b11156113d75760028301546113d4908361350d565b91505b600383015481906113e990600261350d565b11156114015760018301546113fe908361350d565b91505b509392505050565b600054610100900460ff1680611422575060005460ff16155b61143e5760405162461bcd60e51b8152600401610b529061348a565b600054610100900460ff16158015611460576000805461ffff19166101011790555b61146982612db4565b60405163095ea7b360e01b81526001600160a01b037f00000000000000000000000000000000000000000000000000000000000000008116600483015260001960248301527f0000000000000000000000000000000000000000000000000000000000000000169063095ea7b390604401602060405180830381600087803b1580156114f457600080fd5b505af1158015611508573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061152c9190613330565b61158c5760405162461bcd60e51b815260206004820152602b60248201527f4661696c656420746f20617070726f7665204354534920666f72207374616b6960448201526a1b99c818dbdb9d1c9858dd60aa1b6064820152608401610b52565b600180546001600160a01b0319166001600160a01b03851617905580156115b9576000805461ff00191690555b505050565b604051638e9f04b560e01b81523060048201526000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690638e9f04b59060240160206040518083038186803b15801561162057600080fd5b505afa158015611634573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906116589190613352565b905060008111801561170057506040516367ba9b9160e01b815230600482015242907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906367ba9b919060240160206040518083038186803b1580156116c657600080fd5b505afa1580156116da573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906116fe9190613352565b115b156117085750565b600d541580156117185750600e54155b156117205750565b80156117a157604051632e1a7d4d60e01b8152600481018290527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690632e1a7d4d90602401600060405180830381600087803b15801561178857600080fd5b505af115801561179c573d6000803e3d6000fd5b505050505b600d5460009015611858576003546117ba600d54612a9d565b6117c49190613566565b90508015611858576040516305c2fbcf60e31b8152600481018290527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690632e17de7890602401600060405180830381600087803b15801561182e57600080fd5b505af1158015611842573d6000803e3d6000fd5b5050505080600b546118549190613566565b600b555b600d54600c600082825461186c9190613566565b9091555050600d546010805460009061188690849061350d565b90915550506000600d55600354600e546118a0919061350d565b600f60008282546118b1919061350d565b909155505060006003819055600e82905560068054600192906118d590849061350d565b90915550505050565b6001600160a01b03811660009081526007602052604081206005015460065461190882600161350d565b14156119ac576040516367ba9b9160e01b81523060048201527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906367ba9b919060240160206040518083038186803b15801561196d57600080fd5b505afa158015611981573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906119a59190613352565b9392505050565b604051638e9f04b560e01b81523060048201526000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690638e9f04b59060240160206040518083038186803b158015611a0e57600080fd5b505afa158015611a22573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190611a469190613352565b118015611a54575060065481145b15611b1c576040516367ba9b9160e01b81523060048201527f0000000000000000000000000000000000000000000000000000000000000000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906367ba9b919060240160206040518083038186803b158015611ada57600080fd5b505afa158015611aee573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190611b129190613352565b6119a5919061350d565b600654811415611b50576119a57f00000000000000000000000000000000000000000000000000000000000000004261350d565b50600092915050565b604051636ceb5ec360e11b81523060048201527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063d9d6bd869034906024016000604051808303818588803b158015611bbb57600080fd5b505af1158015611bcf573d6000803e3d6000fd5b5050604051632bef459560e01b81523060048201526001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000811660248301527f0000000000000000000000000000000000000000000000000000000000000000169350632bef459592506044019050600060405180830381600087803b158015611c5e57600080fd5b505af1158015611c72573d6000803e3d6000fd5b505050507f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316639b789b7e6040518163ffffffff1660e01b8152600401600060405180830381600087803b158015611cd157600080fd5b505af1158015611ce5573d6000803e3d6000fd5b5050600080546040516001600160a01b0363010000009092049190911693503480156108fc02935091818181858888f19350505050158015611d2b573d6000803e3d6000fd5b50565b600054630100000090046001600160a01b03163314611d5f5760405162461bcd60e51b8152600401610b52906134d8565b6000805460405163010000009091046001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546301000000600160b81b0319169055565b600054630100000090046001600160a01b03163314611de35760405162461bcd60e51b8152600401610b52906134d8565b6112e1612e75565b6001600160a01b03811660009081526007602052604081206006546005820154600490920191148015611e1f5750600c5415155b15611e2f5780546119a590612a9d565b600654600180830154611e419161350d565b11158015611e50575060105415155b15611b505780546119a590612efa565b6005546001600160a01b038216600090815260076020526040812060030154909190611e8d90600161350d565b1415611f3057604051639a05154560e01b81523060048201527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690639a0515459060240160206040518083038186803b158015611ef257600080fd5b505afa158015611f06573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190611f2a9190613352565b92915050565b6005546001600160a01b038316600090815260076020526040902060030154141561201857604051639a05154560e01b81523060048201527f0000000000000000000000000000000000000000000000000000000000000000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690639a0515459060240160206040518083038186803b158015611fd657600080fd5b505afa158015611fea573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061200e9190613352565b611f2a919061350d565b506000919050565b604051634f31b8dd60e11b81526001600160a01b0382811660048301527f00000000000000000000000000000000000000000000000000000000000000001690639e6371ba906024015b600060405180830381600087803b15801561208457600080fd5b505af1158015612098573d6000803e3d6000fd5b5050505050565b604051639a05154560e01b8152306004820152600090819042906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690639a0515459060240160206040518083038186803b15801561210557600080fd5b505afa158015612119573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061213d9190613352565b118015915061214e5761214e612f31565b6040516385425f4f60e01b8152600481018490526000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906385425f4f9060240160206040518083038186803b1580156121b157600080fd5b505afa1580156121c5573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906121e991906132da565b6001600160a01b0316638aec85426040518163ffffffff1660e01b815260040160206040518083038186803b15801561222157600080fd5b505afa158015612235573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906122599190613352565b60405163a5a6cd0b60e01b8152600481018690529091507f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063a5a6cd0b90602401602060405180830381600087803b1580156122be57600080fd5b505af11580156122d2573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906122f69190613330565b50600154604051632c7f22b560e21b815260048101869052602481018390526000916001600160a01b03169063b1fc8ad49060440160206040518083038186803b15801561234357600080fd5b505afa158015612357573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061237b9190613352565b90506123a061239a6000546001600160a01b0363010000009091041690565b82612fa3565b60006123ac8284613566565b905060006123c6600254836123c1919061350d565b613114565b905080600360008282546123da919061350d565b909155505060025481906123ee908461350d565b6123f89190613566565b600281905560035460408051878152602081018790529081019290925260608201527febde3bbd8b975e8ef263501eafb2f271cb2d5583cf2f353e16bbd49b3577c88c9060800160405180910390a184156124555761245561318b565b61245d6115be565b5060019695505050505050565b60005462010000900460ff16156124b65760405162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b6044820152606401610b52565b6040516323b872dd60e01b8152336004820152306024820152604481018290527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906323b872dd90606401602060405180830381600087803b15801561252457600080fd5b505af1158015612538573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061255c9190613330565b6125ce5760405162461bcd60e51b815260206004820152603860248201527f416c6c6f77616e6365206f66204354534920746f6b656e73206e6f7420656e6f60448201527f75676820746f206d6174636820616d6f756e742073656e7400000000000000006064820152608401610b52565b611d2b3382612fa3565b60405163b64b3bed60e01b81526001600160a01b0382811660048301527f0000000000000000000000000000000000000000000000000000000000000000169063b64b3bed9060240161206a565b600054630100000090046001600160a01b031633146126575760405162461bcd60e51b8152600401610b52906134d8565b6040516302571be360e01b81527f91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e260048201526000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906302571be39060240160206040518083038186803b1580156126d957600080fd5b505afa1580156126ed573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061271191906132da565b60405163c47f002760e01b81529091506001600160a01b0382169063c47f002790612740908590600401613435565b602060405180830381600087803b15801561275a57600080fd5b505af115801561276e573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906127929190613352565b507f6aaa0865532d48a9a0f63cc91df7ff2ab538c896665c864ae02d0a1e7f81cf65826040516127c29190613435565b60405180910390a15050565b600881815481106127de57600080fd5b600091825260209091200154905081565b604051636ceb5ec360e11b81526001600160a01b0382811660048301527f0000000000000000000000000000000000000000000000000000000000000000169063d9d6bd869034906024016000604051808303818588803b15801561285357600080fd5b505af1158015612867573d6000803e3d6000fd5b5050604051632bef459560e01b81526001600160a01b0385811660048301527f0000000000000000000000000000000000000000000000000000000000000000811660248301527f0000000000000000000000000000000000000000000000000000000000000000169350632bef45959250604401905061206a565b600054630100000090046001600160a01b031633146129145760405162461bcd60e51b8152600401610b52906134d8565b6001600160a01b0381166129795760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b6064820152608401610b52565b600080546040516001600160a01b0380851693630100000090930416917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b039092166301000000026301000000600160b81b0319909216919091179055565b604051639a05154560e01b815230600482015260009042906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690639a0515459060240160206040518083038186803b158015612a4957600080fd5b505afa158015612a5d573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190612a819190613352565b1115905080612a8d5750565b612a95612f31565b611d2b61318b565b6000600c5460001415612ab257506000919050565b6000600254600354600454612ac7919061350d565b612ad1919061350d565b9050600081600b54612ae3919061350d565b600c54909150612af38286613547565b612afd9190613525565b949350505050565b6001600160a01b038116600090815260076020526040902060038101546001820154158015612b3657506002820154155b80612b42575060055481145b15612b4c57505050565b612b5882600101612c54565b826000016000828254612b6b919061350d565b9091555050600554612b7e82600161350d565b1415612ba0576001820180546002840155600090556005546003830155505050565b600554612bae82600261350d565b116115b9576000600283018190556001830155505050565b600080600354600254600454612bdc919061350d565b612be6919061350d565b9050600081600b54612bf8919061350d565b905080612c09575060009392505050565b80600c5485612af39190613547565b600080600f54600e54612c2b919061350d565b905080612c3b5750600092915050565b8060105484612c4a9190613547565b6119a59190613525565b600060055482600201546002612c6a919061350d565b11612ca3576008826002015481548110612c8657612c866135ae565b90600052602060002001548260000154612ca09190613547565b90505b60008260020154118015612cc857506005546002830154612cc590600161350d565b11155b15612d1457600860018360020154612ce09190613566565b81548110612cf057612cf06135ae565b90600052602060002001548260010154612d0a9190613547565b611f2a908261350d565b919050565b60005462010000900460ff16612d685760405162461bcd60e51b815260206004820152601460248201527314185d5cd8589b194e881b9bdd081c185d5cd95960621b6044820152606401610b52565b6000805462ff0000191690557f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa335b6040516001600160a01b03909116815260200160405180910390a1565b600054610100900460ff1680612dcd575060005460ff16155b612de95760405162461bcd60e51b8152600401610b529061348a565b600054610100900460ff16158015612e0b576000805461ffff19166101011790555b600080546301000000600160b81b03191663010000006001600160a01b0385169081029190911782556040519091907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a38015612e71576000805461ff00191690555b5050565b60005462010000900460ff1615612ec15760405162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b6044820152606401610b52565b6000805462ff00001916620100001790557f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258612d973390565b600060105460001415612f0f57506000919050565b6000600f54600e54612f21919061350d565b601054909150612c4a8285613547565b6001600554106112e1576000612f4561324b565b9050612f508161328c565b600c55600880546001810182556000919091527ff3f7a9fe364faab93b216da50a3214154f22a0a2b415b23a84c8169e8b636ee301819055600a54600b54612f98919061350d565b600b55506000600a55565b612fac82612b05565b6001600160a01b038216600090815260076020526040902060010154612fd390829061350d565b6001600160a01b0383166000908152600760205260409020600181019190915560055460039091015560095461300a90829061350d565b600955604051639a05154560e01b81523060048201526001600160a01b03838116917f5af417134f72a9d41143ace85b0a26dce6f550f894f2cbc1eeee8810603d91b69184917f0000000000000000000000000000000000000000000000000000000000000000917f00000000000000000000000000000000000000000000000000000000000000001690639a0515459060240160206040518083038186803b1580156130b657600080fd5b505afa1580156130ca573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906130ee9190613352565b6130f8919061350d565b6040805192835260208301919091520160405180910390a25050565b60008082600354600454600b5461312b919061350d565b613135919061350d565b61313f919061350d565b90506000600c5482600d546131549190613547565b61315e9190613525565b90506000600354826131709190613566565b90508085111561318257949350505050565b50929392505050565b60025460095461319b919061350d565b600a8190551561322457600a5460405163534a7e1d60e11b815260048101919091527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063a694fc3a90602401600060405180830381600087803b15801561320b57600080fd5b505af115801561321f573d6000803e3d6000fd5b505050505b60028054600455600090819055600981905560058054916132448361357d565b9190505550565b60006005546001141561327d57507f000000000000000000000000000000000000000000000000000000000000000090565b6132876001612bc6565b905090565b600080600454600a5461329f9190613566565b905060006132ad8483613547565b905080600c54612afd919061350d565b6000602082840312156132cf57600080fd5b81356119a5816135da565b6000602082840312156132ec57600080fd5b81516119a5816135da565b6000806040838503121561330a57600080fd5b8235613315816135da565b91506020830135613325816135da565b809150509250929050565b60006020828403121561334257600080fd5b815180151581146119a557600080fd5b60006020828403121561336457600080fd5b5051919050565b60006020828403121561337d57600080fd5b813567ffffffffffffffff8082111561339557600080fd5b818401915084601f8301126133a957600080fd5b8135818111156133bb576133bb6135c4565b604051601f8201601f19908116603f011681019083821181831017156133e3576133e36135c4565b816040528281528760208487010111156133fc57600080fd5b826020860160208301376000928101602001929092525095945050505050565b60006020828403121561342e57600080fd5b5035919050565b600060208083528351808285015260005b8181101561346257858101830151858201604001528201613446565b81811115613474576000604083870101525b50601f01601f1916929092016040019392505050565b6020808252602e908201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160408201526d191e481a5b9a5d1a585b1a5e995960921b606082015260800190565b6020808252818101527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604082015260600190565b6000821982111561352057613520613598565b500190565b60008261354257634e487b7160e01b600052601260045260246000fd5b500490565b600081600019048311821515161561356157613561613598565b500290565b60008282101561357857613578613598565b500390565b600060001982141561359157613591613598565b5060010190565b634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052604160045260246000fd5b6001600160a01b0381168114611d2b57600080fdfea26469706673582212208c4a8afc7cbc8a55fc2ceb377c0cde3718cb743ba539d9ce5e029ec8f30d0d7664736f6c63430008060033706172616d657465722063616e206e6f74206265207a65726f20616464726573",
+  "deployedBytecode": "0x6080604052600436106102b25760003560e01c8063715018a611610175578063a694fc3a116100dc578063cf39203711610095578063eca7fe171161006f578063eca7fe17146108ed578063effb839614610921578063f2fde38b14610937578063fc57d44c1461095757600080fd5b8063cf3920371461089a578063d9d6bd86146108ba578063ddca3f43146108cd57600080fd5b8063a694fc3a146107da578063b64b3bed146107fa578063bc598eef1461081a578063be2cfdff14610830578063c47f002714610846578063c56551b61461086657600080fd5b80638da5cb5b1161012e5780638da5cb5b146107015780638e9f04b51461072657806394381556146107465780639a0515451461077a5780639e6371ba1461079a578063a5a6cd0b146107ba57600080fd5b8063715018a61461066157806373a4f33b146106765780637c0de72b1461068c5780637e15d8c7146106a2578063817b1cd2146106d65780638456cb59146106ec57600080fd5b80633f15457f1161021957806356cbf7b9116101d257806356cbf7b9146105b05780635c975abb146105c557806364ffc3f4146105ef57806367ba9b91146106235780636a5030c2146106435780636ff46a6c1461065957600080fd5b80633f15457f146104dd5780633f4ba83a14610511578063419be624146105265780634779525b14610546578063485cc9551461055c5780634cf088d91461057c57600080fd5b8063134d92c81161026b578063134d92c81461041e57806327d49695146104505780632e17de78146104665780632e1a7d4d146104885780633a02a42d146104a85780633b8beb8a146104c857600080fd5b80630103c92b146102be578063030650481461036c5780630600a865146103905780630698607d146103a65780630b41aafd146103bc5780630d36533c146103d257600080fd5b366102b957005b600080fd5b3480156102ca57600080fd5b5061032f6102d93660046132bd565b600760209081526000918252604091829020805483516060810185526001830154815260028301548185015260038301548186015284518086019095526004830154855260059092015492840192909252909183565b6040805193845282516020808601919091528084015185830152920151606084015280516080840152015160a082015260c0015b60405180910390f35b34801561037857600080fd5b5061038260065481565b604051908152602001610363565b34801561039c57600080fd5b50610382600f5481565b3480156103b257600080fd5b50610382600e5481565b3480156103c857600080fd5b5061038260045481565b3480156103de57600080fd5b506104067f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b039091168152602001610363565b34801561042a57600080fd5b5061043361096c565b604080519315158452602084019290925290820152606001610363565b34801561045c57600080fd5b50610382600d5481565b34801561047257600080fd5b5061048661048136600461341c565b610adb565b005b34801561049457600080fd5b506104866104a336600461341c565b610e18565b3480156104b457600080fd5b506103826104c33660046132bd565b61105a565b3480156104d457600080fd5b506104336111e0565b3480156104e957600080fd5b506104067f000000000000000000000000000000000000000000000000000000000000000081565b34801561051d57600080fd5b506104866112a8565b34801561053257600080fd5b506103826105413660046132bd565b6112e3565b34801561055257600080fd5b5061038260105481565b34801561056857600080fd5b506104866105773660046132f7565b611409565b34801561058857600080fd5b506104067f000000000000000000000000000000000000000000000000000000000000000081565b3480156105bc57600080fd5b506104866115be565b3480156105d157600080fd5b5060005462010000900460ff165b6040519015158152602001610363565b3480156105fb57600080fd5b506104067f000000000000000000000000000000000000000000000000000000000000000081565b34801561062f57600080fd5b5061038261063e3660046132bd565b6118de565b34801561064f57600080fd5b5061038260025481565b610486611b59565b34801561066d57600080fd5b50610486611d2e565b34801561068257600080fd5b5061038260055481565b34801561069857600080fd5b5061038260035481565b3480156106ae57600080fd5b506103827f000000000000000000000000000000000000000000000000000000000000000081565b3480156106e257600080fd5b50610382600b5481565b3480156106f857600080fd5b50610486611db2565b34801561070d57600080fd5b50600054630100000090046001600160a01b0316610406565b34801561073257600080fd5b506103826107413660046132bd565b611deb565b34801561075257600080fd5b506103827f000000000000000000000000000000000000000000000000000000000000000081565b34801561078657600080fd5b506103826107953660046132bd565b611e60565b3480156107a657600080fd5b506104866107b53660046132bd565b612020565b3480156107c657600080fd5b506105df6107d536600461341c565b61209f565b3480156107e657600080fd5b506104866107f536600461341c565b61246a565b34801561080657600080fd5b506104866108153660046132bd565b6125d8565b34801561082657600080fd5b50610382600a5481565b34801561083c57600080fd5b50610382600c5481565b34801561085257600080fd5b5061048661086136600461336b565b612626565b34801561087257600080fd5b506104067f000000000000000000000000000000000000000000000000000000000000000081565b3480156108a657600080fd5b506103826108b536600461341c565b6127ce565b6104866108c83660046132bd565b6127ef565b3480156108d957600080fd5b50600154610406906001600160a01b031681565b3480156108f957600080fd5b506103827f000000000000000000000000000000000000000000000000000000000000000081565b34801561092d57600080fd5b5061038260095481565b34801561094357600080fd5b506104866109523660046132bd565b6128e3565b34801561096357600080fd5b506104866129e5565b600080600061097c600d54612a9d565b604051638e9f04b560e01b81523060048201529092506000906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690638e9f04b59060240160206040518083038186803b1580156109e157600080fd5b505afa1580156109f5573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610a199190613352565b118015610abc57506040516367ba9b9160e01b815230600482015242907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906367ba9b919060240160206040518083038186803b158015610a8257600080fd5b505afa158015610a96573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610aba9190613352565b115b15610ace5750600e5460009391925090565b50600e5460019391925090565b33600090815260076020526040902060048101541580610b0057506006546005820154145b610b5b5760405162461bcd60e51b815260206004820152602160248201527f596f752068617665207769746864726177206265696e672070726f63657373656044820152601960fa1b60648201526084015b60405180910390fd5b610b6433612b05565b6000610b6f83612bc6565b905060008111610bcc5760405162461bcd60e51b815260206004820152602260248201527f746865726520617265206e6f2073686172657320746f20626520756e7374616b604482015261195960f21b6064820152608401610b52565b80826004016000016000828254610be3919061350d565b9091555050600482015482541015610c4b5760405162461bcd60e51b815260206004820152602560248201527f556e7374616b6520616d6f756e74206973206f766572207374616b65642062616044820152646c616e636560d81b6064820152608401610b52565b80600d6000828254610c5d919061350d565b90915550506006546005830155604051638e9f04b560e01b815230600482015260009081907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690638e9f04b59060240160206040518083038186803b158015610cce57600080fd5b505afa158015610ce2573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610d069190613352565b1115610daa576040516367ba9b9160e01b81523060048201527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906367ba9b919060240160206040518083038186803b158015610d6b57600080fd5b505afa158015610d7f573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610da39190613352565b9050610dad565b50425b337ff960dbf9e5d0682f7a298ed974e33a28b4464914b7a2bfac12ae419a9afeb28085610dfa7f00000000000000000000000000000000000000000000000000000000000000008561350d565b6040805192835260208301919091520160405180910390a250505050565b336000908152600760205260409020600481015415801590610e4b57506006546005820154610e4890600261350d565b11155b610e975760405162461bcd60e51b815260206004820181905260248201527f596f7520646f6e27742068617665207265616c65617365642062616c616e63656044820152606401610b52565b610ea033612b05565b6000610eab83612c18565b90508082600401600001541015610f185760405162461bcd60e51b815260206004820152602b60248201527f4e6f7420656e6f7567682062616c616e636520666f722074686973207769746860448201526a191c985dc8185b5bdd5b9d60aa1b6064820152608401610b52565b80826004016000016000828254610f2f9190613566565b9091555050815481908390600090610f48908490613566565b9250508190555082600f6000828254610f619190613566565b925050819055508060106000828254610f7a9190613566565b909155505060405163a9059cbb60e01b8152336004820152602481018490527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063a9059cbb90604401602060405180830381600087803b158015610fe757600080fd5b505af1158015610ffb573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061101f9190613330565b5060405183815233907f884edad9ce6fa2440d8a54cc123490eb96d2768479d49ff9c7366125a94243649060200160405180910390a2505050565b6001600160a01b03811660009081526007602052604081208161107f60018301612c54565b60065460058401549192506000918291111561109d57600484015491505b600c54156110ca5783546110b2908390613566565b6110bc908461350d565b92506110c783612a9d565b90505b604051639a05154560e01b815230600482015242907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690639a0515459060240160206040518083038186803b15801561112b57600080fd5b505afa15801561113f573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906111639190613352565b10156111d7576000600554600161117a919061350d565b6003860154909150819061118f90600161350d565b14156111ab5760028501546111a4908361350d565b91506111d5565b600385015481906111bd90600261350d565b14156111d55760018501546111d2908361350d565b91505b505b95945050505050565b604051639a05154560e01b81523060048201526000908190819042906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690639a0515459060240160206040518083038186803b15801561124857600080fd5b505afa15801561125c573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906112809190613352565b1115611297575050600954600a5460009391925090565b5050600954600a5460019391925090565b600054630100000090046001600160a01b031633146112d95760405162461bcd60e51b8152600401610b52906134d8565b6112e1612d19565b565b6001600160a01b038181166000908152600760205260408082206005549151639a05154560e01b81523060048201529293909284929142917f000000000000000000000000000000000000000000000000000000000000000090911690639a0515459060240160206040518083038186803b15801561136157600080fd5b505afa158015611375573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906113999190613352565b10156113ad57806113a98161357d565b9150505b600383015481906113bf90600161350d565b11156113d75760028301546113d4908361350d565b91505b600383015481906113e990600261350d565b11156114015760018301546113fe908361350d565b91505b509392505050565b600054610100900460ff1680611422575060005460ff16155b61143e5760405162461bcd60e51b8152600401610b529061348a565b600054610100900460ff16158015611460576000805461ffff19166101011790555b61146982612db4565b60405163095ea7b360e01b81526001600160a01b037f00000000000000000000000000000000000000000000000000000000000000008116600483015260001960248301527f0000000000000000000000000000000000000000000000000000000000000000169063095ea7b390604401602060405180830381600087803b1580156114f457600080fd5b505af1158015611508573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061152c9190613330565b61158c5760405162461bcd60e51b815260206004820152602b60248201527f4661696c656420746f20617070726f7665204354534920666f72207374616b6960448201526a1b99c818dbdb9d1c9858dd60aa1b6064820152608401610b52565b600180546001600160a01b0319166001600160a01b03851617905580156115b9576000805461ff00191690555b505050565b604051638e9f04b560e01b81523060048201526000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690638e9f04b59060240160206040518083038186803b15801561162057600080fd5b505afa158015611634573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906116589190613352565b905060008111801561170057506040516367ba9b9160e01b815230600482015242907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906367ba9b919060240160206040518083038186803b1580156116c657600080fd5b505afa1580156116da573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906116fe9190613352565b115b156117085750565b600d541580156117185750600e54155b156117205750565b80156117a157604051632e1a7d4d60e01b8152600481018290527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690632e1a7d4d90602401600060405180830381600087803b15801561178857600080fd5b505af115801561179c573d6000803e3d6000fd5b505050505b600d5460009015611858576003546117ba600d54612a9d565b6117c49190613566565b90508015611858576040516305c2fbcf60e31b8152600481018290527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690632e17de7890602401600060405180830381600087803b15801561182e57600080fd5b505af1158015611842573d6000803e3d6000fd5b5050505080600b546118549190613566565b600b555b600d54600c600082825461186c9190613566565b9091555050600d546010805460009061188690849061350d565b90915550506000600d55600354600e546118a0919061350d565b600f60008282546118b1919061350d565b909155505060006003819055600e82905560068054600192906118d590849061350d565b90915550505050565b6001600160a01b03811660009081526007602052604081206005015460065461190882600161350d565b14156119ac576040516367ba9b9160e01b81523060048201527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906367ba9b919060240160206040518083038186803b15801561196d57600080fd5b505afa158015611981573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906119a59190613352565b9392505050565b604051638e9f04b560e01b81523060048201526000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690638e9f04b59060240160206040518083038186803b158015611a0e57600080fd5b505afa158015611a22573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190611a469190613352565b118015611a54575060065481145b15611b1c576040516367ba9b9160e01b81523060048201527f0000000000000000000000000000000000000000000000000000000000000000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906367ba9b919060240160206040518083038186803b158015611ada57600080fd5b505afa158015611aee573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190611b129190613352565b6119a5919061350d565b600654811415611b50576119a57f00000000000000000000000000000000000000000000000000000000000000004261350d565b50600092915050565b604051636ceb5ec360e11b81523060048201527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063d9d6bd869034906024016000604051808303818588803b158015611bbb57600080fd5b505af1158015611bcf573d6000803e3d6000fd5b5050604051632bef459560e01b81523060048201526001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000811660248301527f0000000000000000000000000000000000000000000000000000000000000000169350632bef459592506044019050600060405180830381600087803b158015611c5e57600080fd5b505af1158015611c72573d6000803e3d6000fd5b505050507f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316639b789b7e6040518163ffffffff1660e01b8152600401600060405180830381600087803b158015611cd157600080fd5b505af1158015611ce5573d6000803e3d6000fd5b5050600080546040516001600160a01b0363010000009092049190911693503480156108fc02935091818181858888f19350505050158015611d2b573d6000803e3d6000fd5b50565b600054630100000090046001600160a01b03163314611d5f5760405162461bcd60e51b8152600401610b52906134d8565b6000805460405163010000009091046001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546301000000600160b81b0319169055565b600054630100000090046001600160a01b03163314611de35760405162461bcd60e51b8152600401610b52906134d8565b6112e1612e75565b6001600160a01b03811660009081526007602052604081206006546005820154600490920191148015611e1f5750600c5415155b15611e2f5780546119a590612a9d565b600654600180830154611e419161350d565b11158015611e50575060105415155b15611b505780546119a590612efa565b6005546001600160a01b038216600090815260076020526040812060030154909190611e8d90600161350d565b1415611f3057604051639a05154560e01b81523060048201527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690639a0515459060240160206040518083038186803b158015611ef257600080fd5b505afa158015611f06573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190611f2a9190613352565b92915050565b6005546001600160a01b038316600090815260076020526040902060030154141561201857604051639a05154560e01b81523060048201527f0000000000000000000000000000000000000000000000000000000000000000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031690639a0515459060240160206040518083038186803b158015611fd657600080fd5b505afa158015611fea573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061200e9190613352565b611f2a919061350d565b506000919050565b604051634f31b8dd60e11b81526001600160a01b0382811660048301527f00000000000000000000000000000000000000000000000000000000000000001690639e6371ba906024015b600060405180830381600087803b15801561208457600080fd5b505af1158015612098573d6000803e3d6000fd5b5050505050565b604051639a05154560e01b8152306004820152600090819042906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690639a0515459060240160206040518083038186803b15801561210557600080fd5b505afa158015612119573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061213d9190613352565b118015915061214e5761214e612f31565b6040516385425f4f60e01b8152600481018490526000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906385425f4f9060240160206040518083038186803b1580156121b157600080fd5b505afa1580156121c5573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906121e991906132da565b6001600160a01b0316638aec85426040518163ffffffff1660e01b815260040160206040518083038186803b15801561222157600080fd5b505afa158015612235573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906122599190613352565b60405163a5a6cd0b60e01b8152600481018690529091507f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063a5a6cd0b90602401602060405180830381600087803b1580156122be57600080fd5b505af11580156122d2573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906122f69190613330565b50600154604051632c7f22b560e21b815260048101869052602481018390526000916001600160a01b03169063b1fc8ad49060440160206040518083038186803b15801561234357600080fd5b505afa158015612357573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061237b9190613352565b90506123a061239a6000546001600160a01b0363010000009091041690565b82612fa3565b60006123ac8284613566565b905060006123c6600254836123c1919061350d565b613114565b905080600360008282546123da919061350d565b909155505060025481906123ee908461350d565b6123f89190613566565b600281905560035460408051878152602081018790529081019290925260608201527febde3bbd8b975e8ef263501eafb2f271cb2d5583cf2f353e16bbd49b3577c88c9060800160405180910390a184156124555761245561318b565b61245d6115be565b5060019695505050505050565b60005462010000900460ff16156124b65760405162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b6044820152606401610b52565b6040516323b872dd60e01b8152336004820152306024820152604481018290527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906323b872dd90606401602060405180830381600087803b15801561252457600080fd5b505af1158015612538573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061255c9190613330565b6125ce5760405162461bcd60e51b815260206004820152603860248201527f416c6c6f77616e6365206f66204354534920746f6b656e73206e6f7420656e6f60448201527f75676820746f206d6174636820616d6f756e742073656e7400000000000000006064820152608401610b52565b611d2b3382612fa3565b60405163b64b3bed60e01b81526001600160a01b0382811660048301527f0000000000000000000000000000000000000000000000000000000000000000169063b64b3bed9060240161206a565b600054630100000090046001600160a01b031633146126575760405162461bcd60e51b8152600401610b52906134d8565b6040516302571be360e01b81527f91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e260048201526000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906302571be39060240160206040518083038186803b1580156126d957600080fd5b505afa1580156126ed573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061271191906132da565b60405163c47f002760e01b81529091506001600160a01b0382169063c47f002790612740908590600401613435565b602060405180830381600087803b15801561275a57600080fd5b505af115801561276e573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906127929190613352565b507f6aaa0865532d48a9a0f63cc91df7ff2ab538c896665c864ae02d0a1e7f81cf65826040516127c29190613435565b60405180910390a15050565b600881815481106127de57600080fd5b600091825260209091200154905081565b604051636ceb5ec360e11b81526001600160a01b0382811660048301527f0000000000000000000000000000000000000000000000000000000000000000169063d9d6bd869034906024016000604051808303818588803b15801561285357600080fd5b505af1158015612867573d6000803e3d6000fd5b5050604051632bef459560e01b81526001600160a01b0385811660048301527f0000000000000000000000000000000000000000000000000000000000000000811660248301527f0000000000000000000000000000000000000000000000000000000000000000169350632bef45959250604401905061206a565b600054630100000090046001600160a01b031633146129145760405162461bcd60e51b8152600401610b52906134d8565b6001600160a01b0381166129795760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b6064820152608401610b52565b600080546040516001600160a01b0380851693630100000090930416917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b039092166301000000026301000000600160b81b0319909216919091179055565b604051639a05154560e01b815230600482015260009042906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690639a0515459060240160206040518083038186803b158015612a4957600080fd5b505afa158015612a5d573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190612a819190613352565b1115905080612a8d5750565b612a95612f31565b611d2b61318b565b6000600c5460001415612ab257506000919050565b6000600254600354600454612ac7919061350d565b612ad1919061350d565b9050600081600b54612ae3919061350d565b600c54909150612af38286613547565b612afd9190613525565b949350505050565b6001600160a01b038116600090815260076020526040902060038101546001820154158015612b3657506002820154155b80612b42575060055481145b15612b4c57505050565b612b5882600101612c54565b826000016000828254612b6b919061350d565b9091555050600554612b7e82600161350d565b1415612ba0576001820180546002840155600090556005546003830155505050565b600554612bae82600261350d565b116115b9576000600283018190556001830155505050565b600080600354600254600454612bdc919061350d565b612be6919061350d565b9050600081600b54612bf8919061350d565b905080612c09575060009392505050565b80600c5485612af39190613547565b600080600f54600e54612c2b919061350d565b905080612c3b5750600092915050565b8060105484612c4a9190613547565b6119a59190613525565b600060055482600201546002612c6a919061350d565b11612ca3576008826002015481548110612c8657612c866135ae565b90600052602060002001548260000154612ca09190613547565b90505b60008260020154118015612cc857506005546002830154612cc590600161350d565b11155b15612d1457600860018360020154612ce09190613566565b81548110612cf057612cf06135ae565b90600052602060002001548260010154612d0a9190613547565b611f2a908261350d565b919050565b60005462010000900460ff16612d685760405162461bcd60e51b815260206004820152601460248201527314185d5cd8589b194e881b9bdd081c185d5cd95960621b6044820152606401610b52565b6000805462ff0000191690557f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa335b6040516001600160a01b03909116815260200160405180910390a1565b600054610100900460ff1680612dcd575060005460ff16155b612de95760405162461bcd60e51b8152600401610b529061348a565b600054610100900460ff16158015612e0b576000805461ffff19166101011790555b600080546301000000600160b81b03191663010000006001600160a01b0385169081029190911782556040519091907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a38015612e71576000805461ff00191690555b5050565b60005462010000900460ff1615612ec15760405162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b6044820152606401610b52565b6000805462ff00001916620100001790557f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258612d973390565b600060105460001415612f0f57506000919050565b6000600f54600e54612f21919061350d565b601054909150612c4a8285613547565b6001600554106112e1576000612f4561324b565b9050612f508161328c565b600c55600880546001810182556000919091527ff3f7a9fe364faab93b216da50a3214154f22a0a2b415b23a84c8169e8b636ee301819055600a54600b54612f98919061350d565b600b55506000600a55565b612fac82612b05565b6001600160a01b038216600090815260076020526040902060010154612fd390829061350d565b6001600160a01b0383166000908152600760205260409020600181019190915560055460039091015560095461300a90829061350d565b600955604051639a05154560e01b81523060048201526001600160a01b03838116917f5af417134f72a9d41143ace85b0a26dce6f550f894f2cbc1eeee8810603d91b69184917f0000000000000000000000000000000000000000000000000000000000000000917f00000000000000000000000000000000000000000000000000000000000000001690639a0515459060240160206040518083038186803b1580156130b657600080fd5b505afa1580156130ca573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906130ee9190613352565b6130f8919061350d565b6040805192835260208301919091520160405180910390a25050565b60008082600354600454600b5461312b919061350d565b613135919061350d565b61313f919061350d565b90506000600c5482600d546131549190613547565b61315e9190613525565b90506000600354826131709190613566565b90508085111561318257949350505050565b50929392505050565b60025460095461319b919061350d565b600a8190551561322457600a5460405163534a7e1d60e11b815260048101919091527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063a694fc3a90602401600060405180830381600087803b15801561320b57600080fd5b505af115801561321f573d6000803e3d6000fd5b505050505b60028054600455600090819055600981905560058054916132448361357d565b9190505550565b60006005546001141561327d57507f000000000000000000000000000000000000000000000000000000000000000090565b6132876001612bc6565b905090565b600080600454600a5461329f9190613566565b905060006132ad8483613547565b905080600c54612afd919061350d565b6000602082840312156132cf57600080fd5b81356119a5816135da565b6000602082840312156132ec57600080fd5b81516119a5816135da565b6000806040838503121561330a57600080fd5b8235613315816135da565b91506020830135613325816135da565b809150509250929050565b60006020828403121561334257600080fd5b815180151581146119a557600080fd5b60006020828403121561336457600080fd5b5051919050565b60006020828403121561337d57600080fd5b813567ffffffffffffffff8082111561339557600080fd5b818401915084601f8301126133a957600080fd5b8135818111156133bb576133bb6135c4565b604051601f8201601f19908116603f011681019083821181831017156133e3576133e36135c4565b816040528281528760208487010111156133fc57600080fd5b826020860160208301376000928101602001929092525095945050505050565b60006020828403121561342e57600080fd5b5035919050565b600060208083528351808285015260005b8181101561346257858101830151858201604001528201613446565b81811115613474576000604083870101525b50601f01601f1916929092016040019392505050565b6020808252602e908201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160408201526d191e481a5b9a5d1a585b1a5e995960921b606082015260800190565b6020808252818101527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604082015260600190565b6000821982111561352057613520613598565b500190565b60008261354257634e487b7160e01b600052601260045260246000fd5b500490565b600081600019048311821515161561356157613561613598565b500290565b60008282101561357857613578613598565b500390565b600060001982141561359157613591613598565b5060010190565b634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052604160045260246000fd5b6001600160a01b0381168114611d2b57600080fdfea26469706673582212208c4a8afc7cbc8a55fc2ceb377c0cde3718cb743ba539d9ce5e029ec8f30d0d7664736f6c63430008060033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "canCycleStakeMaturation()": {
+        "returns": {
+          "available": "true if cycleStakeMaturation can bee called                   false if it can not         _currentQueuedTotal how much is waiting to be staked"
+        }
+      },
+      "canCycleWithdrawRelease()": {
+        "returns": {
+          "available": "true if cycleWithdrawRelease can bee called                   false if it can not         _totalToUnstakeValue how much is waiting to be unstaked"
+        }
+      },
+      "cancelHire(address)": {
+        "params": {
+          "workerAddress": "address of the worker node"
+        }
+      },
+      "getMaturingBalance(address)": {
+        "returns": {
+          "_0": "amount that will get staked after finalization"
+        }
+      },
+      "getMaturingTimestamp(address)": {
+        "returns": {
+          "_0": "timestamp of when cycleStakeMaturation() is callable"
+        }
+      },
+      "getReleasingBalance(address)": {
+        "returns": {
+          "_0": "amount that will get withdrawn after finalization"
+        }
+      },
+      "getReleasingTimestamp(address)": {
+        "returns": {
+          "_0": "timestamp of when withdraw() is callable"
+        }
+      },
+      "getStakedBalance(address)": {
+        "params": {
+          "_userAddress": "user to retrieve staked balance from"
+        },
+        "returns": {
+          "stakedBalance": "is the finalized staked of _userAddress"
+        }
+      },
+      "hire(address)": {
+        "params": {
+          "workerAddress": "address of the worker"
+        }
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "paused()": {
+        "details": "Returns true if the contract is paused, and false otherwise."
+      },
+      "produceBlock(uint256)": {
+        "returns": {
+          "_0": "true when everything went fine"
+        }
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "retire(address)": {
+        "details": "this also removes all authorizations in place",
+        "params": {
+          "workerAddress": "address of the worker to be retired"
+        }
+      },
+      "stake(uint256)": {
+        "params": {
+          "_amount": "The amount of tokens that are gonna be additionally deposited."
+        }
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      },
+      "unstake(uint256)": {
+        "params": {
+          "_amount": "The amount of tokens that are gonna be unstaked."
+        }
+      },
+      "withdraw(uint256)": {
+        "params": {
+          "_amount": "The amount of tokens that are gonna be transferred."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "BlockProduced(uint256,uint256,uint256,uint256)": {
+        "notice": "this events is emitted at every produceBlock call     reward is the block reward     commission is how much CTSI is directed to the poolManager     queued is how much currently is being queued to be staked     notStaked is how much is directed to withdrawal"
+      },
+      "Stake(address,uint256,uint256)": {
+        "notice": "CTSI tokens were deposited, they count as stake after _maturationDate"
+      },
+      "StakingPoolRenamed(string)": {
+        "notice": "Event emmited when a pool is rename"
+      },
+      "Unstake(address,uint256,uint256)": {
+        "notice": "Unstake tokens, moving them to releasing structure"
+      },
+      "Withdraw(address,uint256)": {
+        "notice": "Withdraw process was finalized"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "canCycleStakeMaturation()": {
+        "notice": "checks whether or not a call can be made to cycleStakeMaturation and be successful"
+      },
+      "canCycleWithdrawRelease()": {
+        "notice": "checks whether or not a call can be made to cycleWithdrawRelease and be successful"
+      },
+      "cancelHire(address)": {
+        "notice": "Called by the user to cancel a job offer"
+      },
+      "cycleStakeMaturation()": {
+        "notice": "enables pool manager to update staking balances as they mature on the (main) Staking contract"
+      },
+      "cycleWithdrawRelease()": {
+        "notice": "enables pool manager to update staking balances as they mature on the (main) Staking contract"
+      },
+      "getMaturingBalance(address)": {
+        "notice": "Returns the balance waiting/ready to be matured"
+      },
+      "getMaturingTimestamp(address)": {
+        "notice": "Returns the timestamp when next deposit can be finalized"
+      },
+      "getReleasingBalance(address)": {
+        "notice": "Returns the balance waiting/ready to be released"
+      },
+      "getReleasingTimestamp(address)": {
+        "notice": "Returns the timestamp when next withdraw can be finalized"
+      },
+      "getStakedBalance(address)": {
+        "notice": "Returns total amount of tokens counted as stake"
+      },
+      "hire(address)": {
+        "notice": "Asks the worker to work for the sender. Sender needs to pay something."
+      },
+      "pause()": {
+        "notice": "pauses new staking on the pool"
+      },
+      "produceBlock(uint256)": {
+        "notice": "routes produceBlock to POS contract and updates internal states of the pool"
+      },
+      "retire(address)": {
+        "notice": "Called by the user to retire his worker."
+      },
+      "selfhire()": {
+        "notice": "allows for the pool to act on its own behalf when producing blocks."
+      },
+      "setName(string)": {
+        "notice": "sets a name for the pool using ENS service"
+      },
+      "stake(uint256)": {
+        "notice": "Deposit CTSI to be staked. The money will turn into staked         balance after timeToStake days"
+      },
+      "unpause()": {
+        "notice": "unpauses new staking on the pool"
+      },
+      "unstake(uint256)": {
+        "notice": "Remove tokens from staked balance. The money can         be released after timeToRelease seconds, if the         function withdraw is called."
+      },
+      "withdraw(uint256)": {
+        "notice": "Transfer tokens to user's wallet."
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 835,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "_initialized",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_bool"
+      },
+      {
+        "astId": 838,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "_initializing",
+        "offset": 1,
+        "slot": "0",
+        "type": "t_bool"
+      },
+      {
+        "astId": 893,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "_paused",
+        "offset": 2,
+        "slot": "0",
+        "type": "t_bool"
+      },
+      {
+        "astId": 4085,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "_owner",
+        "offset": 3,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 2443,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "fee",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_contract(Fee)1855"
+      },
+      {
+        "astId": 2445,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "rewardQueued",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2447,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "rewardNotStaked",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2449,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "rewardMaturing",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2451,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "currentStakeEpoch",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2453,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "currentUnstakeEpoch",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2483,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "userBalance",
+        "offset": 0,
+        "slot": "7",
+        "type": "t_mapping(t_address,t_struct(UserBalance)2478_storage)"
+      },
+      {
+        "astId": 2489,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "stakingVoucherValueAtEpoch",
+        "offset": 0,
+        "slot": "8",
+        "type": "t_array(t_uint256)dyn_storage"
+      },
+      {
+        "astId": 2491,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "currentQueuedTotal",
+        "offset": 0,
+        "slot": "9",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2493,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "currentMaturingTotal",
+        "offset": 0,
+        "slot": "10",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2495,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "totalStaked",
+        "offset": 0,
+        "slot": "11",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2497,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "totalStakedShares",
+        "offset": 0,
+        "slot": "12",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2499,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "totalToUnstakeShares",
+        "offset": 0,
+        "slot": "13",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2501,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "totalUnstaking",
+        "offset": 0,
+        "slot": "14",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2503,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "totalWithdrawable",
+        "offset": 0,
+        "slot": "15",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 2505,
+        "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+        "label": "totalUnstakedShares",
+        "offset": 0,
+        "slot": "16",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_uint256)dyn_storage": {
+        "base": "t_uint256",
+        "encoding": "dynamic_array",
+        "label": "uint256[]",
+        "numberOfBytes": "32"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_contract(Fee)1855": {
+        "encoding": "inplace",
+        "label": "contract Fee",
+        "numberOfBytes": "20"
+      },
+      "t_mapping(t_address,t_struct(UserBalance)2478_storage)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => struct StakingPoolImpl.UserBalance)",
+        "numberOfBytes": "32",
+        "value": "t_struct(UserBalance)2478_storage"
+      },
+      "t_struct(StakingVoucher)2464_storage": {
+        "encoding": "inplace",
+        "label": "struct StakingPoolImpl.StakingVoucher",
+        "members": [
+          {
+            "astId": 2459,
+            "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+            "label": "amountQueued",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2461,
+            "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+            "label": "amountStaked",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2463,
+            "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+            "label": "queueEpoch",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "96"
+      },
+      "t_struct(UnstakingVoucher)2469_storage": {
+        "encoding": "inplace",
+        "label": "struct StakingPoolImpl.UnstakingVoucher",
+        "members": [
+          {
+            "astId": 2466,
+            "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+            "label": "poolShares",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2468,
+            "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+            "label": "queueEpoch",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_struct(UserBalance)2478_storage": {
+        "encoding": "inplace",
+        "label": "struct StakingPoolImpl.UserBalance",
+        "members": [
+          {
+            "astId": 2471,
+            "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+            "label": "stakedPoolShares",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2474,
+            "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+            "label": "stakingVoucher",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_struct(StakingVoucher)2464_storage"
+          },
+          {
+            "astId": 2477,
+            "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
+            "label": "unstakingVoucher",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_struct(UnstakingVoucher)2469_storage"
+          }
+        ],
+        "numberOfBytes": "192"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
