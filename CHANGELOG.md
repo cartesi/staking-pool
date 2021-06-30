@@ -7,13 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changes
+### Changed
+
+## [1.0.0-alpha.2] - 2021-06-30
+
+### Changed
+
+-   Fixing reference to Staking contract
 
 ## [1.0.0-alpha.1] - 2021-06-29
 
 ### Changed
 
-- Changed ropsten maturation times
+-   Changed ropsten maturation times
 
 ## [1.0.0-alpha.0] - 2021-06-29
 
