@@ -22,9 +22,10 @@ Please note we have a [Code of Conduct](CODE_OF_CONDUCT.md), please follow it in
 
 # Authors
 
-* *Gabriel Barros*
-* *Danilo Tuler*
+-   _Gabriel Barros_
+-   _Danilo Tuler_
 
 ## License
-The solidity-util repository and all contributions are licensed under
+
+This repository and all contributions are licensed under
 [APACHE 2.0](https://www.apache.org/licenses/LICENSE-2.0). Please review our [LICENSE](LICENSE) file.
