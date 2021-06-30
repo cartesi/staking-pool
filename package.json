@@ -1,6 +1,6 @@
 {
     "name": "@cartesi/staking-pool",
-    "version": "1.0.0-alpha.1",
+    "version": "1.0.0-alpha.2",
     "description": "PoS Staking Pools",
     "scripts": {
         "build": "hardhat compile && tsc",
@@ -48,7 +48,7 @@
         "test:coverage": "Run test coverage report"
     },
     "dependencies": {
-        "@cartesi/pos": "^1.1.1",
+        "@cartesi/pos": "^1.1.2",
         "@chainlink/contracts": "^0.1.9",
         "@ensdomains/ens-contracts": "^0.0.5",
         "@openzeppelin/contracts": "^4.1.0",
