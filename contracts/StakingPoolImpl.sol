@@ -240,19 +240,20 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
     ///         be released after timeToRelease seconds, if the
     ///         function withdraw is called.
     /// @param _amount The amount of tokens that are gonna be unstaked.
-    function unstake(uint256 _amount) external override {
+    function unstakeCTSI(uint256 _amount) external override {
         uint256 _amountInShares = _getStakedValueInShares(_amount);
-        unstakeShares(_amountInShares);
+        unstake(_amountInShares);
     }
 
     ///  @notice this will unstake all shares for a user
     function unstake() external override {
-        unstakeShares(userBalance[msg.sender].stakedPoolShares);
+        _updateUserBalances(msg.sender); // makes sure balances are updated to shares
+        unstake(userBalance[msg.sender].stakedPoolShares);
     }
 
     /// @notice allow for users to defined exactly how many shares they
     /// want to unstake. Estimated value is then emitted on Unstake event
-    function unstakeShares(uint256 shares) public override {
+    function unstake(uint256 shares) public override {
         require(shares > 0, "Can not unstake 0 shares");
         UserBalance storage user = userBalance[msg.sender];
         require(

@@ -408,7 +408,7 @@ describe("StakingPool", async () => {
 
             await setNextBlockTimestamp(provider, release - 1); // this method increases 1 on the next block
             await mockStaking.mock.getReleasingBalance.returns(0);
-            let tx = stakingPool["unstake(uint256)"](stakedValue);
+            let tx = stakingPool.unstakeCTSI(stakedValue);
             await expect(tx)
                 .to.emit(stakingPool, "Unstake")
                 .withArgs(signerAddress, stakedValue, release + RELEASE);
@@ -457,7 +457,7 @@ describe("StakingPool", async () => {
 
             await mockStaking.mock.getReleasingBalance.returns(10); //fake as if there is something there
             await mockStaking.mock.getReleasingTimestamp.returns(0);
-            await stakingPool["unstake(uint256)"](stakedValue);
+            await stakingPool.unstakeCTSI(stakedValue);
 
             await mockStaking.mock.unstake.withArgs(stakedValue).returns();
             await mockStaking.mock.getReleasingBalance.returns(0); // avoid having a staking.withdraw() call at this time
@@ -509,7 +509,7 @@ describe("StakingPool", async () => {
                 stakingReleasingBalance
             ); //fake as if there is something there
             await mockStaking.mock.getReleasingTimestamp.returns(0);
-            await stakingPool["unstake(uint256)"](stakedValue);
+            await stakingPool.unstakeCTSI(stakedValue);
 
             await mockStaking.mock.unstake.withArgs(stakedValue).returns();
             await mockStaking.mock.withdraw
@@ -640,7 +640,7 @@ describe("StakingPool", async () => {
 
             await mockStaking.mock.getReleasingBalance.returns(10); //fake as if there is something there
             await mockStaking.mock.getReleasingTimestamp.returns(0);
-            await stakingPool["unstake(uint256)"](stakedValue);
+            await stakingPool.unstakeCTSI(stakedValue);
             expect(
                 await stakingPool.getReleasingTimestamp(signerAddress)
             ).to.be.equal(release);
@@ -677,7 +677,7 @@ describe("StakingPool", async () => {
 
             await mockStaking.mock.getReleasingBalance.returns(10); //fake as if there is something there
             await mockStaking.mock.getReleasingTimestamp.returns(0);
-            await stakingPool["unstake(uint256)"](stakedValue);
+            await stakingPool["unstake()"]();
 
             await mockStaking.mock.unstake.returns();
             await mockStaking.mock.getReleasingBalance.returns(0); // avoid having a staking.withdraw() call at this time
@@ -1258,7 +1258,7 @@ describe("StakingPool", async () => {
                 stakingReleasingBalance
             ); //fake as if there is something there
             await mockStaking.mock.getReleasingTimestamp.returns(0);
-            await stakingPool["unstake(uint256)"](stakedValue);
+            await stakingPool.unstakeCTSI(stakedValue);
             await mockStaking.mock.withdraw
                 .withArgs(stakingReleasingBalance)
                 .returns();
@@ -1304,9 +1304,9 @@ describe("StakingPool", async () => {
             const stakedValue = 100;
             await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getReleasingBalance.returns(0);
-            await expect(
-                stakingPool["unstake(uint256)"](stakedValue)
-            ).to.be.revertedWith("Can not unstake 0 shares");
+            await expect(stakingPool["unstake()"]()).to.be.revertedWith(
+                "Can not unstake 0 shares"
+            );
         });
 
         it("should get correct getStakedBalance after getMaturingTimestamp passed", async () => {
@@ -1363,7 +1363,7 @@ describe("StakingPool", async () => {
 
             // now we unstake some so UserBalance can be updated
             await mockStaking.mock.getReleasingBalance.returns(0);
-            await stakingPool["unstake(uint256)"](unstakeAmount);
+            await stakingPool.unstakeCTSI(unstakeAmount);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );

@@ -37,7 +37,13 @@ interface StakingPool is IStaking, StakingPoolManagement {
 
     /// @notice allow for users to defined exactly how many shares they
     /// want to unstake. Estimated value is then emitted on Unstake event
-    function unstakeShares(uint256 shares) external;
+    function unstake(uint256 shares) external override;
+
+    /// @notice Remove tokens from staked balance. The money can
+    ///         be released after timeToRelease seconds, if the
+    ///         function withdraw is called.
+    /// @param _amount The amount of tokens that are gonna be unstaked.
+    function unstakeCTSI(uint256 _amount) external;
 
     /// @notice routes produceBlock to POS contract and
     /// updates internal states of the pool
