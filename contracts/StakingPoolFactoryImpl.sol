@@ -22,7 +22,7 @@ import "./FlatRateCommission.sol";
 import "./GasTaxCommission.sol";
 
 contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
-    address public immutable poolImplementationReference;
+    address public referencePool;
     address public immutable chainlinkOracle;
     address public immutable uniswapOracle;
 
@@ -43,9 +43,14 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
             _uniswapOracle != address(0),
             "parameter can not be zero address."
         );
-        poolImplementationReference = _referencePool;
+        referencePool = _referencePool;
         chainlinkOracle = _chainlinkOracle;
         uniswapOracle = _uniswapOracle;
+    }
+
+    /// @notice Change the pool reference implementation
+    function setReferencePool(address _referencePool) public onlyOwner {
+        referencePool = _referencePool;
     }
 
     /// @notice Creates a new staking pool
@@ -59,8 +64,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         returns (address)
     {
         FlatRateCommission fee = new FlatRateCommission(commission);
-        address payable deployed =
-            payable(Clones.clone(poolImplementationReference));
+        address payable deployed = payable(Clones.clone(referencePool));
         StakingPoolImpl pool = StakingPoolImpl(deployed);
         pool.initialize(address(fee), msg.sender);
         fee.transferOwnership(msg.sender);
@@ -77,10 +81,12 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         whenNotPaused
         returns (address)
     {
-        GasTaxCommission fee =
-            new GasTaxCommission(chainlinkOracle, uniswapOracle, gas);
-        address payable deployed =
-            payable(Clones.clone(poolImplementationReference));
+        GasTaxCommission fee = new GasTaxCommission(
+            chainlinkOracle,
+            uniswapOracle,
+            gas
+        );
+        address payable deployed = payable(Clones.clone(referencePool));
         StakingPoolImpl pool = StakingPoolImpl(deployed);
         pool.initialize(address(fee), msg.sender);
         fee.transferOwnership(msg.sender);

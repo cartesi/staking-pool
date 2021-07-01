@@ -113,4 +113,16 @@ describe("StakingPoolFactory", async () => {
         const fee = GasTaxCommission__factory.connect(feeAddress, deployer);
         expect(await fee.gas()).to.equal(gas);
     });
+
+    it("should only allow owner to modify pool reference", async () => {
+        const newPool = "0x58EEB5D44Dc41965AB0a9E563536175C8dc5C3B3"; // any other address
+        await expect(
+            factory.connect(user).setReferencePool(newPool)
+        ).to.be.revertedWith("Ownable: caller is not the owner");
+    });
+
+    it("should allow owner to modify pool reference", async () => {
+        const newPool = "0x58EEB5D44Dc41965AB0a9E563536175C8dc5C3B3"; // any other address
+        await factory.setReferencePool(newPool);
+    });
 });
