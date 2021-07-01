@@ -25,9 +25,19 @@ interface StakingPool is IStaking, StakingPoolManagement {
     event BlockProduced(
         uint256 reward,
         uint256 commission,
-        uint256 queued,
-        uint256 notStaked
+        uint256 rewardQueued
     );
+
+    /// @notice Transfer tokens to user's wallet.
+    ///  this will transfer all tokens for the last unstake(x) call
+    function withdraw() external;
+
+    ///  @notice this will unstake all shares for a user
+    function unstake() external;
+
+    /// @notice allow for users to defined exactly how many shares they
+    /// want to unstake. Estimated value is then emitted on Unstake event
+    function unstakeShares(uint256 shares) external;
 
     /// @notice routes produceBlock to POS contract and
     /// updates internal states of the pool
@@ -50,7 +60,11 @@ interface StakingPool is IStaking, StakingPoolManagement {
     function canCycleStakeMaturation()
         external
         view
-        returns (bool available, uint256 _currentQueuedTotal, uint256 _currentMaturingTotal);
+        returns (
+            bool available,
+            uint256 _currentQueuedTotal,
+            uint256 _currentMaturingTotal
+        );
 
     /// @notice checks whether or not a call can be made to cycleWithdrawRelease
     /// and be successful
@@ -60,5 +74,9 @@ interface StakingPool is IStaking, StakingPoolManagement {
     function canCycleWithdrawRelease()
         external
         view
-        returns (bool available, uint256 _totalToUnstakeValue, uint256 _totalUnstaking);
+        returns (
+            bool available,
+            uint256 _totalToUnstakeValue,
+            uint256 _totalUnstaking
+        );
 }

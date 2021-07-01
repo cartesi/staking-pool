@@ -282,6 +282,7 @@ describe("StakingPool", async () => {
         it("should have maturing balance after 1 time window", async () => {
             const stakedValue = 100;
             await mockToken.mock.transferFrom.returns(true);
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -326,6 +327,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -357,6 +359,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -387,6 +390,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -404,7 +408,7 @@ describe("StakingPool", async () => {
 
             await setNextBlockTimestamp(provider, release - 1); // this method increases 1 on the next block
             await mockStaking.mock.getReleasingBalance.returns(0);
-            let tx = stakingPool.unstake(stakedValue);
+            let tx = stakingPool["unstake(uint256)"](stakedValue);
             await expect(tx)
                 .to.emit(stakingPool, "Unstake")
                 .withArgs(signerAddress, stakedValue, release + RELEASE);
@@ -419,16 +423,14 @@ describe("StakingPool", async () => {
 
             const balances = await stakingPool.userBalance(signerAddress);
             const unstakeEpoch = await stakingPool.currentUnstakeEpoch();
-            expect(balances.stakedPoolShares).to.equal(
-                balances.unstakingVoucher.poolShares
-            );
+            expect(balances.stakedPoolShares).to.equal(0);
+            expect(balances.unstakingVoucher.amount).to.equal(stakedValue);
+
             expect(balances.unstakingVoucher.queueEpoch).to.equal(unstakeEpoch);
             // since it didn't call staking.unstake() yet, it's balance still counts for reward
-            expect(await stakingPool.totalStakedShares()).to.equal(
-                stakedValue * FIXED_POINT_DECIMALS
-            );
+            expect(await stakingPool.totalStakedShares()).to.equal(0);
             expect(await stakingPool.getStakedBalance(signerAddress)).to.equal(
-                stakedValue
+                0
             );
         });
 
@@ -438,6 +440,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -447,13 +450,14 @@ describe("StakingPool", async () => {
             await advanceBlock(provider);
             await stakingPool.cycleStakeMaturation(); // makes a maturation cycle update
 
+            await mockStaking.mock.getMaturingBalance.returns(stakedValue);
             await advanceTime(provider, MATURATION);
             await advanceBlock(provider);
             await stakingPool.cycleStakeMaturation(); // makes a maturation cycle update
 
             await mockStaking.mock.getReleasingBalance.returns(10); //fake as if there is something there
             await mockStaking.mock.getReleasingTimestamp.returns(0);
-            await stakingPool.unstake(stakedValue);
+            await stakingPool["unstake(uint256)"](stakedValue);
 
             await mockStaking.mock.unstake.withArgs(stakedValue).returns();
             await mockStaking.mock.getReleasingBalance.returns(0); // avoid having a staking.withdraw() call at this time
@@ -468,18 +472,13 @@ describe("StakingPool", async () => {
             ).to.be.equal(stakedValue);
 
             const balances = await stakingPool.userBalance(signerAddress);
-            const unstakeEpoch = await stakingPool.currentUnstakeEpoch();
-            expect(balances.stakedPoolShares).to.equal(
-                balances.unstakingVoucher.poolShares
-            );
+
+            expect(balances.stakedPoolShares).to.equal(0);
+            expect(balances.unstakingVoucher.amount).to.equal(stakedValue);
             expect(
                 balances.unstakingVoucher.queueEpoch.toNumber() + 1
-            ).to.equal(unstakeEpoch);
+            ).to.equal(await stakingPool.currentUnstakeEpoch());
             expect(await stakingPool.totalStakedShares()).to.equal(0);
-            expect(await stakingPool.totalUnstakedShares()).to.equal(
-                balances.stakedPoolShares
-            );
-
             expect(await stakingPool.getStakedBalance(signerAddress)).to.equal(
                 0
             );
@@ -491,6 +490,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -500,6 +500,7 @@ describe("StakingPool", async () => {
             await advanceBlock(provider);
             await stakingPool.cycleStakeMaturation(); // makes a maturation cycle update
 
+            await mockStaking.mock.getMaturingBalance.returns(stakedValue);
             await advanceTime(provider, MATURATION);
             await advanceBlock(provider);
             await stakingPool.cycleStakeMaturation(); // makes a maturation cycle update
@@ -508,7 +509,7 @@ describe("StakingPool", async () => {
                 stakingReleasingBalance
             ); //fake as if there is something there
             await mockStaking.mock.getReleasingTimestamp.returns(0);
-            await stakingPool.unstake(stakedValue);
+            await stakingPool["unstake(uint256)"](stakedValue);
 
             await mockStaking.mock.unstake.withArgs(stakedValue).returns();
             await mockStaking.mock.withdraw
@@ -518,13 +519,10 @@ describe("StakingPool", async () => {
             await mockStaking.mock.withdraw.withArgs(stakedValue).returns();
             await stakingPool.cycleWithdrawRelease(); // force a release cycle update
 
-            expect(await stakingPool.totalUnstakedShares()).to.equal(
-                stakedValue * FIXED_POINT_DECIMALS
-            );
             await mockToken.mock.transfer
                 .withArgs(signerAddress, stakedValue)
                 .returns(true);
-            let tx = stakingPool.withdraw(stakedValue); // force a release cycle update
+            let tx = stakingPool["withdraw()"]();
 
             await expect(tx).to.not.be.reverted;
 
@@ -532,8 +530,6 @@ describe("StakingPool", async () => {
             expect(
                 await stakingPool.getReleasingBalance(signerAddress)
             ).to.be.equal(0);
-
-            expect(await stakingPool.totalUnstakedShares()).to.equal(0);
         });
     });
 
@@ -549,6 +545,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -615,7 +612,7 @@ describe("StakingPool", async () => {
             );
         });
 
-        it("should not change staked balance right away when unstaking requested", async () => {
+        it("should change staked balance right away when unstaking requested", async () => {
             // First we lock the balance and make it matured
             // Then we call unstake
             // Final matured balance is unaltered, releasing balance is equal to unstake call.
@@ -625,6 +622,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -642,7 +640,7 @@ describe("StakingPool", async () => {
 
             await mockStaking.mock.getReleasingBalance.returns(10); //fake as if there is something there
             await mockStaking.mock.getReleasingTimestamp.returns(0);
-            await stakingPool.unstake(stakedValue);
+            await stakingPool["unstake(uint256)"](stakedValue);
             expect(
                 await stakingPool.getReleasingTimestamp(signerAddress)
             ).to.be.equal(release);
@@ -650,7 +648,7 @@ describe("StakingPool", async () => {
                 await stakingPool.getReleasingBalance(signerAddress)
             ).to.be.equal(stakedValue);
             expect(await stakingPool.getStakedBalance(signerAddress)).to.equal(
-                stakedValue
+                0
             );
         });
 
@@ -663,6 +661,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -678,7 +677,7 @@ describe("StakingPool", async () => {
 
             await mockStaking.mock.getReleasingBalance.returns(10); //fake as if there is something there
             await mockStaking.mock.getReleasingTimestamp.returns(0);
-            await stakingPool.unstake(stakedValue);
+            await stakingPool["unstake(uint256)"](stakedValue);
 
             await mockStaking.mock.unstake.returns();
             await mockStaking.mock.getReleasingBalance.returns(0); // avoid having a staking.withdraw() call at this time
@@ -706,6 +705,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(0);
             await stakingPool.stake(stakedValue);
             await stakingPool.cycleStakeMaturation(); // makes a maturation cycle update
@@ -726,7 +726,7 @@ describe("StakingPool", async () => {
 
             await expect(stakingPool.produceBlock(0))
                 .to.emit(stakingPool, "BlockProduced")
-                .withArgs(reward, commission, reward - commission, 0);
+                .withArgs(reward, commission, reward - commission);
 
             expect(await stakingPool.currentStakeEpoch()).to.equal(3);
             expect(await stakingPool.rewardMaturing()).to.equal(reward * 0.9);
@@ -743,6 +743,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(0);
             await stakingPool.stake(stakedValue);
             await stakingPool.cycleStakeMaturation(); // makes a maturation cycle update
@@ -759,9 +760,10 @@ describe("StakingPool", async () => {
             await mockFee.mock.getCommission.returns(commission);
             await mockStaking.mock.getReleasingBalance.returns(0);
 
+            await mockStaking.mock.getMaturingBalance.returns(stakedValue);
             await expect(stakingPool.produceBlock(0))
                 .to.emit(stakingPool, "BlockProduced")
-                .withArgs(reward, commission, reward - commission, 0);
+                .withArgs(reward, commission, reward - commission);
 
             expect(await stakingPool.currentStakeEpoch()).to.equal(2);
             expect(await stakingPool.rewardQueued()).to.equal(reward * 0.9);
@@ -794,6 +796,8 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
+
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -826,7 +830,7 @@ describe("StakingPool", async () => {
 
             await expect(stakingPool.produceBlock(0))
                 .to.emit(stakingPool, "BlockProduced")
-                .withArgs(reward, commission, reward.sub(commission), 0);
+                .withArgs(reward, commission, reward.sub(commission));
 
             await advanceTime(provider, MATURATION);
             await advanceBlock(provider);
@@ -874,6 +878,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -910,11 +915,14 @@ describe("StakingPool", async () => {
             await mockRewardManager.mock.getCurrentReward.returns(reward);
             await mockPoS.mock.produceBlock.returns(true);
             await mockFee.mock.getCommission.returns(commission);
+            await mockStaking.mock.getMaturingBalance.returns(
+                thirdSignerMaturingValue
+            );
             await mockStaking.mock.getReleasingBalance.returns(0);
 
             await expect(stakingPool.produceBlock(0))
                 .to.emit(stakingPool, "BlockProduced")
-                .withArgs(reward, commission, reward.sub(commission), 0);
+                .withArgs(reward, commission, reward.sub(commission));
 
             await advanceTime(provider, MATURATION);
             await advanceBlock(provider);
@@ -965,6 +973,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(0);
             await stakingPool.stake(stakedValue);
             await stakingPool.cycleStakeMaturation(); // makes a maturation cycle update
@@ -982,11 +991,12 @@ describe("StakingPool", async () => {
             await mockStaking.mock.getReleasingBalance.returns(0);
             await expect(stakingPool.produceBlock(0))
                 .to.emit(stakingPool, "BlockProduced")
-                .withArgs(reward, commission, reward - commission, 0);
+                .withArgs(reward, commission, reward - commission);
 
-            expect(await stakingPool.currentStakeEpoch()).to.equal(2);
+            expect(await stakingPool.currentStakeEpoch()).to.equal(3);
 
-            expect(await stakingPool.rewardQueued()).to.equal(reward * 0.9);
+            expect(await stakingPool.rewardQueued()).to.equal(0);
+            expect(await stakingPool.rewardMaturing()).to.equal(reward * 0.9);
         });
 
         it("should emit Stake on stake() and update balance for user", async () => {
@@ -994,6 +1004,7 @@ describe("StakingPool", async () => {
             const remainingTimeOnMaturingState = Date.now() + 100;
 
             await mockToken.mock.transferFrom.returns(true);
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 remainingTimeOnMaturingState
             );
@@ -1024,6 +1035,7 @@ describe("StakingPool", async () => {
 
             // setup first locked state
             await mockToken.mock.transferFrom.returns(true);
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 maturingTimestamp
             );
@@ -1159,6 +1171,7 @@ describe("StakingPool", async () => {
             const stakedBalance = 400;
             // setup first locked state
             await mockToken.mock.transferFrom.returns(true);
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(Date.now());
             await stakingPool.stake(stakedBalance);
             // // First cycling
@@ -1176,6 +1189,7 @@ describe("StakingPool", async () => {
 
             // setup first locked state
             await mockToken.mock.transferFrom.returns(true);
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(Date.now());
             await stakingPool.stake(stakedBalance);
             // First cycling
@@ -1226,6 +1240,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
@@ -1243,7 +1258,7 @@ describe("StakingPool", async () => {
                 stakingReleasingBalance
             ); //fake as if there is something there
             await mockStaking.mock.getReleasingTimestamp.returns(0);
-            await stakingPool.unstake(stakedValue);
+            await stakingPool["unstake(uint256)"](stakedValue);
             await mockStaking.mock.withdraw
                 .withArgs(stakingReleasingBalance)
                 .returns();
@@ -1287,10 +1302,11 @@ describe("StakingPool", async () => {
 
         it("should not unstake without shares", async () => {
             const stakedValue = 100;
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getReleasingBalance.returns(0);
-            await expect(stakingPool.unstake(stakedValue)).to.be.revertedWith(
-                "there are no shares to be unstaked"
-            );
+            await expect(
+                stakingPool["unstake(uint256)"](stakedValue)
+            ).to.be.revertedWith("Can not unstake 0 shares");
         });
 
         it("should get correct getStakedBalance after getMaturingTimestamp passed", async () => {
@@ -1303,6 +1319,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(0);
             await stakingPool.stake(firstStake);
             await stakingPool.cycleStakeMaturation();
@@ -1328,6 +1345,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(0);
             await stakingPool.stake(firstStake);
             await stakingPool.cycleStakeMaturation();
@@ -1345,12 +1363,12 @@ describe("StakingPool", async () => {
 
             // now we unstake some so UserBalance can be updated
             await mockStaking.mock.getReleasingBalance.returns(0);
-            await stakingPool.unstake(unstakeAmount);
+            await stakingPool["unstake(uint256)"](unstakeAmount);
             await mockStaking.mock.getMaturingTimestamp.returns(
                 stakingMaturingTimestamp
             );
             expect(await stakingPool.getStakedBalance(signerAddress)).to.equal(
-                firstStake
+                firstStake - unstakeAmount
             );
 
             const userBalance = await stakingPool.userBalance(signerAddress);
@@ -1362,7 +1380,8 @@ describe("StakingPool", async () => {
                     userBalance.stakingVoucher.amountStaked.toNumber(),
                 queueEpoch: userBalance.stakingVoucher.queueEpoch.toNumber(),
             }).to.be.deep.equal({
-                stakedPoolShares: firstStake * FIXED_POINT_DECIMALS,
+                stakedPoolShares:
+                    (firstStake - unstakeAmount) * FIXED_POINT_DECIMALS,
                 amountQueued: 0,
                 amountStaked: secStake,
                 queueEpoch: 3,
@@ -1387,6 +1406,7 @@ describe("StakingPool", async () => {
             await mockToken.mock.transferFrom.returns(true);
             await mockToken.mock.approve.returns(true);
             await mockStaking.mock.stake.returns();
+            await mockStaking.mock.getMaturingBalance.returns(0);
             await mockStaking.mock.getMaturingTimestamp.returns(0); // anytime we call cycleStakeMaturation it will pass
 
             await stakingPool.connect(aliceSigner).stake(aliceStakedValue);
@@ -1415,7 +1435,7 @@ describe("StakingPool", async () => {
 
             await expect(stakingPool.produceBlock(0))
                 .to.emit(stakingPool, "BlockProduced")
-                .withArgs(reward, commission, reward.sub(commission), 0);
+                .withArgs(reward, commission, reward.sub(commission));
 
             /// check for all user and global states for correct values
             const totalStaked = aliceStakedValue

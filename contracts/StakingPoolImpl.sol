@@ -27,7 +27,6 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
 
     Fee public fee;
     uint256 public rewardQueued;
-    uint256 public rewardNotStaked;
     uint256 public rewardMaturing;
     uint256 public currentStakeEpoch;
     uint256 public currentUnstakeEpoch;
@@ -42,7 +41,7 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
     }
 
     struct UnstakingVoucher {
-        uint256 poolShares;
+        uint256 amount;
         uint256 queueEpoch;
     }
 
@@ -62,10 +61,9 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
     uint256 public totalStakedShares;
     // this tracks the ratio of balances to actual CTSI value
     // withdraw related variables
-    uint256 public totalToUnstakeShares; // next withdraw cycle unstake amount
-    uint256 public totalUnstaking; // current withdraw cycle unstaking amount
+    uint256 public totalToUnstakeValue; // next withdraw cycle unstake amount
+    uint256 public totalUnstakingValue; // current withdraw cycle unstaking amount
     uint256 public totalWithdrawable; // ready to withdraw user balances
-    uint256 public totalUnstakedShares; // tracks shares balances
 
     // all immutable variables can stay at the constructor
     constructor(
@@ -105,14 +103,11 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
         returns (uint256 stakedBalance)
     {
         UserBalance storage b = userBalance[_userAddress];
-        uint256 shares = _getUserMaturatedShares(b.stakingVoucher);
-        uint256 withdrawBalance;
+        uint256 shares = _getUserMaturatedShares(b.stakingVoucher) +
+            b.stakedPoolShares;
         uint256 stakedValue = 0;
-        // since it didn't call staking.unstake() yet, it's balance still counts for reward
-        if (b.unstakingVoucher.queueEpoch < currentUnstakeEpoch)
-            withdrawBalance = b.unstakingVoucher.poolShares;
+
         if (totalStakedShares > 0) {
-            shares += b.stakedPoolShares - withdrawBalance;
             stakedValue = _getStakedSharesInValue(shares);
         }
         if (staking.getMaturingTimestamp(address(this)) < block.timestamp) {
@@ -199,19 +194,7 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
         override
         returns (uint256)
     {
-        UnstakingVoucher storage voucher =
-            userBalance[_userAddress].unstakingVoucher;
-        // releasing balance still was not unstaked on IStaking
-        if (voucher.queueEpoch == currentUnstakeEpoch && totalStakedShares != 0)
-            return _getStakedSharesInValue(voucher.poolShares);
-
-        // releasing(ed) balance was unstaked on IStaking
-        if (
-            voucher.queueEpoch + 1 <= currentUnstakeEpoch &&
-            totalUnstakedShares != 0
-        ) return _getUnstakedSharesInValue(voucher.poolShares);
-        // avoid division by zero in some scenarios
-        return 0;
+        return userBalance[_userAddress].unstakingVoucher.amount;
     }
 
     /// @notice Deposit CTSI to be staked. The money will turn into staked
@@ -229,13 +212,11 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
     /// updates internal states of the pool
     /// @return true when everything went fine
     function produceBlock(uint256 _index) external override returns (bool) {
-        bool isLastStakeCycleOver =
-            staking.getMaturingTimestamp(address(this)) <= block.timestamp;
-        if (isLastStakeCycleOver) computeFinishedStake();
+        bool _isLastStakeCycleOver = isLastStakeCycleOver();
+        if (_isLastStakeCycleOver) computeFinishedStake();
 
-        uint256 reward =
-            IRewardManager(pos.getRewardManagerAddress(_index))
-                .getCurrentReward();
+        uint256 reward = IRewardManager(pos.getRewardManagerAddress(_index))
+        .getCurrentReward();
 
         pos.produceBlock(_index);
 
@@ -245,20 +226,12 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
         uint256 remainingReward = reward - commission; // this is also a safety check
         // if commission is over the reward amount, it will underflow
 
-        // we first route rewards related to unstakingShares to withdrawal
-        // then we add the rest to the staking queue
-        uint256 additionalRewardsWithdrawal =
-            _calcUnstakingRewards(remainingReward + rewardQueued);
-        rewardNotStaked += additionalRewardsWithdrawal;
-
         // update the possible remaining reward to be staked
-        rewardQueued =
-            (remainingReward + rewardQueued) -
-            additionalRewardsWithdrawal;
+        rewardQueued += remainingReward;
 
-        emit BlockProduced(reward, commission, rewardQueued, rewardNotStaked);
+        emit BlockProduced(reward, commission, rewardQueued);
 
-        if (isLastStakeCycleOver) startNewStakeCycle();
+        if (_isLastStakeCycleOver) startNewStakeCycle();
         cycleWithdrawRelease();
         return true;
     }
@@ -268,25 +241,40 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
     ///         function withdraw is called.
     /// @param _amount The amount of tokens that are gonna be unstaked.
     function unstake(uint256 _amount) external override {
+        uint256 _amountInShares = _getStakedValueInShares(_amount);
+        unstakeShares(_amountInShares);
+    }
+
+    ///  @notice this will unstake all shares for a user
+    function unstake() external override {
+        unstakeShares(userBalance[msg.sender].stakedPoolShares);
+    }
+
+    /// @notice allow for users to defined exactly how many shares they
+    /// want to unstake. Estimated value is then emitted on Unstake event
+    function unstakeShares(uint256 shares) public override {
+        require(shares > 0, "Can not unstake 0 shares");
         UserBalance storage user = userBalance[msg.sender];
         require(
-            user.unstakingVoucher.poolShares == 0 ||
+            user.unstakingVoucher.amount == 0 ||
                 user.unstakingVoucher.queueEpoch == currentUnstakeEpoch,
             "You have withdraw being processed"
         );
 
         _updateUserBalances(msg.sender); // makes sure balances are updated to shares
 
-        uint256 _amountInShares = _getStakedValueInShares(_amount);
-        require(_amountInShares > 0, "there are no shares to be unstaked");
-        user.unstakingVoucher.poolShares += _amountInShares;
-
         require(
-            user.stakedPoolShares >= user.unstakingVoucher.poolShares,
+            user.stakedPoolShares >= shares,
             "Unstake amount is over staked balance"
         );
 
-        totalToUnstakeShares += _amountInShares;
+        uint256 valueUnstaking = _getStakedSharesInValue(shares);
+
+        user.stakedPoolShares -= shares; // won't underflow because of require above
+        totalStakedShares -= shares;
+        totalStaked -= valueUnstaking;
+        totalToUnstakeValue += valueUnstaking;
+        user.unstakingVoucher.amount += valueUnstaking;
         user.unstakingVoucher.queueEpoch = currentUnstakeEpoch;
 
         uint256 releaseTimestamp;
@@ -296,51 +284,35 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
             releaseTimestamp = block.timestamp;
         }
 
-        emit Unstake(msg.sender, _amount, releaseTimestamp + timeToRelease);
+        emit Unstake(
+            msg.sender,
+            valueUnstaking,
+            releaseTimestamp + timeToRelease
+        );
     }
 
     /// @notice Transfer tokens to user's wallet.
-    /// @param _amount The amount of tokens that are gonna be transferred.
-    function withdraw(uint256 _amount) external override {
+    ///  this will transfer all tokens for the last unstake(x) call
+    function withdraw() external override {
         UserBalance storage user = userBalance[msg.sender];
         require(
-            user.unstakingVoucher.poolShares > 0 &&
+            user.unstakingVoucher.amount > 0 &&
                 user.unstakingVoucher.queueEpoch + 2 <= currentUnstakeEpoch,
             "You don't have realeased balance"
         );
         _updateUserBalances(msg.sender); // makes sure balances are updated to matured
-        uint256 shares = _getUnstakedValueInShares(_amount);
-        require(
-            user.unstakingVoucher.poolShares >= shares,
-            "Not enough balance for this withdraw amount"
-        );
-        user.unstakingVoucher.poolShares -= shares;
-        user.stakedPoolShares -= shares;
+        uint256 amount = user.unstakingVoucher.amount;
+        user.unstakingVoucher.amount = 0;
 
-        totalWithdrawable -= _amount;
-        totalUnstakedShares -= shares;
-        ctsi.transfer(msg.sender, _amount);
-        emit Withdraw(msg.sender, _amount);
+        totalWithdrawable -= amount;
+        ctsi.transfer(msg.sender, amount);
+        emit Withdraw(msg.sender, amount);
     }
 
-    function _calcUnstakingRewards(uint256 rewards)
-        internal
-        view
-        returns (uint256)
-    {
-        // @dev review this function when totalStakedShares is Zero.
-        // total value related to totalStakedShares
-        uint256 totalAccumulatedValue =
-            totalStaked + rewardMaturing + rewardNotStaked + rewards;
-        // value that will be made available to withdraw in the next full withdraw cycle
-        uint256 totalToUnstakeValue =
-            (totalToUnstakeShares * totalAccumulatedValue) / totalStakedShares;
-        // additional value related to current rewards yet to be set aside
-        uint256 toUnstakeValueNotAccounted =
-            totalToUnstakeValue - rewardNotStaked;
-        if (rewards > toUnstakeValueNotAccounted)
-            return toUnstakeValueNotAccounted;
-        return rewards; // all this reward will be added to rewardNotStaked
+    /// @notice this function is deactivated
+    /// we maintain it here since it is part of IStaking
+    function withdraw(uint256 amount) external pure override {
+        revert("this function is deactivated");
     }
 
     function _calcValueAtEpoch() internal view returns (uint256) {
@@ -391,9 +363,7 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
     /// @notice enables pool manager to update staking balances as they mature
     /// on the (main) Staking contract
     function cycleStakeMaturation() public override {
-        bool isLastStakeCycleOver =
-            staking.getMaturingTimestamp(address(this)) <= block.timestamp;
-        if (!isLastStakeCycleOver) return;
+        if (!isLastStakeCycleOver()) return;
         computeFinishedStake();
         startNewStakeCycle();
     }
@@ -407,29 +377,19 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
             staking.getReleasingTimestamp(address(this)) > block.timestamp
         ) return; // last release cycle hasn't finished
 
-        if (totalToUnstakeShares == 0 && totalUnstaking == 0) return; // nothing to do
+        if (totalToUnstakeValue == 0 && totalUnstakingValue == 0) return; // nothing to do
 
         // withdraw everything to this contract before reseting the clock
         if (releasingBalance > 0) staking.withdraw(releasingBalance);
 
-        uint256 totalToUnstake = 0;
-        if (totalToUnstakeShares > 0) {
-            totalToUnstake =
-                _getStakedSharesInValue(totalToUnstakeShares) -
-                rewardNotStaked;
-            if (totalToUnstake > 0) {
-                staking.unstake(totalToUnstake);
-                totalStaked = totalStaked - totalToUnstake;
-            }
+        if (totalToUnstakeValue > 0) {
+            staking.unstake(totalToUnstakeValue);
         }
 
         // reset the cycle
-        totalStakedShares -= totalToUnstakeShares;
-        totalUnstakedShares += totalToUnstakeShares;
-        totalToUnstakeShares = 0;
-        totalWithdrawable += totalUnstaking + rewardNotStaked;
-        rewardNotStaked = 0;
-        totalUnstaking = totalToUnstake;
+        totalWithdrawable += totalUnstakingValue;
+        totalUnstakingValue = totalToUnstakeValue;
+        totalToUnstakeValue = 0;
         currentUnstakeEpoch += 1;
     }
 
@@ -479,12 +439,23 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
         view
         returns (uint256 shares)
     {
-        uint256 rewardsNotStaked =
-            rewardMaturing + rewardQueued + rewardNotStaked;
+        uint256 rewardsNotStaked = rewardMaturing + rewardQueued;
         // total value related to totalStakedShares
         uint256 totalAccumulatedValue = totalStaked + rewardsNotStaked;
         if (totalAccumulatedValue == 0) return 0;
         return (value * totalStakedShares) / totalAccumulatedValue;
+    }
+
+    function isLastStakeCycleOver() internal view returns (bool) {
+        return
+            staking.getMaturingBalance(address(this)) == 0 ||
+            staking.getMaturingTimestamp(address(this)) <= block.timestamp;
+    }
+
+    function isLastUnstakingCycleOver() internal view returns (bool) {
+        return
+            staking.getReleasingBalance(address(this)) == 0 ||
+            staking.getReleasingTimestamp(address(this)) <= block.timestamp;
     }
 
     function _getStakedSharesInValue(uint256 shares)
@@ -493,33 +464,10 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
         returns (uint256 value)
     {
         if (totalStakedShares == 0) return 0;
-        uint256 rewardsNotStaked =
-            rewardMaturing + rewardNotStaked + rewardQueued;
+        uint256 rewardsNotStaked = rewardMaturing + rewardQueued;
         // total value related to totalStakedShares
         uint256 totalAccumulatedValue = totalStaked + rewardsNotStaked;
         return (shares * totalAccumulatedValue) / totalStakedShares;
-    }
-
-    function _getUnstakedSharesInValue(uint256 shares)
-        internal
-        view
-        returns (uint256 value)
-    {
-        if (totalUnstakedShares == 0) return 0;
-        // total value related to totalUnstakedShares
-        uint256 totalAccumulatedValue = totalUnstaking + totalWithdrawable;
-        return (shares * totalAccumulatedValue) / totalUnstakedShares;
-    }
-
-    function _getUnstakedValueInShares(uint256 value)
-        internal
-        view
-        returns (uint256 shares)
-    {
-        // total value related to totalUnstakedShares
-        uint256 totalAccumulatedValue = totalUnstaking + totalWithdrawable;
-        if (totalAccumulatedValue == 0) return 0;
-        return (value * totalUnstakedShares) / totalAccumulatedValue;
     }
 
     function _getUserMaturatedShares(StakingVoucher storage v)
@@ -561,14 +509,13 @@ contract StakingPoolImpl is StakingPool, StakingPoolManagementImpl {
         returns (
             bool available,
             uint256 _totalToUnstakeValue,
-            uint256 _totalUnstaking
+            uint256 _totalUnstakingValue
         )
     {
-        _totalToUnstakeValue = _getStakedSharesInValue(totalToUnstakeShares);
         if (
             staking.getReleasingBalance(address(this)) > 0 &&
             staking.getReleasingTimestamp(address(this)) > block.timestamp
-        ) return (false, _totalToUnstakeValue, totalUnstaking);
-        return (true, _totalToUnstakeValue, totalUnstaking);
+        ) return (false, totalToUnstakeValue, totalUnstakingValue);
+        return (true, totalToUnstakeValue, totalUnstakingValue);
     }
 }
