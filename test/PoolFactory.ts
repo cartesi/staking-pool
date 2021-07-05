@@ -147,6 +147,8 @@ describe("StakingPoolFactory", async () => {
     it("should allow owner to modify pool reference", async () => {
         // set reference pool
         const { StakingPoolImpl } = await deployments.all();
-        await factory.setReferencePool(StakingPoolImpl.address);
+        await expect(factory.setReferencePool(StakingPoolImpl.address))
+            .to.emit(factory, "ReferencePoolChanged")
+            .withArgs(StakingPoolImpl.address);
     });
 });

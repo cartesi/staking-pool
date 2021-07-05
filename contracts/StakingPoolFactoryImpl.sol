@@ -26,6 +26,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     address public immutable chainlinkOracle;
     address public immutable uniswapOracle;
 
+    event ReferencePoolChanged(address indexed pool);
+
     constructor(address _chainlinkOracle, address _uniswapOracle) {
         require(
             _chainlinkOracle != address(0),
@@ -42,6 +44,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     /// @notice Change the pool reference implementation
     function setReferencePool(address _referencePool) public onlyOwner {
         referencePool = _referencePool;
+        emit ReferencePoolChanged(_referencePool);
     }
 
     /// @notice Creates a new staking pool
