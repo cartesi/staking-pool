@@ -52,7 +52,6 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     const { deployments, getNamedAccounts, network } = hre;
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
-    const { StakingPoolImpl } = await deployments.all();
 
     network.config.chainId === 1;
 
@@ -69,7 +68,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
 
     // deploy pool factory
     await deploy("StakingPoolFactoryImpl", {
-        args: [StakingPoolImpl.address, chainlinkOracle, uniswapOracle],
+        args: [chainlinkOracle, uniswapOracle],
         from: deployer,
         log: true,
     });

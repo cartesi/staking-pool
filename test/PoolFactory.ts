@@ -28,8 +28,13 @@ describe("StakingPoolFactory", async () => {
     beforeEach(async () => {
         await deployments.fixture();
         [deployer, user] = await ethers.getSigners();
-        const { address } = await deployments.get("StakingPoolFactoryImpl");
-        factory = StakingPoolFactoryImpl__factory.connect(address, deployer);
+        const { StakingPoolFactoryImpl } = await deployments.all();
+
+        // connect to factory
+        factory = StakingPoolFactoryImpl__factory.connect(
+            StakingPoolFactoryImpl.address,
+            deployer
+        );
     });
 
     it("should only allow owner to pause", async () => {
@@ -38,7 +43,17 @@ describe("StakingPoolFactory", async () => {
         );
     });
 
+    it("should not work with no reference pool set", async () => {
+        await expect(factory.createFlatRateCommission(1)).to.be.revertedWith(
+            "undefined reference pool"
+        );
+    });
+
     it("should not create when paused and create when unpaused", async () => {
+        // set reference pool
+        const { StakingPoolImpl } = await deployments.all();
+        await factory.setReferencePool(StakingPoolImpl.address);
+
         // factory starts as not paused
         expect(await factory.paused()).to.be.false;
 
@@ -71,6 +86,10 @@ describe("StakingPoolFactory", async () => {
     });
 
     it("should create flat rate pool", async () => {
+        // set reference pool
+        const { StakingPoolImpl } = await deployments.all();
+        await factory.setReferencePool(StakingPoolImpl.address);
+
         const rate = 10;
         const tx = await factory.createFlatRateCommission(rate, {
             value: ethers.utils.parseEther("0.001"),
@@ -93,6 +112,10 @@ describe("StakingPoolFactory", async () => {
     });
 
     it("should create gas tax pool", async () => {
+        // set reference pool
+        const { StakingPoolImpl } = await deployments.all();
+        await factory.setReferencePool(StakingPoolImpl.address);
+
         const gas = 100000;
         const tx = await factory.createGasTaxCommission(gas, {
             value: ethers.utils.parseEther("0.001"),
@@ -122,7 +145,8 @@ describe("StakingPoolFactory", async () => {
     });
 
     it("should allow owner to modify pool reference", async () => {
-        const newPool = "0x58EEB5D44Dc41965AB0a9E563536175C8dc5C3B3"; // any other address
-        await factory.setReferencePool(newPool);
+        // set reference pool
+        const { StakingPoolImpl } = await deployments.all();
+        await factory.setReferencePool(StakingPoolImpl.address);
     });
 });

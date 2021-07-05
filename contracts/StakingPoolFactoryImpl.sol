@@ -26,15 +26,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     address public immutable chainlinkOracle;
     address public immutable uniswapOracle;
 
-    constructor(
-        address _referencePool,
-        address _chainlinkOracle,
-        address _uniswapOracle
-    ) {
-        require(
-            _referencePool != address(0),
-            "parameter can not be zero address."
-        );
+    constructor(address _chainlinkOracle, address _uniswapOracle) {
         require(
             _chainlinkOracle != address(0),
             "parameter can not be zero address."
@@ -43,7 +35,6 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
             _uniswapOracle != address(0),
             "parameter can not be zero address."
         );
-        referencePool = _referencePool;
         chainlinkOracle = _chainlinkOracle;
         uniswapOracle = _uniswapOracle;
     }
@@ -63,6 +54,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         whenNotPaused
         returns (address)
     {
+        require(referencePool != address(0), "undefined reference pool");
         FlatRateCommission fee = new FlatRateCommission(commission);
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPoolImpl pool = StakingPoolImpl(deployed);
@@ -81,6 +73,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         whenNotPaused
         returns (address)
     {
+        require(referencePool != address(0), "undefined reference pool");
         GasTaxCommission fee = new GasTaxCommission(
             chainlinkOracle,
             uniswapOracle,
