@@ -10,12 +10,14 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the
 // specific language governing permissions and limitations under the License.
 
-/// @title Interface staking contract
-pragma solidity ^0.8.0;
+pragma solidity >=0.7.0 <0.9.0;
 
+/// @title Calculator of pool owner commission for each block reward
+/// @author Danilo Tuler
+/// @notice This provides flexibility for different commission models
 interface Fee {
-    /// @notice calculates the total amount of the reward that will be directed to the PoolManager
-    /// @return commissionTotal is the amount subtracted from the rewardAmount
+    /// @notice calculates the total amount of the reward that will be directed to the pool owner
+    /// @return amount of tokens taken by the pool owner as commission
     function getCommission(uint256 posIndex, uint256 rewardAmount)
         external
         view

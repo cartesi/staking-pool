@@ -10,22 +10,9 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the
 // specific language governing permissions and limitations under the License.
 
-/// @title Interface staking contract
-pragma solidity ^0.8.0;
+pragma solidity >=0.7.0;
 
-interface StakingPoolManagement {
-    /// @notice sets a name for the pool using ENS service
-    function setName(string memory name) external;
-
-    /// @notice pauses new staking on the pool
-    function pause() external;
-
-    /// @notice unpauses new staking on the pool
-    function unpause() external;
-
-    /// @notice Event emmited when a pool is rename
-    event StakingPoolRenamed(string name);
-
+interface StakingPoolWorker {
     /// @notice allows for the pool to act on its own behalf when producing blocks.
     function selfhire() external payable;
 

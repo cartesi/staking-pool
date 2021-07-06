@@ -14,7 +14,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./Fee.sol";
+import "./interfaces/Fee.sol";
 
 contract FlatRateCommission is Fee, Ownable {
     uint256 public BASE = 1E4;

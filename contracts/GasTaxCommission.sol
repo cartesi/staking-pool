@@ -17,7 +17,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol";
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./Fee.sol";
+import "./interfaces/Fee.sol";
 
 contract GasTaxCommission is Fee, Ownable {
     AggregatorInterface public immutable gasOracle;
@@ -56,8 +56,11 @@ contract GasTaxCommission is Fee, Ownable {
         uint256 gasFee = gasPrice * gas;
 
         // get CTSI/ETH reserves
-        (uint112 reserveCTSI, uint112 reserveETH, uint32 _blockTimestampLast) =
-            priceOracle.getReserves();
+        (
+            uint112 reserveCTSI,
+            uint112 reserveETH,
+            uint32 _blockTimestampLast
+        ) = priceOracle.getReserves();
 
         // convert gas in ETH to gas in CTSI
 

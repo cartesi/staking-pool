@@ -16,7 +16,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
-import "./StakingPoolFactory.sol";
+import "./interfaces/StakingPoolFactory.sol";
 import "./StakingPoolImpl.sol";
 import "./FlatRateCommission.sol";
 import "./GasTaxCommission.sol";
