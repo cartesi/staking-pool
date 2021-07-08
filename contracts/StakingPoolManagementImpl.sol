@@ -14,7 +14,6 @@ pragma solidity ^0.8.0;
 
 import "@ensdomains/ens-contracts/contracts/registry/ReverseRegistrar.sol";
 import "@ensdomains/ens-contracts/contracts/registry/ENS.sol";
-import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 
 import "./interfaces/StakingPoolManagement.sol";
 import "./StakingPoolData.sol";

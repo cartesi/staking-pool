@@ -16,8 +16,8 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "./interfaces/StakingPool.sol";
 import "./interfaces/StakingPoolFactory.sol";
-import "./StakingPoolImpl.sol";
 import "./FlatRateCommission.sol";
 import "./GasTaxCommission.sol";
 
@@ -60,8 +60,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         require(referencePool != address(0), "undefined reference pool");
         FlatRateCommission fee = new FlatRateCommission(commission);
         address payable deployed = payable(Clones.clone(referencePool));
-        StakingPoolImpl pool = StakingPoolImpl(deployed);
-        pool.initialize(address(fee), msg.sender);
+        StakingPool pool = StakingPool(deployed);
+        pool.initialize(msg.sender, address(fee), 0, 0);
         fee.transferOwnership(msg.sender);
         pool.selfhire{value: msg.value}();
 
@@ -83,8 +83,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
             gas
         );
         address payable deployed = payable(Clones.clone(referencePool));
-        StakingPoolImpl pool = StakingPoolImpl(deployed);
-        pool.initialize(address(fee), msg.sender);
+        StakingPool pool = StakingPool(deployed);
+        pool.initialize(msg.sender, address(fee), 0, 0);
         fee.transferOwnership(msg.sender);
         pool.selfhire{value: msg.value}();
 

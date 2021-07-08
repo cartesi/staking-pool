@@ -34,5 +34,10 @@ interface StakingPool is
     StakingPoolUser,
     StakingPoolWorker
 {
-
+    function initialize(
+        address owner,
+        address fee,
+        uint256 stakeLock,
+        uint256 stakeThreshold
+    ) external;
 }

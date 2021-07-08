@@ -34,15 +34,23 @@ contract StakingPoolImpl is
         address _staking,
         address _pos,
         address _workerManager,
-        address _ens,
+        address _ens
+    )
+        StakingPoolManagementImpl(_ens)
+        StakingPoolProducerImpl(_ctsi, _pos)
+        StakingPoolStakingImpl(_ctsi, _staking)
+        StakingPoolUserImpl(_ctsi)
+        StakingPoolWorkerImpl(_workerManager, _pos)
+    {}
+
+    function initialize(
+        address _owner,
         address _fee,
         uint256 _stakeLock,
         uint256 _stakeThreshold
-    )
-        StakingPoolManagementImpl(_ens)
-        StakingPoolProducerImpl(_ctsi, _pos, _fee)
-        StakingPoolStakingImpl(_ctsi, _staking, _stakeThreshold)
-        StakingPoolUserImpl(_ctsi, _stakeLock)
-        StakingPoolWorkerImpl(_workerManager, _pos)
-    {}
+    ) public override initializer {
+        StakingPoolProducerImpl.initialize_StakingPoolProducer(_fee);
+        StakingPoolStakingImpl.initialize_StakingPoolStaking(_stakeThreshold);
+        StakingPoolUserImpl.initialize_StakingPoolUser(_stakeLock);
+    }
 }

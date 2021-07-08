@@ -24,13 +24,12 @@ contract StakingPoolProducerImpl is StakingPoolProducer, StakingPoolData {
     IPoS private immutable pos;
     Fee public fee;
 
-    constructor(
-        address _ctsi,
-        address _pos,
-        address _fee
-    ) {
+    constructor(address _ctsi, address _pos) {
         ctsi = IERC20(_ctsi);
         pos = IPoS(_pos);
+    }
+
+    function initialize_StakingPoolProducer(address _fee) public {
         fee = Fee(_fee);
     }
 
@@ -49,6 +48,7 @@ contract StakingPoolProducerImpl is StakingPoolProducer, StakingPoolData {
         pos.produceBlock(_index);
 
         // calculate pool commission
+        // TODO: where do we require that fee is initialized?
         uint256 commission = fee.getCommission(_index, reward);
         require(
             commission <= reward,

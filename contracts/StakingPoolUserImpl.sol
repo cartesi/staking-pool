@@ -22,9 +22,12 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
 
     /// @dev Constructor
     /// @param _ctsi The contract that provides the staking pool's token
-    /// @param _lockTime The user stake lock period
-    constructor(address _ctsi, uint256 _lockTime) {
+    constructor(address _ctsi) {
         ctsi = IERC20(_ctsi);
+    }
+
+    /// @param _lockTime The user stake lock period
+    function initialize_StakingPoolUser(uint256 _lockTime) public {
         lockTime = _lockTime;
     }
 

@@ -13,9 +13,10 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-contract StakingPoolData is Ownable, Pausable {
+contract StakingPoolData is Ownable, Initializable, Pausable {
     uint256 public shares; // total number of shares
     uint256 public amount; // amount of staked tokens (no matter where it is)
     uint256 public requiredLiquidity; // amount of required tokens for withdraw requests

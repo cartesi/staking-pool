@@ -24,21 +24,19 @@ import "./StakingPoolData.sol";
 contract StakingPoolStakingImpl is StakingPoolStaking, StakingPoolData {
     IERC20 private immutable ctsi;
     IStaking private immutable staking;
-    uint256 public immutable stakeThreshold;
+    uint256 public stakeThreshold;
 
-    constructor(
-        address _ctsi,
-        address _staking,
-        uint256 _stakeThresold
-    ) {
+    constructor(address _ctsi, address _staking) {
         ctsi = IERC20(_ctsi);
         staking = IStaking(_staking);
-        stakeThreshold = _stakeThresold;
-        /* TODO
+    }
+
+    function initialize_StakingPoolStaking(uint256 _stakeThreshold) public {
+        stakeThreshold = _stakeThreshold;
         require(
             ctsi.approve(address(staking), type(uint256).max),
             "Failed to approve CTSI for staking contract"
-        );*/
+        );
     }
 
     function trade() public override {
