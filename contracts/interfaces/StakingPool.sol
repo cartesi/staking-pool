@@ -37,7 +37,6 @@ interface StakingPool is
     function initialize(
         address owner,
         address fee,
-        uint256 stakeLock,
-        uint256 stakeThreshold
+        uint256 stakeLock
     ) external;
 }

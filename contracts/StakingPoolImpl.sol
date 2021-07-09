@@ -46,11 +46,10 @@ contract StakingPoolImpl is
     function initialize(
         address _owner,
         address _fee,
-        uint256 _stakeLock,
-        uint256 _stakeThreshold
+        uint256 _stakeLock
     ) public override initializer {
         StakingPoolProducerImpl.initialize_StakingPoolProducer(_fee);
-        StakingPoolStakingImpl.initialize_StakingPoolStaking(_stakeThreshold);
+        StakingPoolStakingImpl.initialize_StakingPoolStaking();
         StakingPoolUserImpl.initialize_StakingPoolUser(_stakeLock);
     }
 }

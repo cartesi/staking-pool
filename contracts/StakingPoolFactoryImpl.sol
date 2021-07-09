@@ -61,7 +61,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         FlatRateCommission fee = new FlatRateCommission(commission);
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPool pool = StakingPool(deployed);
-        pool.initialize(msg.sender, address(fee), 0, 0);
+        pool.initialize(msg.sender, address(fee), 0);
         fee.transferOwnership(msg.sender);
         pool.selfhire{value: msg.value}();
 
@@ -84,7 +84,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         );
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPool pool = StakingPool(deployed);
-        pool.initialize(msg.sender, address(fee), 0, 0);
+        pool.initialize(msg.sender, address(fee), 0);
         fee.transferOwnership(msg.sender);
         pool.selfhire{value: msg.value}();
 

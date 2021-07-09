@@ -24,15 +24,13 @@ import "./StakingPoolData.sol";
 contract StakingPoolStakingImpl is StakingPoolStaking, StakingPoolData {
     IERC20 private immutable ctsi;
     IStaking private immutable staking;
-    uint256 public stakeThreshold;
 
     constructor(address _ctsi, address _staking) {
         ctsi = IERC20(_ctsi);
         staking = IStaking(_staking);
     }
 
-    function initialize_StakingPoolStaking(uint256 _stakeThreshold) public {
-        stakeThreshold = _stakeThreshold;
+    function initialize_StakingPoolStaking() public {
         require(
             ctsi.approve(address(staking), type(uint256).max),
             "Failed to approve CTSI for staking contract"
@@ -44,7 +42,7 @@ contract StakingPoolStakingImpl is StakingPoolStaking, StakingPoolData {
         (uint256 _stake, uint256 _unstake, uint256 _withdraw) = amounts();
 
         // only stake if it is above certain threshold
-        if (_stake >= stakeThreshold) {
+        if (_stake > 0) {
             uint256 maturing = staking.getMaturingBalance(address(this));
             if (maturing == 0) {
                 // avoid resetting the clock
