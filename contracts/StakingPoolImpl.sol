@@ -48,6 +48,7 @@ contract StakingPoolImpl is
         address _fee,
         uint256 _stakeLock
     ) public override initializer {
+        StakingPoolManagementImpl.initialize_StakingPoolManagement();
         StakingPoolProducerImpl.initialize_StakingPoolProducer(_fee);
         StakingPoolStakingImpl.initialize_StakingPoolStaking();
         StakingPoolUserImpl.initialize_StakingPoolUser(_stakeLock);

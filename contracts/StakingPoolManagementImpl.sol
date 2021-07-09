@@ -27,10 +27,14 @@ contract StakingPoolManagementImpl is StakingPoolManagement, StakingPoolData {
     // all immutable variables can stay at the constructor
     constructor(address _ens) {
         require(_ens != address(0), "parameter can not be zero address");
-
         ens = ENS(_ens);
-        // make sure reference code is pause so noone stake to it
+
+        // make sure reference code is pause so no one stake to it
         _pause();
+    }
+
+    function initialize_StakingPoolManagement() public {
+        _unpause();
     }
 
     /// @notice sets a name for the pool using ENS service
