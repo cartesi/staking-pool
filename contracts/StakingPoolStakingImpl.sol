@@ -90,7 +90,9 @@ contract StakingPoolStakingImpl is StakingPoolStaking, StakingPoolData {
                 // some is already releasing
 
                 // let's check timestamp to see if we can withdrawn it
-                uint256 timestamp = staking.getMaturingTimestamp(address(this));
+                uint256 timestamp = staking.getReleasingTimestamp(
+                    address(this)
+                );
                 if (timestamp < block.timestamp) {
                     // there it is, let's grab it
                     withdraw = releasing;
