@@ -32,11 +32,19 @@ contract StakingPoolData is Ownable, Initializable, Pausable {
 
     function amountToShares(uint256 _amount) public view returns (uint256) {
         // TODO: rounding errors
+        if (amount == 0) {
+            // no shares yet, return 1 to 1 ratio
+            return _amount;
+        }
         return (_amount * shares) / amount;
     }
 
     function sharesToAmount(uint256 _shares) public view returns (uint256) {
         // TODO: rounding errors
+        if (shares == 0) {
+            // no shares yet, return 1 to 1 ratio
+            return _shares;
+        }
         return (_shares * amount) / shares;
     }
 }
