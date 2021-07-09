@@ -38,6 +38,10 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         // user must have approved the transfer a priori
         // tokens will be lying around, until actually staked by pool owner at a later time
         require(
+            _amount > 0,
+            "StakingPoolUserImpl: amount must be greater than 0"
+        );
+        require(
             ctsi.transferFrom(msg.sender, address(this), _amount),
             "StakingPoolUserImpl: failed to transfer tokens"
         );
@@ -67,6 +71,9 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
     function unstake(uint256 _shares) public override {
         UserBalance storage user = userBalance[msg.sender];
 
+        // check if shares is valid value
+        require(_shares > 0, "StakingPoolUserImpl: invalid amount of shares");
+
         // check if user has enough shares to unstake
         require(
             user.shares >= _shares,
@@ -76,7 +83,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         // check if user can already unstake or if it's still locked
         require(
             block.timestamp > user.unstakeTimestamp,
-            "StakingPoolUserImpl: too early to unstake"
+            "StakingPoolUserImpl: stake locked"
         );
 
         // reduce user number of shares
