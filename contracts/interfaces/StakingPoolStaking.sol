@@ -25,7 +25,7 @@ interface StakingPoolStaking {
     /// If the pool has more liquidity then necessary, it stakes tokens.
     /// If the pool has less liquidity then necessary, and has not started an unstake, it unstakes.
     /// If the pool has less liquity than necessary, and has started an unstake, it withdraws if possible.
-    function trade() external;
+    function rebalance() external;
 
     /// @notice provide information for offchain about the amount for each
     /// staking operation on the main Staking contract

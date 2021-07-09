@@ -39,7 +39,7 @@ contract StakingPoolStakingImpl is StakingPoolStaking, StakingPoolData {
         );
     }
 
-    function trade() public override {
+    function rebalance() public override {
         // get amounts
         (uint256 _stake, uint256 _unstake, uint256 _withdraw) = amounts();
 
