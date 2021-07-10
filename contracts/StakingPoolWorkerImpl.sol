@@ -43,7 +43,7 @@ contract StakingPoolWorkerImpl is StakingPoolWorker {
         workerManager.hire{value: msg.value}(payable(address(this)));
         workerManager.authorize(address(this), pos);
         workerManager.acceptJob();
-        payable(msg.sender).transfer(msg.value);
+        // TODO: payable(msg.sender).transfer(msg.value);
     }
 
     /// @notice Asks the worker to work for the sender. Sender needs to pay something.

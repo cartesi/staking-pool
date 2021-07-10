@@ -29,7 +29,7 @@ contract StakingPoolProducerImpl is StakingPoolProducer, StakingPoolData {
         pos = IPoS(_pos);
     }
 
-    function initialize_StakingPoolProducer(address _fee) public {
+    function __StakingPoolProducer_init(address _fee) public {
         fee = Fee(_fee);
     }
 

@@ -27,7 +27,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
     }
 
     /// @param _lockTime The user stake lock period
-    function initialize_StakingPoolUser(uint256 _lockTime) public {
+    function __StakingPoolUser_init(uint256 _lockTime) public {
         lockTime = _lockTime;
     }
 

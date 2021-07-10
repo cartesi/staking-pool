@@ -43,14 +43,22 @@ contract StakingPoolImpl is
         StakingPoolWorkerImpl(_workerManager, _pos)
     {}
 
-    function initialize(
-        address _owner,
-        address _fee,
-        uint256 _stakeLock
-    ) public override initializer {
-        StakingPoolManagementImpl.initialize_StakingPoolManagement();
-        StakingPoolProducerImpl.initialize_StakingPoolProducer(_fee);
-        StakingPoolStakingImpl.initialize_StakingPoolStaking();
-        StakingPoolUserImpl.initialize_StakingPoolUser(_stakeLock);
+    function initialize(address _fee, uint256 _stakeLock)
+        public
+        override
+        initializer
+    {
+        __Pausable_init();
+        __Ownable_init();
+        __StakingPoolProducer_init(_fee);
+        __StakingPoolStaking_init();
+        __StakingPoolUser_init(_stakeLock);
+    }
+
+    function transferOwnership(address newOwner)
+        public
+        override(StakingPool, OwnableUpgradeable)
+    {
+        OwnableUpgradeable.transferOwnership(newOwner);
     }
 }

@@ -33,10 +33,6 @@ contract StakingPoolManagementImpl is StakingPoolManagement, StakingPoolData {
         _pause();
     }
 
-    function initialize_StakingPoolManagement() public {
-        _unpause();
-    }
-
     /// @notice sets a name for the pool using ENS service
     function setName(string memory name) external override onlyOwner {
         ReverseRegistrar ensReverseRegistrar = ReverseRegistrar(

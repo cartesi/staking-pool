@@ -12,11 +12,15 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract StakingPoolData is Ownable, Initializable, Pausable {
+contract StakingPoolData is
+    Initializable,
+    PausableUpgradeable,
+    OwnableUpgradeable
+{
     uint256 public shares; // total number of shares
     uint256 public amount; // amount of staked tokens (no matter where it is)
     uint256 public requiredLiquidity; // amount of required tokens for withdraw requests
@@ -27,8 +31,6 @@ contract StakingPoolData is Ownable, Initializable, Pausable {
         uint256 unstakeTimestamp; // timestamp of when user can unstake
     }
     mapping(address => UserBalance) public userBalance;
-
-    constructor() {}
 
     function amountToShares(uint256 _amount) public view returns (uint256) {
         // TODO: rounding errors

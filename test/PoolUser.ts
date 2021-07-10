@@ -60,7 +60,7 @@ describe("StakingPoolUser", async () => {
                 StakingPoolImpl.address,
                 deployer
             );
-            await pool.initialize(deployer.address, fee.address, STAKE_LOCK);
+            await pool.initialize(fee.address, STAKE_LOCK);
             return {
                 owner: {
                     address: deployer.address,
@@ -167,8 +167,6 @@ describe("StakingPoolUser", async () => {
         const ts = Date.now();
         setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts);
         await alice.pool.stake(stake);
-
-        // only 10 seconds after stake
         setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts + 61);
 
         await expect(alice.pool.unstake(unstake))

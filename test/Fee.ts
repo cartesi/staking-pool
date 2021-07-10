@@ -13,7 +13,7 @@ import { expect, use } from "chai";
 import { ethers } from "hardhat";
 import { BigNumberish, Signer } from "ethers";
 import { solidity, deployMockContract } from "ethereum-waffle";
-import AgregatorInterface from "@chainlink/contracts/abi/v0.7/AggregatorInterface.json";
+import AgregatorInterface from "@chainlink/contracts/abi/v0.8/AggregatorInterface.json";
 import IUniswapV2Pair from "@uniswap/v2-core/build/IUniswapV2Pair.json";
 
 import { FlatRateCommission } from "../src/types/FlatRateCommission";
@@ -86,7 +86,7 @@ describe("GasTaxCommission", async () => {
         // build a chainlink oracle mock returning the specified gas price
         const chainlinkOracle = await deployMockContract(
             signer,
-            AgregatorInterface.compilerOutput.abi
+            AgregatorInterface
         );
         chainlinkOracle.mock.latestAnswer.returns(gasPrice);
 

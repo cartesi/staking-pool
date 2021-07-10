@@ -30,7 +30,7 @@ contract StakingPoolStakingImpl is StakingPoolStaking, StakingPoolData {
         staking = IStaking(_staking);
     }
 
-    function initialize_StakingPoolStaking() public {
+    function __StakingPoolStaking_init() public {
         require(
             ctsi.approve(address(staking), type(uint256).max),
             "Failed to approve CTSI for staking contract"

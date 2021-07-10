@@ -31,11 +31,11 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     constructor(address _chainlinkOracle, address _uniswapOracle) {
         require(
             _chainlinkOracle != address(0),
-            "parameter can not be zero address."
+            "StakingPoolFactoryImpl: parameter can not be zero address."
         );
         require(
             _uniswapOracle != address(0),
-            "parameter can not be zero address."
+            "StakingPoolFactoryImpl: parameter can not be zero address."
         );
         chainlinkOracle = _chainlinkOracle;
         uniswapOracle = _uniswapOracle;
@@ -57,11 +57,15 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         whenNotPaused
         returns (address)
     {
-        require(referencePool != address(0), "undefined reference pool");
+        require(
+            referencePool != address(0),
+            "StakingPoolFactoryImpl: undefined reference pool"
+        );
         FlatRateCommission fee = new FlatRateCommission(commission);
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPool pool = StakingPool(deployed);
-        pool.initialize(msg.sender, address(fee), 0);
+        pool.initialize(address(fee), 0);
+        pool.transferOwnership(msg.sender);
         fee.transferOwnership(msg.sender);
         pool.selfhire{value: msg.value}();
 
@@ -76,7 +80,10 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         whenNotPaused
         returns (address)
     {
-        require(referencePool != address(0), "undefined reference pool");
+        require(
+            referencePool != address(0),
+            "StakingPoolFactoryImpl: undefined reference pool"
+        );
         GasTaxCommission fee = new GasTaxCommission(
             chainlinkOracle,
             uniswapOracle,
@@ -84,7 +91,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         );
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPool pool = StakingPool(deployed);
-        pool.initialize(msg.sender, address(fee), 0);
+        pool.initialize(address(fee), 0);
+        pool.transferOwnership(msg.sender);
         fee.transferOwnership(msg.sender);
         pool.selfhire{value: msg.value}();
 
