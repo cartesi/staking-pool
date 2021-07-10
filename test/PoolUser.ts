@@ -173,10 +173,80 @@ describe("StakingPoolUser", async () => {
             .to.emit(alice.pool, "Unstake")
             .withArgs(alice.address, unstake, unstake);
 
+        // total shares and amount should decrease
         expect(await alice.pool.shares()).to.equal(stake.sub(unstake));
         expect(await alice.pool.amount()).to.equal(stake.sub(unstake));
+
+        // user shares and amount should decrease
         const balance = await alice.pool.userBalance(alice.address);
         expect(balance.shares).to.equal(stake.sub(unstake));
+
+        // relesed should increase
         expect(balance.released).to.equal(unstake);
+
+        // required liquidity should increase
+        expect(await alice.pool.requiredLiquidity()).to.equal(unstake);
+    });
+
+    it("should not withdraw with no user balance", async () => {
+        const { alice } = await setupPool();
+        await expect(alice.pool.withdraw()).to.be.revertedWith(
+            "StakingPoolUserImpl: no balance to withdraw"
+        );
+    });
+
+    it("should withdraw right after unstake", async () => {
+        const { alice } = await setupPool();
+        const stake = parseCTSI("1000");
+        const unstake = stake.div(4);
+        await alice.token.approve(alice.pool.address, stake);
+
+        // stake
+        const ts = Date.now();
+        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts);
+        await alice.pool.stake(stake);
+
+        // unstake 1/4
+        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts + 61);
+        await alice.pool.unstake(unstake);
+
+        // unstake request liquidity
+        expect(await alice.pool.requiredLiquidity()).to.equal(unstake);
+
+        await expect(alice.pool.withdraw())
+            .to.emit(alice.pool, "Withdraw")
+            .withArgs(alice.address, unstake);
+
+        const balance = await alice.pool.userBalance(alice.address);
+        expect(balance.released).to.equal(0);
+
+        // decrease liquidity
+        expect(await alice.pool.requiredLiquidity()).to.equal(0);
+    });
+
+    it("should not withdraw with no pool balance", async () => {
+        const { alice } = await setupPool();
+        const stake = parseCTSI("1000");
+        const unstake = stake.div(4);
+        await alice.token.approve(alice.pool.address, stake);
+
+        // stake
+        const ts = Date.now();
+        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts);
+        await alice.pool.stake(stake);
+
+        // stake to staking
+        await alice.pool.rebalance();
+
+        // unstake 1/4
+        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts + 61);
+        await alice.pool.unstake(unstake);
+
+        // should not have balance
+        expect(await alice.pool.getWithdrawBalance()).to.equal(0);
+
+        await expect(alice.pool.withdraw()).to.be.revertedWith(
+            "ERC20: transfer amount exceeds balance"
+        );
     });
 });
