@@ -98,9 +98,9 @@
   "evm": {
     "bytecode": {
       "functionDebugData": {
-        "@_3606": {
+        "@_3613": {
           "entryPoint": null,
-          "id": 3606,
+          "id": 3613,
           "parameterSlots": 2,
           "returnSlots": 0
         },
@@ -741,33 +741,33 @@
     },
     "deployedBytecode": {
       "functionDebugData": {
-        "@_3610": {
+        "@_3617": {
           "entryPoint": null,
-          "id": 3610,
+          "id": 3617,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@cancelHire_3684": {
+        "@cancelHire_3691": {
           "entryPoint": 701,
-          "id": 3684,
+          "id": 3691,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@hire_3670": {
+        "@hire_3677": {
           "entryPoint": 779,
-          "id": 3670,
+          "id": 3677,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@retire_3698": {
+        "@retire_3705": {
           "entryPoint": 574,
-          "id": 3698,
+          "id": 3705,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@selfhire_3646": {
+        "@selfhire_3653": {
           "entryPoint": 172,
-          "id": 3646,
+          "id": 3653,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -2076,7 +2076,7 @@
         }
       ],
       "immutableReferences": {
-        "3565": [
+        "3572": [
           {
             "length": 32,
             "start": 321
@@ -2086,7 +2086,7 @@
             "start": 932
           }
         ],
-        "3568": [
+        "3575": [
           {
             "length": 32,
             "start": 193

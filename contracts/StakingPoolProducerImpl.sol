@@ -20,8 +20,8 @@ import "./interfaces/StakingPoolProducer.sol";
 import "./StakingPoolData.sol";
 
 contract StakingPoolProducerImpl is StakingPoolProducer, StakingPoolData {
-    IERC20 private immutable ctsi;
-    IPoS private immutable pos;
+    IERC20 public immutable ctsi;
+    IPoS public immutable pos;
     Fee public fee;
 
     constructor(address _ctsi, address _pos) {

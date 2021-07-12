@@ -49,6 +49,12 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         // calculate amount of shares as of now
         uint256 _shares = amountToShares(_amount);
 
+        // make sure he get at least one share (rounding errors)
+        require(
+            _shares > 0,
+            "StakingPoolUserImpl: stake not enough to emit 1 share"
+        );
+
         UserBalance storage user = userBalance[msg.sender];
 
         // allocate new shares to user, immediately

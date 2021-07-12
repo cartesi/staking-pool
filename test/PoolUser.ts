@@ -16,10 +16,14 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import { CartesiToken__factory } from "@cartesi/token";
 import { StakingPoolImpl__factory } from "../src/types/factories/StakingPoolImpl__factory";
 
-import { setNextBlockTimestamp } from "./utils";
+import { advanceTime, setNextBlockTimestamp } from "./utils";
+import { WorkerManagerAuthManagerImpl__factory } from "@cartesi/util";
+import { PoS__factory } from "@cartesi/pos";
 const { solidity, deployMockContract } = waffle;
 
 use(solidity);
+const MINUTE = 60; // seconds in a minute
+const HOUR = 60 * MINUTE; // seconds in an hour
 const STAKE_LOCK = 60; // seconds
 
 const parseCTSI = (value: string) => ethers.utils.parseUnits(value, 18);
@@ -33,11 +37,17 @@ describe("StakingPoolUser", async () => {
             await deployments.fixture();
 
             const [deployer, alice, bob] = await ethers.getSigners();
-            const { CartesiToken, StakingPoolImpl } = await deployments.all();
+            const {
+                BlockSelector,
+                CartesiToken,
+                StakingImpl,
+                StakingPoolImpl,
+                WorkerManagerAuthManagerImpl,
+            } = await deployments.all();
 
             // setup fee mock contract
-            const reward = 200;
-            const commission = reward * 0.1; // 10%
+            const reward = parseCTSI("2900");
+            const commission = reward.div(10); // 10%
             const commissionArtifact = await deployments.getArtifact(
                 "FlatRateCommission"
             );
@@ -47,7 +57,7 @@ describe("StakingPoolUser", async () => {
             );
             await fee.mock.getCommission.returns(commission);
 
-            // setup tolen distribution
+            // setup token distribution
             const token = CartesiToken__factory.connect(
                 CartesiToken.address,
                 deployer
@@ -61,6 +71,40 @@ describe("StakingPoolUser", async () => {
                 deployer
             );
             await pool.initialize(fee.address, STAKE_LOCK);
+
+            // deploy a mock BlockSelector that always returns true to produceBlock
+            const blockSelector = await deployMockContract(
+                deployer,
+                BlockSelector.abi
+            );
+            blockSelector.mock.instantiate.returns(0);
+            blockSelector.mock.produceBlock.returns(true);
+            blockSelector.mock.canProduceBlock.returns(true);
+            await pool.selfhire({ value: ethers.utils.parseEther("0.001") });
+
+            // instantiate a chain
+            const pos = PoS__factory.connect(await pool.pos(), deployer);
+            await pos.instantiate(
+                StakingImpl.address,
+                blockSelector.address,
+                WorkerManagerAuthManagerImpl.address,
+                "1000000000",
+                "100000000000000000000000000",
+                50000,
+                56,
+                CartesiToken.address,
+                reward,
+                reward,
+                10000,
+                10000
+            );
+
+            // feed the RewardManager with 10 block worth of tokens
+            await token.transfer(
+                await pos.getRewardManagerAddress(0),
+                reward.mul(10)
+            );
+
             return {
                 owner: {
                     address: deployer.address,
@@ -139,6 +183,32 @@ describe("StakingPoolUser", async () => {
         expect(balance.shares).to.equal(stake);
         expect(balance.unstakeTimestamp).to.equal(ts + STAKE_LOCK);
         expect(balance.released).to.equal(0);
+    });
+
+    it("should not allow to receive zero shares", async () => {
+        const { alice, bob, owner } = await setupPool();
+
+        // stake 1e-18 tokens, earn 1e-18 shares
+        await alice.token.approve(alice.pool.address, 1);
+        await alice.pool.stake(1);
+        expect((await alice.pool.userBalance(alice.address)).shares).to.equal(
+            1
+        );
+
+        // stake to staking
+        await owner.pool.rebalance();
+
+        // advance time to mature stake
+        advanceTime(owner.pool.provider as JsonRpcProvider, 6 * HOUR);
+
+        // produce a block
+        await owner.pool.produceBlock(0);
+
+        // bob tries to stake same as alice, but it's not enough to emit a single share
+        await bob.token.approve(bob.pool.address, 1);
+        await expect(bob.pool.stake(1)).to.revertedWith(
+            "StakingPoolUserImpl: stake not enough to emit 1 share"
+        );
     });
 
     it("should lock stake", async () => {
