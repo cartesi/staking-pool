@@ -17,7 +17,6 @@ import { CartesiToken__factory } from "@cartesi/token";
 import { StakingPoolImpl__factory } from "../src/types/factories/StakingPoolImpl__factory";
 
 import { advanceTime, setNextBlockTimestamp } from "./utils";
-import { WorkerManagerAuthManagerImpl__factory } from "@cartesi/util";
 import { PoS__factory } from "@cartesi/pos";
 const { solidity, deployMockContract } = waffle;
 
@@ -237,7 +236,10 @@ describe("StakingPoolUser", async () => {
         const ts = Date.now();
         setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts);
         await alice.pool.stake(stake);
-        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts + 61);
+        setNextBlockTimestamp(
+            alice.pool.provider as JsonRpcProvider,
+            ts + STAKE_LOCK + 1
+        );
 
         await expect(alice.pool.unstake(unstake))
             .to.emit(alice.pool, "Unstake")
@@ -277,7 +279,10 @@ describe("StakingPoolUser", async () => {
         await alice.pool.stake(stake);
 
         // unstake 1/4
-        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts + 61);
+        setNextBlockTimestamp(
+            alice.pool.provider as JsonRpcProvider,
+            ts + STAKE_LOCK + 1
+        );
         await alice.pool.unstake(unstake);
 
         // unstake request liquidity
@@ -309,7 +314,10 @@ describe("StakingPoolUser", async () => {
         await alice.pool.rebalance();
 
         // unstake 1/4
-        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts + 61);
+        setNextBlockTimestamp(
+            alice.pool.provider as JsonRpcProvider,
+            ts + STAKE_LOCK + 1
+        );
         await alice.pool.unstake(unstake);
 
         // should not have balance
