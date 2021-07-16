@@ -25,8 +25,6 @@ const MINUTE = 60; // seconds in a minute
 const HOUR = 60 * MINUTE; // seconds in an hour
 const STAKE_LOCK = 60; // seconds
 
-// const  = (value: string) => ethers.utils.parseUnits(value, 18);
-
 describe("StakingPoolUser", async () => {
     beforeEach(async () => {});
 
@@ -113,7 +111,7 @@ describe("StakingPoolUser", async () => {
         );
     });
 
-    it("should lock stake", async () => {
+    it("should lock user stake", async () => {
         const { alice } = await setupPool({ STAKE_LOCK });
         const stake = parseCTSI("1000");
         await alice.token.approve(alice.pool.address, stake);
