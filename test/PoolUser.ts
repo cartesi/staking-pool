@@ -29,42 +29,42 @@ describe("StakingPoolUser", async () => {
     beforeEach(async () => {});
 
     it("should not allow unstake of zero shares", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         await expect(alice.pool.unstake(0)).to.revertedWith(
             "StakingPoolUserImpl: invalid amount of shares"
         );
     });
 
     it("should not allow unstake with no shares", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         await expect(alice.pool.unstake(1)).to.revertedWith(
             "StakingPoolUserImpl: insufficient shares"
         );
     });
 
     it("should not allow stake zero tokens", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         await expect(alice.pool.stake(0)).to.revertedWith(
             "StakingPoolUserImpl: amount must be greater than 0"
         );
     });
 
     it("should not stake what user don't have", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         await expect(alice.pool.stake(parseCTSI("100000"))).to.be.revertedWith(
             "ERC20: transfer amount exceeds balance"
         );
     });
 
     it("should not stake what user didn't allow", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         await expect(alice.pool.stake(parseCTSI("1000"))).to.be.revertedWith(
             "ERC20: transfer amount exceeds allowance"
         );
     });
 
     it("should successfully stake", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         const stake = parseCTSI("1000");
         await alice.token.approve(alice.pool.address, stake);
 
@@ -86,7 +86,9 @@ describe("StakingPoolUser", async () => {
     });
 
     it("should not allow to receive zero shares", async () => {
-        const { alice, bob, owner } = await setupPool({ STAKE_LOCK });
+        const { alice, bob, owner } = await setupPool({
+            stakeLock: STAKE_LOCK,
+        });
 
         // stake 1e-18 tokens, earn 1e-18 shares
         await alice.token.approve(alice.pool.address, 1);
@@ -112,7 +114,7 @@ describe("StakingPoolUser", async () => {
     });
 
     it("should lock user stake", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         const stake = parseCTSI("1000");
         await alice.token.approve(alice.pool.address, stake);
 
@@ -129,7 +131,7 @@ describe("StakingPoolUser", async () => {
     });
 
     it("should successfully unstake", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         const stake = parseCTSI("1000");
         const unstake = stake.div(4);
         await alice.token.approve(alice.pool.address, stake);
@@ -159,14 +161,14 @@ describe("StakingPoolUser", async () => {
     });
 
     it("should not withdraw with no user balance", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         await expect(alice.pool.withdraw()).to.be.revertedWith(
             "StakingPoolUserImpl: no balance to withdraw"
         );
     });
 
     it("should withdraw right after unstake", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         const stake = parseCTSI("1000");
         const unstake = stake.div(4);
         await alice.token.approve(alice.pool.address, stake);
@@ -195,7 +197,7 @@ describe("StakingPoolUser", async () => {
     });
 
     it("should not withdraw with no pool balance", async () => {
-        const { alice } = await setupPool({ STAKE_LOCK });
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         const stake = parseCTSI("1000");
         const unstake = stake.div(4);
         await alice.token.approve(alice.pool.address, stake);

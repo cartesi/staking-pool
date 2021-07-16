@@ -46,13 +46,17 @@ export const advanceMultipleBlocks = async (
     }
 };
 
+export interface PoolProps {
+    stakeLock?: number;
+}
+
 export const setupPool = deployments.createFixture(
     async (
         { deployments, ethers }: HardhatRuntimeEnvironment,
-        { STAKE_LOCK }: { STAKE_LOCK: number } = { STAKE_LOCK: 60 }
+        options: PoolProps = {}
     ) => {
-        // const op = Object.assign({}, options);
-        // const STAKE_LOCK = op.STAKE_LOCK ? op.STAKE_LOCK : 60;
+        const stakeLock = options?.stakeLock || 60;
+
         // start with a fresh deployment
         await deployments.fixture();
 
@@ -90,7 +94,7 @@ export const setupPool = deployments.createFixture(
             throw "error on cloning deployment";
         const newPoolAddr = newPoolReceipt.events[0].args[0];
         const pool = StakingPoolImpl__factory.connect(newPoolAddr, deployer);
-        await pool.initialize(fee.address, STAKE_LOCK);
+        await pool.initialize(fee.address, stakeLock);
 
         // deploy a mock BlockSelector that always returns true to produceBlock
         const blockSelector = await deployMockContract(
