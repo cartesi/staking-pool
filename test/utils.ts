@@ -145,6 +145,14 @@ export const setupPool = deployments.createFixture(
                 pool: pool.connect(bob),
                 token: token.connect(bob),
             },
+            constants: {
+                reward,
+                commission,
+            },
+            contracts: {
+                pos,
+                fee,
+            },
         };
     }
 );

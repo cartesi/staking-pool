@@ -119,11 +119,11 @@ describe("StakingPoolUser", async () => {
         await alice.token.approve(alice.pool.address, stake);
 
         const ts = Date.now();
-        setNextBlockTimestamp(alice.pool.provider, ts);
+        await setNextBlockTimestamp(alice.pool.provider, ts);
         await alice.pool.stake(stake);
 
         // only 10 seconds after stake
-        setNextBlockTimestamp(alice.pool.provider, ts + 10);
+        await setNextBlockTimestamp(alice.pool.provider, ts + 10);
 
         await expect(alice.pool.unstake(stake)).to.be.revertedWith(
             "StakingPoolUserImpl: stake locked"
@@ -137,9 +137,9 @@ describe("StakingPoolUser", async () => {
         await alice.token.approve(alice.pool.address, stake);
 
         const ts = Date.now();
-        setNextBlockTimestamp(alice.pool.provider, ts);
+        await setNextBlockTimestamp(alice.pool.provider, ts);
         await alice.pool.stake(stake);
-        setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
+        await setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
 
         await expect(alice.pool.unstake(unstake))
             .to.emit(alice.pool, "Unstake")
@@ -175,11 +175,11 @@ describe("StakingPoolUser", async () => {
 
         // stake
         const ts = Date.now();
-        setNextBlockTimestamp(alice.pool.provider, ts);
+        await setNextBlockTimestamp(alice.pool.provider, ts);
         await alice.pool.stake(stake);
 
         // unstake 1/4
-        setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
+        await setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
         await alice.pool.unstake(unstake);
 
         // unstake request liquidity
@@ -204,14 +204,14 @@ describe("StakingPoolUser", async () => {
 
         // stake
         const ts = Date.now();
-        setNextBlockTimestamp(alice.pool.provider, ts);
+        await setNextBlockTimestamp(alice.pool.provider, ts);
         await alice.pool.stake(stake);
 
         // stake to staking
         await alice.pool.rebalance();
 
         // unstake 1/4
-        setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
+        await setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
         await alice.pool.unstake(unstake);
 
         // should not have balance
