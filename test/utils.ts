@@ -16,8 +16,9 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import { Provider } from "@ethersproject/abstract-provider";
 
 import { PoS__factory } from "@cartesi/pos";
-import { StakingPoolImpl__factory } from "../src/types/factories/StakingPoolImpl__factory";
 import { CartesiToken__factory } from "@cartesi/token";
+import { StakingPoolImpl__factory } from "../src/types/factories/StakingPoolImpl__factory";
+import { CloneMaker__factory } from "../src/types/factories/CloneMaker__factory";
 
 const { solidity, deployMockContract } = waffle;
 export const { parseEther: parseCTSI } = ethers.utils;
@@ -81,11 +82,14 @@ export const setupPool = deployments.createFixture(
         // send 10k tokens to alice and bob
         await token.transfer(alice.address, parseCTSI("10000"));
         await token.transfer(bob.address, parseCTSI("10000"));
-
-        const pool = StakingPoolImpl__factory.connect(
-            StakingPoolImpl.address,
-            deployer
-        );
+        const CloneMakerFactory = new CloneMaker__factory(deployer);
+        const cloneMaker = await CloneMakerFactory.deploy();
+        const newPoolTx = await cloneMaker.clone(StakingPoolImpl.address);
+        const newPoolReceipt = await newPoolTx.wait();
+        if (!newPoolReceipt.events || !newPoolReceipt.events[0].args)
+            throw "error on cloning deployment";
+        const newPoolAddr = newPoolReceipt.events[0].args[0];
+        const pool = StakingPoolImpl__factory.connect(newPoolAddr, deployer);
         await pool.initialize(fee.address, STAKE_LOCK);
 
         // deploy a mock BlockSelector that always returns true to produceBlock
