@@ -15,7 +15,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { Provider } from "@ethersproject/abstract-provider";
 
-import { PoS__factory } from "@cartesi/pos";
+import { PoS__factory, StakingImpl__factory } from "@cartesi/pos";
 import { CartesiToken__factory } from "@cartesi/token";
 import { StakingPoolImpl__factory } from "../src/types/factories/StakingPoolImpl__factory";
 import { CloneMaker__factory } from "../src/types/factories/CloneMaker__factory";
@@ -106,6 +106,10 @@ export const setupPool = deployments.createFixture(
         blockSelector.mock.canProduceBlock.returns(true);
         await pool.selfhire({ value: ethers.utils.parseEther("0.001") });
 
+        const staking = StakingImpl__factory.connect(
+            StakingImpl.address,
+            deployer
+        );
         // instantiate a chain
         const pos = PoS__factory.connect(await pool.pos(), deployer);
         await pos.instantiate(
@@ -152,6 +156,7 @@ export const setupPool = deployments.createFixture(
             contracts: {
                 pos,
                 fee,
+                staking,
             },
         };
     }

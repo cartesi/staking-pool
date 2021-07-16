@@ -8,10 +8,10 @@ use(solidity);
 const MINUTE = 60; // seconds in a minute
 const HOUR = 60 * MINUTE; // seconds in an hour
 const STAKE_LOCK = 60; // seconds
+const timeToStake = 2 * MINUTE;
+const timeToRelease = 2 * MINUTE;
 
 describe("StakingPoolProducer", async () => {
-    beforeEach(async () => {});
-
     it("should correctly produce a block", async () => {
         const {
             owner,
@@ -55,16 +55,23 @@ describe("StakingPoolProducer", async () => {
             bob,
             owner,
             constants: { reward, commission },
+            contracts: { staking },
         } = await setupPool({});
+        const provider = owner.pool.provider;
         const stake = parseCTSI("1000");
+
         await alice.token.approve(alice.pool.address, stake);
         await bob.token.approve(bob.pool.address, stake.mul(9));
 
         await alice.pool.stake(stake);
+        // bob is staking 9 times the amount of alice
+        // so he should earn 90% of the rewards
         await bob.pool.stake(stake.mul(9));
 
         // stake to staking
-        await owner.pool.rebalance();
+        const ts = Date.now();
+        await setNextBlockTimestamp(provider, ts);
+        await expect(owner.pool.rebalance()).to.emit(staking, "Stake");
         await owner.pool.produceBlock(0);
 
         const aliceBalance = await alice.pool.userBalance(alice.address);
@@ -72,11 +79,13 @@ describe("StakingPoolProducer", async () => {
 
         expect(aliceBalance.shares.mul(9)).to.be.equal(bobBalance.shares);
 
-        const ts = Date.now();
-        await setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
+        await setNextBlockTimestamp(provider, ts + STAKE_LOCK + 1);
 
+        // actual reward to users is the block reward - commission
         const remainingReward = reward.sub(commission);
+        // alice should only take 10% of the reward
         const aliceExpectedBalance = stake.add(remainingReward.div(10));
+        // and bob should take 90%
         const bobExpectedBalance = stake
             .mul(9)
             .add(remainingReward.mul(9).div(10));
@@ -88,5 +97,37 @@ describe("StakingPoolProducer", async () => {
         await expect(bob.pool.unstake(bobBalance.shares))
             .to.emit(bob.pool, "Unstake")
             .withArgs(bob.address, bobExpectedBalance, bobBalance.shares);
+
+        // this will call stakingImpl.unstake()
+        const maturingTS = await staking.getMaturingTimestamp(
+            owner.pool.address
+        );
+        await setNextBlockTimestamp(provider, maturingTS.toNumber() + 1);
+        await expect(owner.pool.rebalance()).to.emit(staking, "Unstake");
+
+        // this will call stakingImpl.withdraw()
+        const releasingTS = await staking.getReleasingTimestamp(
+            owner.pool.address
+        );
+        await setNextBlockTimestamp(provider, releasingTS.toNumber() + 1);
+        await expect(owner.pool.rebalance()).to.emit(staking, "Withdraw");
+
+        const aliceERC20Balance = await alice.token.balanceOf(alice.address);
+        const bobERC20Balance = await bob.token.balanceOf(bob.address);
+
+        await expect(alice.pool.withdraw())
+            .to.emit(alice.pool, "Withdraw")
+            .withArgs(alice.address, aliceExpectedBalance);
+
+        await expect(bob.pool.withdraw())
+            .to.emit(bob.pool, "Withdraw")
+            .withArgs(bob.address, bobExpectedBalance);
+
+        expect(await alice.token.balanceOf(alice.address)).to.be.equal(
+            aliceERC20Balance.add(aliceExpectedBalance)
+        );
+        expect(await bob.token.balanceOf(bob.address)).to.be.equal(
+            bobERC20Balance.add(bobExpectedBalance)
+        );
     });
 });
