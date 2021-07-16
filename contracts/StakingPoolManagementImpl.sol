@@ -25,7 +25,7 @@ contract StakingPoolManagementImpl is StakingPoolManagement, StakingPoolData {
     ENS public immutable ens;
 
     // all immutable variables can stay at the constructor
-    constructor(address _ens) {
+    constructor(address _ens) initializer {
         require(_ens != address(0), "parameter can not be zero address");
         ens = ENS(_ens);
 
