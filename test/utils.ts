@@ -12,29 +12,24 @@
 import { use } from "chai";
 import { solidity } from "ethereum-waffle";
 import { JsonRpcProvider } from "@ethersproject/providers";
+import { Provider } from "@ethersproject/abstract-provider";
 
 use(solidity);
 
-export const advanceTime = async (
-    provider: JsonRpcProvider,
-    seconds: number
-) => {
-    await provider.send("evm_increaseTime", [seconds]);
+export const advanceTime = async (provider: Provider, seconds: number) => {
+    await (provider as JsonRpcProvider).send("evm_increaseTime", [seconds]);
 };
 
-export const advanceBlock = async (provider: JsonRpcProvider) => {
-    await provider.send("evm_mine", []);
+export const advanceBlock = async (provider: Provider) => {
+    await (provider as JsonRpcProvider).send("evm_mine", []);
 };
 
-export const setNextBlockTimestamp = async (
-    provider: JsonRpcProvider,
-    ts: number
-) => {
-    await provider.send("evm_setNextBlockTimestamp", [ts]);
+export const setNextBlockTimestamp = async (provider: Provider, ts: number) => {
+    await (provider as JsonRpcProvider).send("evm_setNextBlockTimestamp", [ts]);
 };
 
 export const advanceMultipleBlocks = async (
-    provider: JsonRpcProvider,
+    provider: Provider,
     numOfBlocks: number
 ) => {
     for (let i = 0; i < numOfBlocks; i++) {

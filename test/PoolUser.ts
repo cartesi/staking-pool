@@ -166,10 +166,7 @@ describe("StakingPoolUser", async () => {
 
         // control time
         const ts = Date.now();
-        await (alice.pool.provider as JsonRpcProvider).send(
-            "evm_setNextBlockTimestamp",
-            [ts]
-        );
+        await setNextBlockTimestamp(alice.pool.provider, ts);
 
         await expect(alice.pool.stake(stake))
             .to.emit(alice.pool, "Stake")
@@ -198,7 +195,7 @@ describe("StakingPoolUser", async () => {
         await owner.pool.rebalance();
 
         // advance time to mature stake
-        advanceTime(owner.pool.provider as JsonRpcProvider, 6 * HOUR);
+        advanceTime(owner.pool.provider, 6 * HOUR);
 
         // produce a block
         await owner.pool.produceBlock(0);
@@ -216,11 +213,11 @@ describe("StakingPoolUser", async () => {
         await alice.token.approve(alice.pool.address, stake);
 
         const ts = Date.now();
-        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts);
+        setNextBlockTimestamp(alice.pool.provider, ts);
         await alice.pool.stake(stake);
 
         // only 10 seconds after stake
-        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts + 10);
+        setNextBlockTimestamp(alice.pool.provider, ts + 10);
 
         await expect(alice.pool.unstake(stake)).to.be.revertedWith(
             "StakingPoolUserImpl: stake locked"
@@ -234,12 +231,9 @@ describe("StakingPoolUser", async () => {
         await alice.token.approve(alice.pool.address, stake);
 
         const ts = Date.now();
-        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts);
+        setNextBlockTimestamp(alice.pool.provider, ts);
         await alice.pool.stake(stake);
-        setNextBlockTimestamp(
-            alice.pool.provider as JsonRpcProvider,
-            ts + STAKE_LOCK + 1
-        );
+        setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
 
         await expect(alice.pool.unstake(unstake))
             .to.emit(alice.pool, "Unstake")
@@ -275,14 +269,11 @@ describe("StakingPoolUser", async () => {
 
         // stake
         const ts = Date.now();
-        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts);
+        setNextBlockTimestamp(alice.pool.provider, ts);
         await alice.pool.stake(stake);
 
         // unstake 1/4
-        setNextBlockTimestamp(
-            alice.pool.provider as JsonRpcProvider,
-            ts + STAKE_LOCK + 1
-        );
+        setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
         await alice.pool.unstake(unstake);
 
         // unstake request liquidity
@@ -307,17 +298,14 @@ describe("StakingPoolUser", async () => {
 
         // stake
         const ts = Date.now();
-        setNextBlockTimestamp(alice.pool.provider as JsonRpcProvider, ts);
+        setNextBlockTimestamp(alice.pool.provider, ts);
         await alice.pool.stake(stake);
 
         // stake to staking
         await alice.pool.rebalance();
 
         // unstake 1/4
-        setNextBlockTimestamp(
-            alice.pool.provider as JsonRpcProvider,
-            ts + STAKE_LOCK + 1
-        );
+        setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
         await alice.pool.unstake(unstake);
 
         // should not have balance
