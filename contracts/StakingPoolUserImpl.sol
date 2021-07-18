@@ -147,6 +147,6 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         uint256 balance = ctsi.balanceOf(address(this));
 
         // only allow full withdraw, so if contract has enough, let him get it
-        return balance > _amount ? _amount : 0;
+        return balance >= _amount ? _amount : 0;
     }
 }

@@ -170,7 +170,6 @@ describe("StakingPoolUser", async () => {
     it("should withdraw right after unstake", async () => {
         const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         const stake = parseCTSI("1000");
-        const unstake = stake.div(4);
         await alice.token.approve(alice.pool.address, stake);
 
         // stake
@@ -180,14 +179,19 @@ describe("StakingPoolUser", async () => {
 
         // unstake 1/4
         await setNextBlockTimestamp(alice.pool.provider, ts + STAKE_LOCK + 1);
-        await alice.pool.unstake(unstake);
+        await alice.pool.unstake(stake);
 
         // unstake request liquidity
-        expect(await alice.pool.requiredLiquidity()).to.equal(unstake);
+        expect(await alice.pool.requiredLiquidity()).to.equal(stake);
 
+        console.log(
+            (await alice.token.balanceOf(alice.pool.address)).toString()
+        );
+        console.log((await alice.pool.userBalance(alice.address)).toString());
+        expect(await alice.pool.getWithdrawBalance()).to.equal(stake);
         await expect(alice.pool.withdraw())
             .to.emit(alice.pool, "Withdraw")
-            .withArgs(alice.address, unstake);
+            .withArgs(alice.address, stake);
 
         const balance = await alice.pool.userBalance(alice.address);
         expect(balance.released).to.equal(0);
