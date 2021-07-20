@@ -183,11 +183,6 @@ describe("StakingPoolUser", async () => {
 
         // unstake request liquidity
         expect(await alice.pool.requiredLiquidity()).to.equal(stake);
-
-        console.log(
-            (await alice.token.balanceOf(alice.pool.address)).toString()
-        );
-        console.log((await alice.pool.userBalance(alice.address)).toString());
         expect(await alice.pool.getWithdrawBalance()).to.equal(stake);
         await expect(alice.pool.withdraw())
             .to.emit(alice.pool, "Withdraw")
