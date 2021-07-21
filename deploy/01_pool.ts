@@ -12,16 +12,23 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
+import { deployENS, ENS } from "@ethereum-waffle/ens";
+
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     const { deployments, getNamedAccounts, ethers } = hre;
     const { deploy } = deployments;
-    const { deployer } = await getNamedAccounts();
     const { CartesiToken, PoS, StakingImpl, WorkerManagerAuthManagerImpl } =
         await deployments.all();
+    const [deployer] = await ethers.getSigners();
 
     const ethNetwork = await ethers.getDefaultProvider().getNetwork();
-    const ensAddress = ethNetwork.ensAddress || ethers.constants.AddressZero;
-
+    let ensAddress;
+    if (hre.network.name != "hardhat") ensAddress = ethNetwork.ensAddress;
+    else {
+        const ensSvc: ENS = await deployENS(deployer);
+        await ensSvc.createTopLevelDomain("test");
+        ensAddress = ensSvc.ens.address;
+    }
     // deploy reference pool
     await deploy("StakingPoolImpl", {
         args: [
@@ -31,7 +38,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
             WorkerManagerAuthManagerImpl.address,
             ensAddress,
         ],
-        from: deployer,
+        from: deployer.address,
         log: true,
     });
 };
