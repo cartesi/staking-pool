@@ -135,6 +135,8 @@ describe("StakingPoolStaking", async () => {
         await setNextBlockTimestamp(pool.provider, ts);
         await alice.pool.stake(stake);
         await pool.rebalance();
+        // now we set the timestamp past the lock period
+        // otherwise the unstake operation would be blocked
         let nextTS = ts + STAKE_LOCK + 1;
         await setNextBlockTimestamp(pool.provider, nextTS);
 
