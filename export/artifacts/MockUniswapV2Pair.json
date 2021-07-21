@@ -689,9 +689,9 @@
   "evm": {
     "bytecode": {
       "functionDebugData": {
-        "@_4077": {
+        "@_4079": {
           "entryPoint": null,
-          "id": 4077,
+          "id": 4079,
           "parameterSlots": 0,
           "returnSlots": 0
         }
@@ -703,171 +703,171 @@
     },
     "deployedBytecode": {
       "functionDebugData": {
-        "@DOMAIN_SEPARATOR_4187": {
+        "@DOMAIN_SEPARATOR_4189": {
           "entryPoint": null,
-          "id": 4187,
+          "id": 4189,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@MINIMUM_LIQUIDITY_4236": {
+        "@MINIMUM_LIQUIDITY_4238": {
           "entryPoint": null,
-          "id": 4236,
+          "id": 4238,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@PERMIT_TYPEHASH_4196": {
+        "@PERMIT_TYPEHASH_4198": {
           "entryPoint": null,
-          "id": 4196,
+          "id": 4198,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@allowance_4137": {
+        "@allowance_4139": {
           "entryPoint": null,
-          "id": 4137,
+          "id": 4139,
           "parameterSlots": 2,
           "returnSlots": 1
         },
-        "@approve_4150": {
+        "@approve_4152": {
           "entryPoint": null,
-          "id": 4150,
+          "id": 4152,
           "parameterSlots": 2,
           "returnSlots": 1
         },
-        "@balanceOf_4124": {
+        "@balanceOf_4126": {
           "entryPoint": null,
-          "id": 4124,
+          "id": 4126,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@burn_4361": {
+        "@burn_4363": {
           "entryPoint": null,
-          "id": 4361,
+          "id": 4363,
           "parameterSlots": 1,
           "returnSlots": 2
         },
-        "@decimals_4104": {
+        "@decimals_4106": {
           "entryPoint": null,
-          "id": 4104,
+          "id": 4106,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@factory_4248": {
+        "@factory_4250": {
           "entryPoint": null,
-          "id": 4248,
+          "id": 4250,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@getReserves_4312": {
+        "@getReserves_4314": {
           "entryPoint": null,
-          "id": 4312,
+          "id": 4314,
           "parameterSlots": 0,
           "returnSlots": 3
         },
-        "@initialize_4395": {
+        "@initialize_4397": {
           "entryPoint": null,
-          "id": 4395,
+          "id": 4397,
           "parameterSlots": 2,
           "returnSlots": 0
         },
-        "@kLast_4339": {
+        "@kLast_4341": {
           "entryPoint": null,
-          "id": 4339,
+          "id": 4341,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@mint_4350": {
+        "@mint_4352": {
           "entryPoint": null,
-          "id": 4350,
+          "id": 4352,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@name_4086": {
+        "@name_4088": {
           "entryPoint": null,
-          "id": 4086,
+          "id": 4088,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@nonces_4207": {
+        "@nonces_4209": {
           "entryPoint": null,
-          "id": 4207,
+          "id": 4209,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@permit_4227": {
+        "@permit_4229": {
           "entryPoint": null,
-          "id": 4227,
+          "id": 4229,
           "parameterSlots": 7,
           "returnSlots": 0
         },
-        "@price0CumulativeLast_4321": {
+        "@price0CumulativeLast_4323": {
           "entryPoint": null,
-          "id": 4321,
+          "id": 4323,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@price1CumulativeLast_4330": {
+        "@price1CumulativeLast_4332": {
           "entryPoint": null,
-          "id": 4330,
+          "id": 4332,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@setReserves_4296": {
+        "@setReserves_4298": {
           "entryPoint": null,
-          "id": 4296,
+          "id": 4298,
           "parameterSlots": 2,
           "returnSlots": 0
         },
-        "@skim_4381": {
+        "@skim_4383": {
           "entryPoint": null,
-          "id": 4381,
+          "id": 4383,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@swap_4374": {
+        "@swap_4376": {
           "entryPoint": null,
-          "id": 4374,
+          "id": 4376,
           "parameterSlots": 5,
           "returnSlots": 0
         },
-        "@symbol_4095": {
+        "@symbol_4097": {
           "entryPoint": null,
-          "id": 4095,
+          "id": 4097,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@sync_4386": {
+        "@sync_4388": {
           "entryPoint": null,
-          "id": 4386,
+          "id": 4388,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@token0_4260": {
+        "@token0_4262": {
           "entryPoint": null,
-          "id": 4260,
+          "id": 4262,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@token1_4272": {
+        "@token1_4274": {
           "entryPoint": null,
-          "id": 4272,
+          "id": 4274,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@totalSupply_4113": {
+        "@totalSupply_4115": {
           "entryPoint": null,
-          "id": 4113,
+          "id": 4115,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@transferFrom_4178": {
+        "@transferFrom_4180": {
           "entryPoint": null,
-          "id": 4178,
+          "id": 4180,
           "parameterSlots": 3,
           "returnSlots": 1
         },
-        "@transfer_4163": {
+        "@transfer_4165": {
           "entryPoint": null,
-          "id": 4163,
+          "id": 4165,
           "parameterSlots": 2,
           "returnSlots": 1
         },
@@ -5102,7 +5102,7 @@
   "storageLayout": {
     "storage": [
       {
-        "astId": 4069,
+        "astId": 4071,
         "contract": "contracts/test/MockUniswapV2Pair.sol:MockUniswapV2Pair",
         "label": "_reserve0",
         "offset": 0,
@@ -5110,7 +5110,7 @@
         "type": "t_uint112"
       },
       {
-        "astId": 4071,
+        "astId": 4073,
         "contract": "contracts/test/MockUniswapV2Pair.sol:MockUniswapV2Pair",
         "label": "_reserve1",
         "offset": 14,
@@ -5118,7 +5118,7 @@
         "type": "t_uint112"
       },
       {
-        "astId": 4073,
+        "astId": 4075,
         "contract": "contracts/test/MockUniswapV2Pair.sol:MockUniswapV2Pair",
         "label": "_reserveTimestamp",
         "offset": 28,

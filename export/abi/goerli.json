@@ -148,7 +148,7 @@
       ]
     },
     "MockUniswapV2Pair": {
-      "address": "0x8A7C15C9B33675114E583cBab6A0a4Bb2D190300",
+      "address": "0x6fc3A7dfAf286B7a3fe87EdB86A87F1902d46588",
       "abi": [
         {
           "inputs": [],
@@ -827,15 +827,10 @@
       ]
     },
     "StakingPoolFactoryImpl": {
-      "address": "0xc2d199CfD4F5d910f8CbE8dc6A1ED68F45f3AB1b",
+      "address": "0x8E34146ef3b057A9E0869bdd988ffa57c6104A51",
       "abi": [
         {
           "inputs": [
-            {
-              "internalType": "address",
-              "name": "_referencePool",
-              "type": "address"
-            },
             {
               "internalType": "address",
               "name": "_chainlinkOracle",
@@ -918,6 +913,19 @@
             }
           ],
           "name": "Paused",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "pool",
+              "type": "address"
+            }
+          ],
+          "name": "ReferencePoolChanged",
           "type": "event"
         },
         {
@@ -1019,7 +1027,7 @@
         },
         {
           "inputs": [],
-          "name": "poolImplementationReference",
+          "name": "referencePool",
           "outputs": [
             {
               "internalType": "address",
@@ -1033,6 +1041,19 @@
         {
           "inputs": [],
           "name": "renounceOwnership",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_referencePool",
+              "type": "address"
+            }
+          ],
+          "name": "setReferencePool",
           "outputs": [],
           "stateMutability": "nonpayable",
           "type": "function"
@@ -1073,7 +1094,7 @@
       ]
     },
     "StakingPoolImpl": {
-      "address": "0x635E46b492c67A012F15d6C20b5D3d808fFbC8b5",
+      "address": "0xe291DB054722Cc84CaDCc1FA63Ac16Fb3FA39de7",
       "abi": [
         {
           "inputs": [
@@ -1093,23 +1114,13 @@
               "type": "address"
             },
             {
-              "internalType": "uint256",
-              "name": "_timeToStake",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "_timeToRelease",
-              "type": "uint256"
-            },
-            {
               "internalType": "address",
-              "name": "_ens",
+              "name": "_workerManager",
               "type": "address"
             },
             {
               "internalType": "address",
-              "name": "_workerManager",
+              "name": "_ens",
               "type": "address"
             }
           ],
@@ -1129,18 +1140,6 @@
               "indexed": false,
               "internalType": "uint256",
               "name": "commission",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "queued",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "notStaked",
               "type": "uint256"
             }
           ],
@@ -1197,7 +1196,13 @@
             {
               "indexed": false,
               "internalType": "uint256",
-              "name": "maturationDate",
+              "name": "shares",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "unlockTimestamp",
               "type": "uint256"
             }
           ],
@@ -1248,7 +1253,7 @@
             {
               "indexed": false,
               "internalType": "uint256",
-              "name": "maturationDate",
+              "name": "shares",
               "type": "uint256"
             }
           ],
@@ -1276,7 +1281,26 @@
         },
         {
           "inputs": [],
-          "name": "FIXED_POINT_DECIMALS",
+          "name": "amount",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "amountToShares",
           "outputs": [
             {
               "internalType": "uint256",
@@ -1289,44 +1313,21 @@
         },
         {
           "inputs": [],
-          "name": "canCycleStakeMaturation",
+          "name": "amounts",
           "outputs": [
             {
-              "internalType": "bool",
-              "name": "available",
-              "type": "bool"
-            },
-            {
               "internalType": "uint256",
-              "name": "_currentQueuedTotal",
+              "name": "stake",
               "type": "uint256"
             },
             {
               "internalType": "uint256",
-              "name": "_currentMaturingTotal",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "canCycleWithdrawRelease",
-          "outputs": [
-            {
-              "internalType": "bool",
-              "name": "available",
-              "type": "bool"
-            },
-            {
-              "internalType": "uint256",
-              "name": "_totalToUnstakeValue",
+              "name": "unstake",
               "type": "uint256"
             },
             {
               "internalType": "uint256",
-              "name": "_totalUnstaking",
+              "name": "withdraw",
               "type": "uint256"
             }
           ],
@@ -1361,72 +1362,6 @@
         },
         {
           "inputs": [],
-          "name": "currentMaturingTotal",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "currentQueuedTotal",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "currentStakeEpoch",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "currentUnstakeEpoch",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "cycleStakeMaturation",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "cycleWithdrawRelease",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [],
           "name": "ens",
           "outputs": [
             {
@@ -1452,94 +1387,12 @@
           "type": "function"
         },
         {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "_userAddress",
-              "type": "address"
-            }
-          ],
-          "name": "getMaturingBalance",
+          "inputs": [],
+          "name": "getWithdrawBalance",
           "outputs": [
             {
               "internalType": "uint256",
               "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "_userAddress",
-              "type": "address"
-            }
-          ],
-          "name": "getMaturingTimestamp",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "_userAddress",
-              "type": "address"
-            }
-          ],
-          "name": "getReleasingBalance",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "_userAddress",
-              "type": "address"
-            }
-          ],
-          "name": "getReleasingTimestamp",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "_userAddress",
-              "type": "address"
-            }
-          ],
-          "name": "getStakedBalance",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "stakedBalance",
               "type": "uint256"
             }
           ],
@@ -1563,13 +1416,13 @@
           "inputs": [
             {
               "internalType": "address",
-              "name": "_feeAddress",
+              "name": "_fee",
               "type": "address"
             },
             {
-              "internalType": "address",
-              "name": "owner",
-              "type": "address"
+              "internalType": "uint256",
+              "name": "_stakeLock",
+              "type": "uint256"
             }
           ],
           "name": "initialize",
@@ -1644,9 +1497,29 @@
         },
         {
           "inputs": [],
+          "name": "rebalance",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
           "name": "renounceOwnership",
           "outputs": [],
           "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "requiredLiquidity",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -1660,45 +1533,6 @@
           "name": "retire",
           "outputs": [],
           "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "rewardMaturing",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "rewardNotStaked",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "rewardQueued",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -1722,6 +1556,38 @@
           "type": "function"
         },
         {
+          "inputs": [],
+          "name": "shares",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_shares",
+              "type": "uint256"
+            }
+          ],
+          "name": "sharesToAmount",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
           "inputs": [
             {
               "internalType": "uint256",
@@ -1732,142 +1598,6 @@
           "name": "stake",
           "outputs": [],
           "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "staking",
-          "outputs": [
-            {
-              "internalType": "contract IStaking",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "name": "stakingVoucherValueAtEpoch",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "timeToRelease",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "timeToStake",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "totalStaked",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "totalStakedShares",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "totalToUnstakeShares",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "totalUnstakedShares",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "totalUnstaking",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "totalWithdrawable",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -1894,7 +1624,7 @@
           "inputs": [
             {
               "internalType": "uint256",
-              "name": "_amount",
+              "name": "_shares",
               "type": "uint256"
             }
           ],
@@ -1915,76 +1645,28 @@
           "outputs": [
             {
               "internalType": "uint256",
-              "name": "stakedPoolShares",
+              "name": "shares",
               "type": "uint256"
             },
             {
-              "components": [
-                {
-                  "internalType": "uint256",
-                  "name": "amountQueued",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "amountStaked",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "queueEpoch",
-                  "type": "uint256"
-                }
-              ],
-              "internalType": "struct StakingPoolImpl.StakingVoucher",
-              "name": "stakingVoucher",
-              "type": "tuple"
+              "internalType": "uint256",
+              "name": "released",
+              "type": "uint256"
             },
             {
-              "components": [
-                {
-                  "internalType": "uint256",
-                  "name": "poolShares",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "queueEpoch",
-                  "type": "uint256"
-                }
-              ],
-              "internalType": "struct StakingPoolImpl.UnstakingVoucher",
-              "name": "unstakingVoucher",
-              "type": "tuple"
+              "internalType": "uint256",
+              "name": "unstakeTimestamp",
+              "type": "uint256"
             }
           ],
           "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "_amount",
-              "type": "uint256"
-            }
-          ],
-          "name": "withdraw",
-          "outputs": [],
-          "stateMutability": "nonpayable",
           "type": "function"
         },
         {
           "inputs": [],
-          "name": "workerManager",
-          "outputs": [
-            {
-              "internalType": "contract IWorkerManagerAuthManager",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "stateMutability": "view",
+          "name": "withdraw",
+          "outputs": [],
+          "stateMutability": "nonpayable",
           "type": "function"
         },
         {
