@@ -46,6 +46,13 @@ describe("StakingPoolManagement", async () => {
         expect(await pool.paused()).to.be.true;
     });
 
+    it("should not pause if not owner", async () => {
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
+        await expect(alice.pool.pause()).to.revertedWith(
+            "Ownable: caller is not the owner"
+        );
+    });
+
     it("should unpause", async () => {
         const { owner } = await setupPool({ stakeLock: STAKE_LOCK });
         const { pool } = owner;
@@ -85,5 +92,12 @@ describe("StakingPoolManagement", async () => {
             pool.provider
         );
         expect(await resolver.name(node)).to.be.equal(name);
+    });
+
+    it("should not setName if not owner", async () => {
+        const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
+        await expect(alice.pool.setName("something")).to.revertedWith(
+            "Ownable: caller is not the owner"
+        );
     });
 });
