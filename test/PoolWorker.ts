@@ -10,13 +10,13 @@
 // specific language governing permissions and limitations under the License.
 
 import { expect, use } from "chai";
-import { waffle, deployments, ethers } from "hardhat";
+import { waffle, ethers } from "hardhat";
 
-import { setNextBlockTimestamp, setupPool, parseCTSI } from "./utils";
+import { setupPool } from "./utils";
 const { solidity } = waffle;
 
 use(solidity);
-const STAKE_LOCK = 60; // seconds WorkerManagerAuthManagerImpl
+const STAKE_LOCK = 60;
 
 describe("StakingPoolWorker", async () => {
     it("should have correct defaults", async () => {
@@ -76,6 +76,18 @@ describe("StakingPoolWorker", async () => {
         );
     });
 
+    it("should fail to hire if not owner", async () => {
+        const { alice } = await setupPool({
+            stakeLock: STAKE_LOCK,
+            selfHire: false,
+        });
+
+        const value = ethers.utils.parseEther("0.001");
+        await expect(
+            alice.pool.hire(alice.address, { value })
+        ).to.be.revertedWith("Ownable: caller is not the owner");
+    });
+
     it("should hire an external worker", async () => {
         const {
             owner: { pool },
@@ -115,6 +127,17 @@ describe("StakingPoolWorker", async () => {
         );
     });
 
+    it("should fail to cancel hire if not owner", async () => {
+        const { alice } = await setupPool({
+            stakeLock: STAKE_LOCK,
+            selfHire: false,
+        });
+
+        await expect(alice.pool.cancelHire(alice.address)).to.be.revertedWith(
+            "Ownable: caller is not the owner"
+        );
+    });
+
     it("should cancel hire an external worker", async () => {
         const {
             owner: { pool },
@@ -140,6 +163,17 @@ describe("StakingPoolWorker", async () => {
         );
         expect(await workerManager.getUser(alice.address)).to.be.equal(
             pool.address
+        );
+    });
+
+    it("should fail to retire if not owner", async () => {
+        const { alice } = await setupPool({
+            stakeLock: STAKE_LOCK,
+            selfHire: false,
+        });
+
+        await expect(alice.pool.retire(alice.address)).to.be.revertedWith(
+            "Ownable: caller is not the owner"
         );
     });
 

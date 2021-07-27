@@ -14,8 +14,9 @@ pragma solidity ^0.8.0;
 
 import "@cartesi/pos/contracts/IWorkerManagerAuthManager.sol";
 import "./interfaces/StakingPoolWorker.sol";
+import "./StakingPoolData.sol";
 
-contract StakingPoolWorkerImpl is StakingPoolWorker {
+contract StakingPoolWorkerImpl is StakingPoolWorker, StakingPoolData {
     address private immutable pos;
 
     IWorkerManagerAuthManager private immutable workerManager;
@@ -45,21 +46,26 @@ contract StakingPoolWorkerImpl is StakingPoolWorker {
 
     /// @notice Asks the worker to work for the sender. Sender needs to pay something.
     /// @param workerAddress address of the worker
-    function hire(address payable workerAddress) external payable override {
+    function hire(address payable workerAddress)
+        external
+        payable
+        override
+        onlyOwner
+    {
         workerManager.hire{value: msg.value}(workerAddress);
         workerManager.authorize(workerAddress, pos);
     }
 
     /// @notice Called by the user to cancel a job offer
     /// @param workerAddress address of the worker node
-    function cancelHire(address workerAddress) external override {
+    function cancelHire(address workerAddress) external override onlyOwner {
         workerManager.cancelHire(workerAddress);
     }
 
     /// @notice Called by the user to retire his worker.
     /// @param workerAddress address of the worker to be retired
     /// @dev this also removes all authorizations in place
-    function retire(address payable workerAddress) external override {
+    function retire(address payable workerAddress) external override onlyOwner {
         workerManager.retire(workerAddress);
     }
 }
