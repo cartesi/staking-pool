@@ -16,9 +16,6 @@ import "@cartesi/pos/contracts/IWorkerManagerAuthManager.sol";
 import "./interfaces/StakingPoolWorker.sol";
 
 contract StakingPoolWorkerImpl is StakingPoolWorker {
-    bytes32 private constant ADDR_REVERSE_NODE =
-        0x91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e2;
-
     address private immutable pos;
 
     IWorkerManagerAuthManager private immutable workerManager;
@@ -43,7 +40,7 @@ contract StakingPoolWorkerImpl is StakingPoolWorker {
         workerManager.hire{value: msg.value}(payable(address(this)));
         workerManager.authorize(address(this), pos);
         workerManager.acceptJob();
-        // TODO: payable(msg.sender).transfer(msg.value);
+        payable(msg.sender).transfer(msg.value);
     }
 
     /// @notice Asks the worker to work for the sender. Sender needs to pay something.

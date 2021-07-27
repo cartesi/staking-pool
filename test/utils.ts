@@ -16,6 +16,9 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import { Provider } from "@ethersproject/abstract-provider";
 
 import { PoS__factory, StakingImpl__factory } from "@cartesi/pos";
+
+import { WorkerManagerAuthManagerImpl__factory } from "@cartesi/util";
+
 import { CartesiToken__factory } from "@cartesi/token";
 import { StakingPoolImpl__factory } from "../src/types/factories/StakingPoolImpl__factory";
 import { CloneMaker__factory } from "../src/types/factories/CloneMaker__factory";
@@ -48,6 +51,7 @@ export const advanceMultipleBlocks = async (
 
 export interface PoolProps {
     stakeLock?: number;
+    selfHire?: boolean;
 }
 
 export const setupPool = deployments.createFixture(
@@ -56,6 +60,8 @@ export const setupPool = deployments.createFixture(
         options: PoolProps = {}
     ) => {
         const stakeLock = options?.stakeLock || 60;
+        const selfHire =
+            options.selfHire === undefined ? true : options.selfHire || false;
 
         // start with a fresh deployment
         await deployments.fixture();
@@ -69,6 +75,10 @@ export const setupPool = deployments.createFixture(
             WorkerManagerAuthManagerImpl,
         } = await deployments.all();
 
+        const workerManager = WorkerManagerAuthManagerImpl__factory.connect(
+            WorkerManagerAuthManagerImpl.address,
+            deployer
+        );
         // setup fee mock contract
         const reward = parseCTSI("2900");
         const commission = reward.div(10); // 10%
@@ -101,16 +111,17 @@ export const setupPool = deployments.createFixture(
             deployer,
             BlockSelector.abi
         );
-        blockSelector.mock.instantiate.returns(0);
-        blockSelector.mock.produceBlock.returns(true);
-        blockSelector.mock.canProduceBlock.returns(true);
-        await pool.selfhire({ value: ethers.utils.parseEther("0.001") });
+        await blockSelector.mock.instantiate.returns(0);
+        await blockSelector.mock.produceBlock.returns(true);
+        await blockSelector.mock.canProduceBlock.returns(true);
+        if (selfHire)
+            await pool.selfhire({ value: ethers.utils.parseEther("0.001") });
 
         const staking = StakingImpl__factory.connect(
             StakingImpl.address,
             deployer
         );
-        // instantiate a chain
+        // // instantiate a chain
         const pos = PoS__factory.connect(await pool.pos(), deployer);
         await pos.instantiate(
             StakingImpl.address,
@@ -135,19 +146,24 @@ export const setupPool = deployments.createFixture(
 
         return {
             owner: {
+                signer: deployer,
                 address: deployer.address,
                 pool: pool,
                 token: token,
             },
             alice: {
+                signer: alice,
                 address: alice.address,
                 pool: pool.connect(alice),
                 token: token.connect(alice),
+                workerManager: workerManager.connect(alice),
             },
             bob: {
+                signer: bob,
                 address: bob.address,
                 pool: pool.connect(bob),
                 token: token.connect(bob),
+                workerManager: workerManager.connect(bob),
             },
             constants: {
                 reward,
@@ -157,6 +173,7 @@ export const setupPool = deployments.createFixture(
                 pos,
                 fee,
                 staking,
+                workerManager,
             },
         };
     }
