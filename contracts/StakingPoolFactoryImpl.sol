@@ -28,6 +28,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
 
     event ReferencePoolChanged(address indexed pool);
 
+    receive() external payable {}
+
     constructor(address _chainlinkOracle, address _uniswapOracle) {
         require(
             _chainlinkOracle != address(0),
@@ -69,6 +71,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         fee.transferOwnership(msg.sender);
         pool.selfhire{value: msg.value}();
 
+        payable(msg.sender).transfer(msg.value);
+
         emit NewFlatRateCommissionStakingPool(address(pool), address(fee));
         return address(pool);
     }
@@ -95,6 +99,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         pool.transferOwnership(msg.sender);
         fee.transferOwnership(msg.sender);
         pool.selfhire{value: msg.value}();
+
+        payable(msg.sender).transfer(msg.value);
 
         emit NewGasTaxCommissionStakingPool(address(pool), address(fee));
         return address(pool);

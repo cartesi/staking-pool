@@ -109,6 +109,11 @@ describe("StakingPoolFactory", async () => {
         // connect to fee contract and check rate value
         const fee = FlatRateCommission__factory.connect(feeAddress, deployer);
         expect(await fee.rate()).to.equal(rate);
+
+        // after deployment the factory must redirect the payable value back to the user
+        expect(
+            await deployer.provider?.getBalance(factory.address)
+        ).to.be.equal(0);
     });
 
     it("should create gas tax pool", async () => {
@@ -135,6 +140,11 @@ describe("StakingPoolFactory", async () => {
         // connect to fee contract and check rate value
         const fee = GasTaxCommission__factory.connect(feeAddress, deployer);
         expect(await fee.gas()).to.equal(gas);
+
+        // after deployment the factory must redirect the payable value back to the user
+        expect(
+            await deployer.provider?.getBalance(factory.address)
+        ).to.be.equal(0);
     });
 
     it("should only allow owner to modify pool reference", async () => {
