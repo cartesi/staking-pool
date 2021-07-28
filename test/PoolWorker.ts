@@ -77,130 +77,138 @@ describe("StakingPoolWorker", async () => {
     });
 
     it("should fail to hire if not owner", async () => {
-        const { alice } = await setupPool({
+        const { node_worker } = await setupPool({
             stakeLock: STAKE_LOCK,
             selfHire: false,
         });
 
         const value = ethers.utils.parseEther("0.001");
         await expect(
-            alice.pool.hire(alice.address, { value })
+            node_worker.pool.hire(node_worker.address, { value })
         ).to.be.revertedWith("Ownable: caller is not the owner");
     });
 
     it("should hire an external worker", async () => {
         const {
             owner: { pool },
-            alice,
+            node_worker,
             contracts: { pos, workerManager },
         } = await setupPool({ stakeLock: STAKE_LOCK, selfHire: false });
 
-        const aliceBalance = await pool.provider.getBalance(alice.address);
+        const node_workerBalance = await pool.provider.getBalance(
+            node_worker.address
+        );
 
         const value = ethers.utils.parseEther("0.001");
 
-        await expect(pool.hire(alice.address, { value }))
+        await expect(pool.hire(node_worker.address, { value }))
             .to.emit(workerManager, "JobOffer")
-            .withArgs(alice.address, pool.address)
+            .withArgs(node_worker.address, pool.address)
             .to.emit(workerManager, "Authorization")
-            .withArgs(pool.address, alice.address, pos.address);
+            .withArgs(pool.address, node_worker.address, pos.address);
 
-        expect(await pool.provider.getBalance(alice.address)).to.be.equal(
-            aliceBalance.add(value)
+        expect(await pool.provider.getBalance(node_worker.address)).to.be.equal(
+            node_workerBalance.add(value)
         );
 
-        await expect(alice.workerManager.acceptJob())
+        await expect(node_worker.workerManager.acceptJob())
             .to.emit(workerManager, "JobAccepted")
-            .withArgs(alice.address, pool.address);
+            .withArgs(node_worker.address, pool.address);
 
-        expect(await workerManager.isAuthorized(alice.address, pos.address)).to
-            .be.true;
-        expect(await workerManager.isRetired(alice.address)).to.be.false;
-        expect(await workerManager.isAvailable(alice.address)).to.be.false;
-        expect(await workerManager.isPending(alice.address)).to.be.false;
-        expect(await workerManager.isOwned(alice.address)).to.be.true;
-        expect(await workerManager.getOwner(alice.address)).to.be.equal(
+        expect(
+            await workerManager.isAuthorized(node_worker.address, pos.address)
+        ).to.be.true;
+        expect(await workerManager.isRetired(node_worker.address)).to.be.false;
+        expect(await workerManager.isAvailable(node_worker.address)).to.be
+            .false;
+        expect(await workerManager.isPending(node_worker.address)).to.be.false;
+        expect(await workerManager.isOwned(node_worker.address)).to.be.true;
+        expect(await workerManager.getOwner(node_worker.address)).to.be.equal(
             pool.address
         );
-        expect(await workerManager.getUser(alice.address)).to.be.equal(
+        expect(await workerManager.getUser(node_worker.address)).to.be.equal(
             pool.address
         );
     });
 
     it("should fail to cancel hire if not owner", async () => {
-        const { alice } = await setupPool({
+        const { node_worker } = await setupPool({
             stakeLock: STAKE_LOCK,
             selfHire: false,
         });
 
-        await expect(alice.pool.cancelHire(alice.address)).to.be.revertedWith(
-            "Ownable: caller is not the owner"
-        );
+        await expect(
+            node_worker.pool.cancelHire(node_worker.address)
+        ).to.be.revertedWith("Ownable: caller is not the owner");
     });
 
     it("should cancel hire an external worker", async () => {
         const {
             owner: { pool },
-            alice,
+            node_worker,
             contracts: { pos, workerManager },
         } = await setupPool({ stakeLock: STAKE_LOCK });
         const value = ethers.utils.parseEther("0.001");
-        await pool.hire(alice.address, { value });
-        await alice.workerManager.acceptJob();
+        await pool.hire(node_worker.address, { value });
+        await node_worker.workerManager.acceptJob();
 
-        await expect(pool.cancelHire(alice.address))
+        await expect(pool.cancelHire(node_worker.address))
             .to.emit(workerManager, "JobRejected")
-            .withArgs(alice.address, pool.address);
+            .withArgs(node_worker.address, pool.address);
 
-        expect(await workerManager.isAuthorized(alice.address, pos.address)).to
-            .be.false;
-        expect(await workerManager.isRetired(alice.address)).to.be.true;
-        expect(await workerManager.isAvailable(alice.address)).to.be.false;
-        expect(await workerManager.isPending(alice.address)).to.be.false;
-        expect(await workerManager.isOwned(alice.address)).to.be.false;
-        expect(await workerManager.getOwner(alice.address)).to.be.equal(
+        expect(
+            await workerManager.isAuthorized(node_worker.address, pos.address)
+        ).to.be.false;
+        expect(await workerManager.isRetired(node_worker.address)).to.be.true;
+        expect(await workerManager.isAvailable(node_worker.address)).to.be
+            .false;
+        expect(await workerManager.isPending(node_worker.address)).to.be.false;
+        expect(await workerManager.isOwned(node_worker.address)).to.be.false;
+        expect(await workerManager.getOwner(node_worker.address)).to.be.equal(
             ethers.constants.AddressZero
         );
-        expect(await workerManager.getUser(alice.address)).to.be.equal(
+        expect(await workerManager.getUser(node_worker.address)).to.be.equal(
             pool.address
         );
     });
 
     it("should fail to retire if not owner", async () => {
-        const { alice } = await setupPool({
+        const { node_worker } = await setupPool({
             stakeLock: STAKE_LOCK,
             selfHire: false,
         });
 
-        await expect(alice.pool.retire(alice.address)).to.be.revertedWith(
-            "Ownable: caller is not the owner"
-        );
+        await expect(
+            node_worker.pool.retire(node_worker.address)
+        ).to.be.revertedWith("Ownable: caller is not the owner");
     });
 
     it("should retire an external worker", async () => {
         const {
             owner: { pool },
-            alice,
+            node_worker,
             contracts: { pos, workerManager },
         } = await setupPool({ stakeLock: STAKE_LOCK });
         const value = ethers.utils.parseEther("0.001");
-        await pool.hire(alice.address, { value });
-        await alice.workerManager.acceptJob();
+        await pool.hire(node_worker.address, { value });
+        await node_worker.workerManager.acceptJob();
 
-        await expect(pool.retire(alice.address))
+        await expect(pool.retire(node_worker.address))
             .to.emit(workerManager, "Retired")
-            .withArgs(alice.address, pool.address);
+            .withArgs(node_worker.address, pool.address);
 
-        expect(await workerManager.isAuthorized(alice.address, pos.address)).to
-            .be.false;
-        expect(await workerManager.isRetired(alice.address)).to.be.true;
-        expect(await workerManager.isAvailable(alice.address)).to.be.false;
-        expect(await workerManager.isPending(alice.address)).to.be.false;
-        expect(await workerManager.isOwned(alice.address)).to.be.false;
-        expect(await workerManager.getOwner(alice.address)).to.be.equal(
+        expect(
+            await workerManager.isAuthorized(node_worker.address, pos.address)
+        ).to.be.false;
+        expect(await workerManager.isRetired(node_worker.address)).to.be.true;
+        expect(await workerManager.isAvailable(node_worker.address)).to.be
+            .false;
+        expect(await workerManager.isPending(node_worker.address)).to.be.false;
+        expect(await workerManager.isOwned(node_worker.address)).to.be.false;
+        expect(await workerManager.getOwner(node_worker.address)).to.be.equal(
             ethers.constants.AddressZero
         );
-        expect(await workerManager.getUser(alice.address)).to.be.equal(
+        expect(await workerManager.getUser(node_worker.address)).to.be.equal(
             pool.address
         );
     });

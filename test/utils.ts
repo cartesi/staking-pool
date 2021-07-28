@@ -66,7 +66,7 @@ export const setupPool = deployments.createFixture(
         // start with a fresh deployment
         await deployments.fixture();
 
-        const [deployer, alice, bob] = await ethers.getSigners();
+        const [deployer, alice, bob, node_worker] = await ethers.getSigners();
         const {
             BlockSelector,
             CartesiToken,
@@ -121,7 +121,7 @@ export const setupPool = deployments.createFixture(
             StakingImpl.address,
             deployer
         );
-        // // instantiate a chain
+        // instantiate a chain
         const pos = PoS__factory.connect(await pool.pos(), deployer);
         await pos.instantiate(
             StakingImpl.address,
@@ -164,6 +164,13 @@ export const setupPool = deployments.createFixture(
                 pool: pool.connect(bob),
                 token: token.connect(bob),
                 workerManager: workerManager.connect(bob),
+            },
+            node_worker: {
+                signer: node_worker,
+                address: node_worker.address,
+                pool: pool.connect(node_worker),
+                token: token.connect(node_worker),
+                workerManager: workerManager.connect(node_worker),
             },
             constants: {
                 reward,
