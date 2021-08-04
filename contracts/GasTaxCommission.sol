@@ -18,9 +18,10 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol";
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/Fee.sol";
+import "./oracle/GasOracle.sol";
 
 contract GasTaxCommission is Fee, Ownable {
-    AggregatorInterface public immutable gasOracle;
+    GasOracle public immutable gasOracle;
 
     IUniswapV2Pair public immutable priceOracle;
 
@@ -34,7 +35,7 @@ contract GasTaxCommission is Fee, Ownable {
         address _uniswapOracle,
         uint256 _gas
     ) {
-        gasOracle = AggregatorInterface(_chainlinkOracle);
+        gasOracle = GasOracle(_chainlinkOracle);
         priceOracle = IUniswapV2Pair(_uniswapOracle);
         gas = _gas;
         emit GasTaxChanged(_gas);
@@ -50,7 +51,7 @@ contract GasTaxCommission is Fee, Ownable {
     {
         // get gas price from chainlink oracle
         // https://data.chain.link/fast-gas-gwei#operator-chainlayer
-        uint256 gasPrice = uint256(gasOracle.latestAnswer());
+        uint256 gasPrice = gasOracle.getGasPrice();
 
         // gas fee (in ETH) charged by pool manager
         uint256 gasFee = gasPrice * gas;
