@@ -10,7 +10,7 @@
 // specific language governing permissions and limitations under the License.
 
 import { expect, use } from "chai";
-import { ethers, waffle } from "hardhat";
+import { waffle } from "hardhat";
 
 import {
     advanceTime,
@@ -82,7 +82,7 @@ describe("StakingPoolUser", async () => {
         const balance = await alice.pool.userBalance(alice.address);
         expect(balance.shares).to.equal(stake);
         expect(balance.unstakeTimestamp).to.equal(ts + STAKE_LOCK);
-        expect(balance.released).to.equal(0);
+        expect(balance.balance).to.equal(0);
     });
 
     it("should not allow to receive zero shares", async () => {
@@ -154,7 +154,7 @@ describe("StakingPoolUser", async () => {
         expect(balance.shares).to.equal(stake.sub(unstake));
 
         // relesed should increase
-        expect(balance.released).to.equal(unstake);
+        expect(balance.balance).to.equal(unstake);
 
         // required liquidity should increase
         expect(await alice.pool.requiredLiquidity()).to.equal(unstake);
@@ -162,7 +162,8 @@ describe("StakingPoolUser", async () => {
 
     it("should not withdraw with no user balance", async () => {
         const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
-        await expect(alice.pool.withdraw()).to.be.revertedWith(
+        const stake = parseCTSI("1000");
+        await expect(alice.pool.withdraw(stake)).to.be.revertedWith(
             "StakingPoolUserImpl: no balance to withdraw"
         );
     });
@@ -184,12 +185,12 @@ describe("StakingPoolUser", async () => {
         // unstake request liquidity
         expect(await alice.pool.requiredLiquidity()).to.equal(stake);
         expect(await alice.pool.getWithdrawBalance()).to.equal(stake);
-        await expect(alice.pool.withdraw())
+        await expect(alice.pool.withdraw(stake))
             .to.emit(alice.pool, "Withdraw")
             .withArgs(alice.address, stake);
 
         const balance = await alice.pool.userBalance(alice.address);
-        expect(balance.released).to.equal(0);
+        expect(balance.balance).to.equal(0);
 
         // decrease liquidity
         expect(await alice.pool.requiredLiquidity()).to.equal(0);
@@ -216,7 +217,7 @@ describe("StakingPoolUser", async () => {
         // should not have balance
         expect(await alice.pool.getWithdrawBalance()).to.equal(0);
 
-        await expect(alice.pool.withdraw()).to.be.revertedWith(
+        await expect(alice.pool.withdraw(unstake)).to.be.revertedWith(
             "ERC20: transfer amount exceeds balance"
         );
     });

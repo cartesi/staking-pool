@@ -20,8 +20,12 @@ pragma solidity >=0.7.0;
 /// he is asking to release tokens. Those tokens need to be withdrawn by an additional
 /// call to withdraw()
 interface StakingPoolUser {
+    /// @notice Deposit tokens to user pool balance
+    /// @param amount amount of token deposited in the pool
+    function deposit(uint256 amount) external;
+
     /// @notice Stake an amount of tokens, immediately earning pool shares in returns
-    /// @param amount amount of tokens deposited in the pool
+    /// @param amount amount of tokens to convert to shares
     function stake(uint256 amount) external;
 
     /// @notice Unstake an specified amount of shares of the calling user
@@ -29,13 +33,18 @@ interface StakingPoolUser {
     function unstake(uint256 shares) external;
 
     /// @notice Transfer tokens back to calling user wallet
-    /// @dev this will transfer all free tokens for the calling user
-    function withdraw() external;
+    /// @dev this will transfer tokens from user pool account to user's wallet
+    function withdraw(uint256 amount) external;
 
     /// @notice Returns the amount of tokens that can be immediately withdrawn by the calling user
     /// @dev there is no way to know the exact time in the future the requested tokens will be available
     /// @return the amount of tokens that can be immediately withdrawn by the calling user
     function getWithdrawBalance() external returns (uint256);
+
+    /// @notice Tokens were deposited, available for staking or withdrawal
+    /// @param user address of msg.sender
+    /// @param amount amount of tokens deposited by the user
+    event Deposit(address indexed user, uint256 amount);
 
     /// @notice Tokens were deposited, they count as shares immediatly
     /// @param user address of msg.sender

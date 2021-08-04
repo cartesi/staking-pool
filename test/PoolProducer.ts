@@ -126,11 +126,11 @@ describe("StakingPoolProducer", async () => {
         const aliceERC20Balance = await alice.token.balanceOf(alice.address);
         const bobERC20Balance = await bob.token.balanceOf(bob.address);
 
-        await expect(alice.pool.withdraw())
+        await expect(alice.pool.withdraw(aliceExpectedBalance))
             .to.emit(alice.pool, "Withdraw")
             .withArgs(alice.address, aliceExpectedBalance);
 
-        await expect(bob.pool.withdraw())
+        await expect(bob.pool.withdraw(bobExpectedBalance))
             .to.emit(bob.pool, "Withdraw")
             .withArgs(bob.address, bobExpectedBalance);
 

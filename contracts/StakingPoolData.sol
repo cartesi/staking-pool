@@ -26,8 +26,8 @@ contract StakingPoolData is
     uint256 public requiredLiquidity; // amount of required tokens for withdraw requests
 
     struct UserBalance {
+        uint256 balance; // amount of free tokens belonging to this user
         uint256 shares; // amount of shares beloging to this user
-        uint256 released; // amount of tokens released to this user
         uint256 unstakeTimestamp; // timestamp of when user can unstake
     }
     mapping(address => UserBalance) public userBalance;

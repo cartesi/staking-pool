@@ -31,9 +31,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         lockTime = _lockTime;
     }
 
-    /// @notice Stake an amount of tokens, immediately earning pool shares in returns
-    /// @param _amount amount of tokens deposited in the pool
-    function stake(uint256 _amount) public override whenNotPaused {
+    function deposit(uint256 _amount) public override whenNotPaused {
         // transfer tokens from caller to this contract
         // user must have approved the transfer a priori
         // tokens will be lying around, until actually staked by pool owner at a later time
@@ -46,6 +44,32 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
             "StakingPoolUserImpl: failed to transfer tokens"
         );
 
+        // add tokens to user's balance
+        UserBalance storage user = userBalance[msg.sender];
+        user.balance += _amount;
+
+        // emit event containing user and amount
+        emit Deposit(msg.sender, amount);
+    }
+
+    /// @notice Stake an amount of tokens, immediately earning pool shares in returns
+    /// @param _amount amount of tokens to convert from user's balance
+    function stake(uint256 _amount) public override whenNotPaused {
+        // get user balance
+        UserBalance storage user = userBalance[msg.sender];
+
+        // transfer tokens from caller to this contract
+        // user must have approved the transfer a priori
+        // tokens will be lying around, until actually staked by pool owner at a later time
+        require(
+            _amount > 0,
+            "StakingPoolUserImpl: amount must be greater than 0"
+        );
+        require(
+            _amount <= user.balance,
+            "StakingPoolUserImpl: not enough tokens available for staking"
+        );
+
         // calculate amount of shares as of now
         uint256 _shares = amountToShares(_amount);
 
@@ -55,10 +79,9 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
             "StakingPoolUserImpl: stake not enough to emit 1 share"
         );
 
-        UserBalance storage user = userBalance[msg.sender];
-
         // allocate new shares to user, immediately
         user.shares += _shares;
+        user.balance -= _amount;
 
         // lock his shares for a period of time
         // this may reset a previously set lock time
@@ -103,7 +126,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         amount -= _amount;
 
         // add amout user can withdraw (if available)
-        user.released += _amount;
+        user.balance += _amount;
 
         // increase required liquidity
         requiredLiquidity += _amount;
@@ -114,9 +137,8 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
 
     /// @notice Transfer tokens back to calling user wallet
     /// @dev this will transfer all free tokens for the calling user
-    function withdraw() public override {
+    function withdraw(uint256 _amount) public override {
         UserBalance storage user = userBalance[msg.sender];
-        uint256 _amount = user.released;
 
         // check user released value
         require(_amount > 0, "StakingPoolUserImpl: no balance to withdraw");
@@ -128,7 +150,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         );
 
         // clear user released value
-        user.released = 0;
+        user.balance -= _amount;
 
         // decrease required liquidity
         requiredLiquidity -= _amount;
@@ -141,12 +163,12 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         UserBalance storage user = userBalance[msg.sender];
 
         // get amount user requested
-        uint256 _amount = user.released;
+        uint256 _amount = user.balance;
 
         // check contract balance, if it has enough, let him get it
         uint256 balance = ctsi.balanceOf(address(this));
 
         // only allow full withdraw, so if contract has enough, let him get it
-        return balance >= _amount ? _amount : 0;
+        return balance >= _amount ? _amount : balance;
     }
 }
