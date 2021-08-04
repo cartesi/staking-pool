@@ -168,13 +168,13 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
     function getWithdrawBalance() public view override returns (uint256) {
         UserBalance storage user = userBalance[msg.sender];
 
-        // get amount user requested
+        // get maximum amount user can withdraw (his balance)
         uint256 _amount = user.balance;
 
-        // check contract balance, if it has enough, let him get it
+        // check contract balance
         uint256 balance = ctsi.balanceOf(address(this));
 
-        // only allow full withdraw, so if contract has enough, let him get it
+        // he can withdraw whatever is available at the contract, up to his balance
         return balance >= _amount ? _amount : balance;
     }
 }
