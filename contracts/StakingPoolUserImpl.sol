@@ -48,6 +48,9 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         UserBalance storage user = userBalance[msg.sender];
         user.balance += _amount;
 
+        // increase the required liquidity so the tokens are not staked
+        requiredLiquidity += _amount;
+
         // emit event containing user and amount
         emit Deposit(msg.sender, amount);
     }
@@ -90,6 +93,9 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         // increase total shares and amount (not changing share value)
         amount += _amount;
         shares += _shares;
+
+        // decrease required liquidity
+        requiredLiquidity -= _amount;
 
         // emit event containing user, amount, shares and unlock time
         emit Stake(msg.sender, _amount, _shares, user.unstakeTimestamp);
