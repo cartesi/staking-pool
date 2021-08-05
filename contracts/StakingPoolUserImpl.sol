@@ -26,7 +26,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         ctsi = IERC20(_ctsi);
     }
 
-    /// @param _lockTime The user stake lock period
+    /// @param _lockTime The user deposit lock period
     function __StakingPoolUser_init(uint256 _lockTime) internal {
         lockTime = _lockTime;
     }
@@ -48,8 +48,11 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         UserBalance storage user = userBalance[msg.sender];
         user.balance += _amount;
 
+        // reset deposit timestamp
+        user.depositTimestamp = block.timestamp;
+
         // emit event containing user and amount
-        emit Deposit(msg.sender, amount);
+        emit Deposit(msg.sender, amount, block.timestamp + lockTime);
     }
 
     /// @notice Stake an amount of tokens, immediately earning pool shares in returns
@@ -70,6 +73,12 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
             "StakingPoolUserImpl: not enough tokens available for staking"
         );
 
+        // check if user can already stake or if it's too early
+        require(
+            block.timestamp >= user.depositTimestamp + lockTime,
+            "StakingPoolUserImpl: not enough time has passed since last deposit"
+        );
+
         // calculate amount of shares as of now
         uint256 _shares = amountToShares(_amount);
 
@@ -83,16 +92,12 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         user.shares += _shares;
         user.balance -= _amount;
 
-        // lock his shares for a period of time
-        // this may reset a previously set lock time
-        user.unstakeTimestamp = block.timestamp + lockTime;
-
         // increase total shares and amount (not changing share value)
         amount += _amount;
         shares += _shares;
 
         // emit event containing user, amount, shares and unlock time
-        emit Stake(msg.sender, _amount, _shares, user.unstakeTimestamp);
+        emit Stake(msg.sender, _amount, _shares);
     }
 
     /// @notice allow for users to defined exactly how many shares they
@@ -107,12 +112,6 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         require(
             user.shares >= _shares,
             "StakingPoolUserImpl: insufficient shares"
-        );
-
-        // check if user can already unstake or if it's still locked
-        require(
-            block.timestamp > user.unstakeTimestamp,
-            "StakingPoolUserImpl: stake locked"
         );
 
         // reduce user number of shares

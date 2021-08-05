@@ -81,7 +81,7 @@ describe("StakingPoolUser", async () => {
         expect(await alice.pool.amount()).to.equal(stake);
         const balance = await alice.pool.userBalance(alice.address);
         expect(balance.shares).to.equal(stake);
-        expect(balance.unstakeTimestamp).to.equal(ts + STAKE_LOCK);
+        expect(balance.depositTimestamp).to.equal(ts + STAKE_LOCK);
         expect(balance.balance).to.equal(0);
     });
 

@@ -44,19 +44,14 @@ interface StakingPoolUser {
     /// @notice Tokens were deposited, available for staking or withdrawal
     /// @param user address of msg.sender
     /// @param amount amount of tokens deposited by the user
-    event Deposit(address indexed user, uint256 amount);
+    /// @param stakeTimestamp instant when the amount can be staked
+    event Deposit(address indexed user, uint256 amount, uint256 stakeTimestamp);
 
     /// @notice Tokens were deposited, they count as shares immediatly
     /// @param user address of msg.sender
     /// @param amount amount deposited by the user
     /// @param shares number of shares emitted for user
-    /// @param unlockTimestamp instant when the stake can be unstaked
-    event Stake(
-        address indexed user,
-        uint256 amount,
-        uint256 shares,
-        uint256 unlockTimestamp
-    );
+    event Stake(address indexed user, uint256 amount, uint256 shares);
 
     /// @notice Request to unstake tokens. Additional liquidity requested for the pool
     /// @param user address of msg.sender

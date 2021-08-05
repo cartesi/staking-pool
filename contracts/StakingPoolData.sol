@@ -28,7 +28,7 @@ contract StakingPoolData is
     struct UserBalance {
         uint256 balance; // amount of free tokens belonging to this user
         uint256 shares; // amount of shares beloging to this user
-        uint256 unstakeTimestamp; // timestamp of when user can unstake
+        uint256 depositTimestamp; // timestamp of when user deposited for the last time
     }
     mapping(address => UserBalance) public userBalance;
 
