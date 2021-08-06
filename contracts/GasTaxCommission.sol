@@ -14,16 +14,15 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol";
-import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/Fee.sol";
 import "./oracle/GasOracle.sol";
+import "./oracle/PriceOracle.sol";
 
 contract GasTaxCommission is Fee, Ownable {
     GasOracle public immutable gasOracle;
 
-    IUniswapV2Pair public immutable priceOracle;
+    PriceOracle public immutable priceOracle;
 
     uint256 public gas;
 
@@ -36,7 +35,7 @@ contract GasTaxCommission is Fee, Ownable {
         uint256 _gas
     ) {
         gasOracle = GasOracle(_chainlinkOracle);
-        priceOracle = IUniswapV2Pair(_uniswapOracle);
+        priceOracle = PriceOracle(_uniswapOracle);
         gas = _gas;
         emit GasTaxChanged(_gas);
     }
@@ -56,20 +55,10 @@ contract GasTaxCommission is Fee, Ownable {
         // gas fee (in ETH) charged by pool manager
         uint256 gasFee = gasPrice * gas;
 
-        // get CTSI/ETH reserves
-        (
-            uint112 reserveCTSI,
-            uint112 reserveETH,
-            uint32 _blockTimestampLast
-        ) = priceOracle.getReserves();
-
         // convert gas in ETH to gas in CTSI
+        uint256 ctsiETHPrice = priceOracle.getPrice();
 
-        // if there is no ETH reserve, we can't calculate
-        if (reserveETH == 0) {
-            return 0;
-        }
-        uint256 gasFeeCTSI = (gasFee * reserveCTSI) / reserveETH;
+        uint256 gasFeeCTSI = gasFee * ctsiETHPrice;
 
         // this is the commission, maxed by the reward
         return gasFeeCTSI > rewardAmount ? rewardAmount : gasFeeCTSI;

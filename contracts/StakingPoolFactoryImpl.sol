@@ -23,23 +23,23 @@ import "./GasTaxCommission.sol";
 
 contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     address public referencePool;
-    address public immutable chainlinkOracle;
+    address public immutable gasOracle;
     address public immutable uniswapOracle;
 
     event ReferencePoolChanged(address indexed pool);
 
     receive() external payable {}
 
-    constructor(address _chainlinkOracle, address _uniswapOracle) {
+    constructor(address _gasOracle, address _uniswapOracle) {
         require(
-            _chainlinkOracle != address(0),
+            _gasOracle != address(0),
             "StakingPoolFactoryImpl: parameter can not be zero address."
         );
         require(
             _uniswapOracle != address(0),
             "StakingPoolFactoryImpl: parameter can not be zero address."
         );
-        chainlinkOracle = _chainlinkOracle;
+        gasOracle = _gasOracle;
         uniswapOracle = _uniswapOracle;
     }
 
@@ -89,7 +89,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
             "StakingPoolFactoryImpl: undefined reference pool"
         );
         GasTaxCommission fee = new GasTaxCommission(
-            chainlinkOracle,
+            gasOracle,
             uniswapOracle,
             gas
         );

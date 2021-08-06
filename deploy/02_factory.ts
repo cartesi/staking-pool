@@ -12,6 +12,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
+const defaultNetworksChainIDs = [1, 3, 4, 5];
 /**
  * Deploy a mock contract for a chainlink aggregator, where anyone can set the value.
  * @param hre hardhat environment
@@ -31,27 +32,76 @@ const deployChainlink = async (
 };
 
 /**
- * Deploy a mock contract for uniswap pair, where anyone can set price.
+ * Deploy a UniswapV3Factory.
  * @param hre hardhat environment
  * @returns contract address
  */
-const deployUniswap = async (
+const deployUniswapV3Factory = async (
     hre: HardhatRuntimeEnvironment
 ): Promise<string> => {
-    const { deployments, getNamedAccounts, ethers, network } = hre;
+    const { deployments, getNamedAccounts } = hre;
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
-    const deployment = await deploy("MockUniswapV2Pair", {
+    const contract = await import(
+        "@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json"
+    );
+    const factory = await deploy("UniswapV3Factory", {
+        contract,
         from: deployer,
         log: true,
     });
-    return deployment.address;
+    return factory.address;
+};
+
+const deployWETH = async (hre: HardhatRuntimeEnvironment): Promise<string> => {
+    const { deployments, getNamedAccounts } = hre;
+    const { deploy } = deployments;
+    const { deployer } = await getNamedAccounts();
+    const contract = await import(
+        "@openzeppelin/contracts/build/contracts/ERC20.json"
+    );
+    const factory = await deploy("ERC20", {
+        contract,
+        args: ["Wrapped Ether", "WETH"],
+        from: deployer,
+        log: true,
+    });
+    return factory.address;
+};
+
+const getUniswapV3FactoryAddress = async (
+    hre: HardhatRuntimeEnvironment
+): Promise<string> => {
+    const { network } = hre;
+    if (
+        network.config.chainId &&
+        defaultNetworksChainIDs.includes(network.config.chainId)
+    )
+        return "0x1F98431c8aD98523631AE4a59f267346ea31F984";
+    return deployUniswapV3Factory(hre);
+};
+
+const getWETHAddress = async (
+    hre: HardhatRuntimeEnvironment
+): Promise<string> => {
+    const { network } = hre;
+    switch (network.config.chainId) {
+        case 1: // mainnet
+            return "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+        case 3: //ropsten
+            return "0xc778417E063141139Fce010982780140Aa0cD5Ab";
+        case 5: //goerli
+            return "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6"; // 0xf5E7Aa9fD045CE55c68F9a4f80A608496f152524
+        default:
+            return await deployWETH(hre);
+    }
 };
 
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     const { deployments, getNamedAccounts, network } = hre;
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
+    const { CartesiToken } = await deployments.all();
 
     network.config.chainId === 1;
 
@@ -59,16 +109,26 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
         network.config.chainId === 1
             ? "0x169E633A2D1E6c10dD91238Ba11c4A708dfEF37C" // https://data.chain.link/fast-gas-gwei
             : await deployChainlink(hre);
+    const GasOracle = await deploy("ChainlinkGasOracle", {
+        args: [chainlinkOracle],
+        from: deployer,
+        log: true,
+    });
 
-    const uniswapOracle =
-        network.config.chainId === 1
-            ? "0x58EEB5D44Dc41965AB0a9E563536175C8dc5C3B3" // https://v2.info.uniswap.org/pair/0x58eeb5d44dc41965ab0a9e563536175c8dc5c3b3
-            : await deployUniswap(hre);
-    // XXX: Uniswap V3 is at https://info.uniswap.org/#/pools/0x01949723055a451229c7ba3a817937c966748f76
+    // deploy UniswapV3 price oracle
+    // https://info.uniswap.org/#/pools/0x01949723055a451229c7ba3a817937c966748f76
+    const uniswapV3FactoryAddress = await getUniswapV3FactoryAddress(hre);
+    const weth = await getWETHAddress(hre);
+
+    const uniswapV3Oracle = await deploy("UniswapV3PriceOracle", {
+        args: [uniswapV3FactoryAddress, CartesiToken.address, weth],
+        from: deployer,
+        log: true,
+    });
 
     // deploy pool factory
     await deploy("StakingPoolFactoryImpl", {
-        args: [chainlinkOracle, uniswapOracle],
+        args: [GasOracle.address, uniswapV3Oracle.address],
         from: deployer,
         log: true,
     });
