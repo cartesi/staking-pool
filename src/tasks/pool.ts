@@ -184,8 +184,8 @@ task("pool:verify", "Verify a pool on etherscan")
     .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { deployments, ethers } = hre;
         const {
-            MockAggregator,
-            MockUniswapV2Pair,
+            ChainlinkGasOracle,
+            UniswapV3PriceOracle,
         } = await deployments.all();
 
         const { StakingPoolImpl__factory } =
@@ -207,8 +207,8 @@ task("pool:verify", "Verify a pool on etherscan")
                 ethers.provider
             );
             const gas = await fee.gas();
-            const gasOracle = MockAggregator.address;
-            const priceOracle = MockUniswapV2Pair.address;
+            const gasOracle = ChainlinkGasOracle.address;
+            const priceOracle = UniswapV3PriceOracle.address;
             return [gasOracle, priceOracle, gas];
         };
 
@@ -225,7 +225,7 @@ task("pool:verify", "Verify a pool on etherscan")
         // verify the commission contract
         const feeAddress = await pool.fee();
 
-        console.log(`verifying fee ${feeAddress}`);
+        console.log(`verifying fee ${feeAddress} for pool ${args.address}`);
         let feeArgs = undefined;
         try {
             // try with a FlatRateArgs
