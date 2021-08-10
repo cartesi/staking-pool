@@ -184,10 +184,6 @@ task("pool:verify", "Verify a pool on etherscan")
     .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { deployments, ethers } = hre;
         const {
-            CartesiToken,
-            PoS,
-            StakingImpl,
-            WorkerManagerAuthManagerImpl,
             MockAggregator,
             MockUniswapV2Pair,
         } = await deployments.all();
@@ -199,8 +195,6 @@ task("pool:verify", "Verify a pool on etherscan")
         const { FlatRateCommission__factory } =
             await require("../types/factories/FlatRateCommission__factory");
 
-        const network = await ethers.getDefaultProvider().getNetwork();
-        const ensAddress = network.ensAddress || ethers.constants.AddressZero;
         const pool = StakingPoolImpl__factory.connect(
             args.address,
             ethers.provider
@@ -232,7 +226,6 @@ task("pool:verify", "Verify a pool on etherscan")
         const feeAddress = await pool.fee();
 
         console.log(`verifying fee ${feeAddress}`);
-
         let feeArgs = undefined;
         try {
             // try with a FlatRateArgs
@@ -245,19 +238,5 @@ task("pool:verify", "Verify a pool on etherscan")
         await hre.run("verify:verify", {
             address: feeAddress,
             constructorArguments: feeArgs,
-        });
-
-        console.log(`verifying pool ${args.address}`);
-        await hre.run("verify:verify", {
-            address: args.address,
-            constructorArguments: [
-                CartesiToken.address,
-                StakingImpl.address,
-                PoS.address,
-                21600, // TODO: this will be a parameter
-                172800, // TODO: this will be a parameter
-                ensAddress,
-                WorkerManagerAuthManagerImpl.address,
-            ],
         });
     });
