@@ -25,15 +25,25 @@ task("pool:create", "Create a staking pool")
     .addOptionalParam("gas", "Gas tax commission", undefined, types.int)
     .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { deployments, ethers } = hre;
-        const { StakingPoolFactory__factory } =
-            await require("../types/factories/StakingPoolFactory__factory");
-        const { StakingPoolFactoryImpl } = await deployments.all();
+        const { StakingPoolFactoryImpl__factory } =
+            await require("../types/factories/StakingPoolFactoryImpl__factory");
+        const { StakingPoolImpl, StakingPoolFactoryImpl } = await deployments.all();
         const [deployer] = await ethers.getSigners();
 
-        const poolFactory = StakingPoolFactory__factory.connect(
+        const poolFactory = StakingPoolFactoryImpl__factory.connect(
             StakingPoolFactoryImpl.address,
             deployer
         );
+
+        // configure factory if needed
+        const referencePool = await poolFactory.referencePool();
+        if (referencePool == ethers.constants.AddressZero) {
+            console.log(
+                `setting up reference pool to ${StakingPoolImpl.address}`
+            );
+            const tx = await poolFactory.setReferencePool(StakingPoolImpl.address);
+            await tx.wait(1);
+        }
 
         let tx;
         if (args.commission) {
