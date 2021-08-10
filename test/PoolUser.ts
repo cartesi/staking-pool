@@ -290,4 +290,37 @@ describe("StakingPoolUser", async () => {
             "ERC20: transfer amount exceeds balance"
         );
     });
+
+    it("should not withdraw with over user balance", async () => {
+        const {
+            alice,
+            bob,
+            owner: {
+                pool: { provider },
+            },
+        } = await setupPool({ stakeLock: STAKE_LOCK });
+        const stake = parseCTSI("1000");
+        await alice.token.approve(alice.pool.address, stake);
+
+        const ts = Date.now();
+        await setNextBlockTimestamp(provider, ts);
+        await alice.pool.deposit(stake);
+
+        // stake
+        const nextTS = ts + STAKE_LOCK + 1;
+        await setNextBlockTimestamp(alice.pool.provider, nextTS);
+        await alice.pool.stake(stake);
+
+        await alice.pool.unstake(stake);
+
+        // we also add bob balance so the pool has enough CTSI under control
+        // to execute user focused control (vs global balance control)
+        await bob.token.approve(bob.pool.address, stake);
+        await bob.pool.deposit(stake);
+
+        // unstake request liquidity
+        expect(await alice.pool.requiredLiquidity()).to.equal(stake);
+        expect(await alice.pool.getWithdrawBalance()).to.equal(stake);
+        await expect(alice.pool.withdraw(stake.add(1))).to.be.reverted;
+    });
 });
