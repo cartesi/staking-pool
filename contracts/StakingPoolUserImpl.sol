@@ -18,16 +18,13 @@ import "./StakingPoolData.sol";
 
 contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
     IERC20 private immutable ctsi;
-    uint256 lockTime;
+    uint256 public immutable lockTime;
 
     /// @dev Constructor
     /// @param _ctsi The contract that provides the staking pool's token
-    constructor(address _ctsi) {
-        ctsi = IERC20(_ctsi);
-    }
-
     /// @param _lockTime The user deposit lock period
-    function __StakingPoolUser_init(uint256 _lockTime) internal {
+    constructor(address _ctsi, uint256 _lockTime) {
+        ctsi = IERC20(_ctsi);
         lockTime = _lockTime;
     }
 
@@ -52,7 +49,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         user.depositTimestamp = block.timestamp;
 
         // emit event containing user and amount
-        emit Deposit(msg.sender, amount, block.timestamp + lockTime);
+        emit Deposit(msg.sender, _amount, block.timestamp + lockTime);
     }
 
     /// @notice Stake an amount of tokens, immediately earning pool shares in returns
@@ -140,7 +137,10 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         UserBalance storage user = userBalance[msg.sender];
 
         // check user released value
-        require(_amount > 0, "StakingPoolUserImpl: no balance to withdraw");
+        require(
+            user.balance > 0,
+            "StakingPoolUserImpl: no balance to withdraw"
+        );
 
         // transfer token back to user
         require(
@@ -149,10 +149,10 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         );
 
         // clear user released value
-        user.balance -= _amount;
+        user.balance -= _amount; // if _amount >  user.balance this will revert
 
         // decrease required liquidity
-        requiredLiquidity -= _amount;
+        requiredLiquidity -= _amount; // if _amount >  requiredLiquidity this will revert
 
         // emit event containing user and token amount
         emit Withdraw(msg.sender, _amount);

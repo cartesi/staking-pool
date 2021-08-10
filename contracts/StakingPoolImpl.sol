@@ -34,25 +34,21 @@ contract StakingPoolImpl is
         address _staking,
         address _pos,
         address _workerManager,
-        address _ens
+        address _ens,
+        uint256 _stakeLock
     )
         StakingPoolManagementImpl(_ens)
         StakingPoolProducerImpl(_ctsi, _pos)
         StakingPoolStakingImpl(_ctsi, _staking)
-        StakingPoolUserImpl(_ctsi)
+        StakingPoolUserImpl(_ctsi, _stakeLock)
         StakingPoolWorkerImpl(_workerManager, _pos)
     {}
 
-    function initialize(address _fee, uint256 _stakeLock)
-        public
-        override
-        initializer
-    {
+    function initialize(address _fee) public override initializer {
         __Pausable_init();
         __Ownable_init();
         __StakingPoolProducer_init(_fee);
         __StakingPoolStaking_init();
-        __StakingPoolUser_init(_stakeLock);
     }
 
     function transferOwnership(address newOwner)
