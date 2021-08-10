@@ -14,6 +14,7 @@ import { deployments, ethers, waffle } from "hardhat";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { Provider } from "@ethersproject/abstract-provider";
+import { deployENS, ENS } from "@ethereum-waffle/ens";
 
 import { PoS__factory, StakingImpl__factory } from "@cartesi/pos";
 
@@ -54,6 +55,8 @@ export interface PoolProps {
     selfHire?: boolean;
 }
 
+const MINUTE = 60; // seconds in a minute
+
 export const setupPool = deployments.createFixture(
     async (
         { deployments, ethers }: HardhatRuntimeEnvironment,
@@ -73,6 +76,7 @@ export const setupPool = deployments.createFixture(
             StakingImpl,
             StakingPoolImpl,
             WorkerManagerAuthManagerImpl,
+            PoS,
         } = await deployments.all();
 
         const workerManager = WorkerManagerAuthManagerImpl__factory.connect(
@@ -96,15 +100,37 @@ export const setupPool = deployments.createFixture(
         // send 10k tokens to alice and bob
         await token.transfer(alice.address, parseCTSI("10000"));
         await token.transfer(bob.address, parseCTSI("10000"));
+
+        let refereceAddress;
+
+        if (stakeLock == 2 * MINUTE) refereceAddress = StakingPoolImpl.address;
+        else {
+            const ensSvc: ENS = await deployENS(deployer);
+            await ensSvc.createTopLevelDomain("test");
+            const ensAddress = ensSvc.ens.address;
+            const deployment = await deployments.deploy("StakingPoolImpl", {
+                args: [
+                    CartesiToken.address,
+                    StakingImpl.address,
+                    PoS.address,
+                    WorkerManagerAuthManagerImpl.address,
+                    ensAddress,
+                    stakeLock,
+                ],
+                from: deployer.address,
+            });
+            refereceAddress = deployment.address;
+        }
+
         const CloneMakerFactory = new CloneMaker__factory(deployer);
         const cloneMaker = await CloneMakerFactory.deploy();
-        const newPoolTx = await cloneMaker.clone(StakingPoolImpl.address);
+        const newPoolTx = await cloneMaker.clone(refereceAddress);
         const newPoolReceipt = await newPoolTx.wait();
         if (!newPoolReceipt.events || !newPoolReceipt.events[0].args)
             throw "error on cloning deployment";
         const newPoolAddr = newPoolReceipt.events[0].args[0];
         const pool = StakingPoolImpl__factory.connect(newPoolAddr, deployer);
-        await pool.initialize(fee.address, stakeLock);
+        await pool.initialize(fee.address);
 
         // deploy a mock BlockSelector that always returns true to produceBlock
         const blockSelector = await deployMockContract(

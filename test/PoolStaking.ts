@@ -23,7 +23,7 @@ const { solidity } = waffle;
 use(solidity);
 const MINUTE = 60; // seconds in a minute
 const HOUR = 60 * MINUTE; // seconds in an hour
-const STAKE_LOCK = 60; // seconds
+const STAKE_LOCK = 2 * MINUTE;
 const timeToStake = 2 * MINUTE;
 const timeToRelease = 2 * MINUTE;
 
@@ -78,19 +78,18 @@ describe("StakingPoolStaking", async () => {
             owner: { pool },
             contracts: { staking },
         } = await setupPool({ stakeLock: STAKE_LOCK });
-
+        const provider = pool.provider;
         const stake = parseCTSI("1000");
         await alice.token.approve(pool.address, stake);
-        await alice.pool.stake(stake);
+        await alice.pool.deposit(stake);
 
         const amounts = await pool.amounts();
         expect(amounts.stake).to.be.equal(stake);
         expect(amounts.unstake.toNumber()).to.be.equal(0);
         expect(amounts.withdraw.toNumber()).to.be.equal(0);
 
-        // stake to staking
         const ts = Date.now();
-        await setNextBlockTimestamp(pool.provider, ts);
+        await setNextBlockTimestamp(provider, ts);
 
         await expect(pool.rebalance())
             .to.emit(staking, "Stake")
@@ -106,11 +105,11 @@ describe("StakingPoolStaking", async () => {
 
         const stake = parseCTSI("1000");
         await alice.token.approve(pool.address, stake.mul(2));
-        await alice.pool.stake(stake);
+        await alice.pool.deposit(stake);
         await pool.rebalance();
 
         // second stake
-        await alice.pool.stake(stake);
+        await alice.pool.deposit(stake);
         const amounts = await pool.amounts();
         expect(amounts.stake).to.be.equal(stake);
         expect(amounts.unstake.toNumber()).to.be.equal(0);
@@ -130,15 +129,16 @@ describe("StakingPoolStaking", async () => {
 
         const stake = parseCTSI("1000");
         await alice.token.approve(pool.address, stake);
-
         const ts = Date.now();
         await setNextBlockTimestamp(pool.provider, ts);
-        await alice.pool.stake(stake);
-        await pool.rebalance();
-        // now we set the timestamp past the lock period
-        // otherwise the unstake operation would be blocked
+        await alice.pool.deposit(stake);
+
+        // now we advance time so we unlock the stake() action
         let nextTS = ts + STAKE_LOCK + 1;
         await setNextBlockTimestamp(pool.provider, nextTS);
+
+        await alice.pool.stake(stake);
+        await pool.rebalance();
 
         const { shares } = await alice.pool.userBalance(alice.address);
         await alice.pool.unstake(shares);
@@ -148,7 +148,7 @@ describe("StakingPoolStaking", async () => {
         expect(amounts.unstake).to.be.equal(stake);
         expect(amounts.withdraw.toNumber()).to.be.equal(0);
 
-        nextTS += 1;
+        nextTS += 10;
         await setNextBlockTimestamp(pool.provider, nextTS);
         await expect(pool.rebalance())
             .to.emit(staking, "Unstake")
@@ -164,18 +164,20 @@ describe("StakingPoolStaking", async () => {
 
         const stake = parseCTSI("1000");
         await alice.token.approve(pool.address, stake);
-
         const ts = Date.now();
         await setNextBlockTimestamp(pool.provider, ts);
-        await alice.pool.stake(stake);
-        await pool.rebalance();
+        await alice.pool.deposit(stake);
+        // now we advance time so we unlock the stake() action
         let nextTS = ts + STAKE_LOCK + 1;
         await setNextBlockTimestamp(pool.provider, nextTS);
+
+        await alice.pool.stake(stake);
+        await pool.rebalance();
 
         const { shares } = await alice.pool.userBalance(alice.address);
         await alice.pool.unstake(shares.div(2));
 
-        nextTS += 1;
+        nextTS += 10;
         await setNextBlockTimestamp(pool.provider, nextTS);
         await pool.rebalance();
 
@@ -201,12 +203,17 @@ describe("StakingPoolStaking", async () => {
 
         const stake = parseCTSI("1000");
         await alice.token.approve(pool.address, stake);
+        const ts = Date.now();
+        await setNextBlockTimestamp(pool.provider, ts);
+        await alice.pool.deposit(stake);
 
-        let nextTS = Date.now();
+        // now we advance time so we unlock the stake() action
+        let nextTS = ts + STAKE_LOCK + 1;
         await setNextBlockTimestamp(pool.provider, nextTS);
         await alice.pool.stake(stake);
+
         await pool.rebalance();
-        nextTS += STAKE_LOCK + 1;
+        nextTS += timeToStake + 1;
         await setNextBlockTimestamp(pool.provider, nextTS);
 
         const { shares } = await alice.pool.userBalance(alice.address);
@@ -241,12 +248,15 @@ describe("StakingPoolStaking", async () => {
 
         const stake = parseCTSI("1000");
         await alice.token.approve(pool.address, stake);
+        const ts = Date.now();
+        await setNextBlockTimestamp(pool.provider, ts);
+        await alice.pool.deposit(stake);
 
-        let nextTS = Date.now();
+        let nextTS = ts + STAKE_LOCK + 1;
         await setNextBlockTimestamp(pool.provider, nextTS);
         await alice.pool.stake(stake);
         await pool.rebalance();
-        nextTS += STAKE_LOCK + 1;
+        nextTS += timeToStake + 10;
         await setNextBlockTimestamp(pool.provider, nextTS);
 
         const { shares } = await alice.pool.userBalance(alice.address);

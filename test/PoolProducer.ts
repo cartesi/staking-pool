@@ -18,7 +18,7 @@ const { solidity } = waffle;
 use(solidity);
 const MINUTE = 60; // seconds in a minute
 const HOUR = 60 * MINUTE; // seconds in an hour
-const STAKE_LOCK = 60; // seconds
+const STAKE_LOCK = 2 * MINUTE;
 const timeToStake = 2 * MINUTE;
 const timeToRelease = 2 * MINUTE;
 
@@ -71,17 +71,20 @@ describe("StakingPoolProducer", async () => {
         const provider = owner.pool.provider;
         const stake = parseCTSI("1000");
 
+        const ts = Date.now();
+        await setNextBlockTimestamp(provider, ts);
         await alice.token.approve(alice.pool.address, stake);
         await bob.token.approve(bob.pool.address, stake.mul(9));
-
-        await alice.pool.stake(stake);
+        await alice.pool.deposit(stake);
         // bob is staking 9 times the amount of alice
         // so he should earn 90% of the rewards
+        await bob.pool.deposit(stake.mul(9));
+        await setNextBlockTimestamp(provider, ts + STAKE_LOCK + 1);
+
+        await alice.pool.stake(stake);
         await bob.pool.stake(stake.mul(9));
 
         // stake to staking
-        const ts = Date.now();
-        await setNextBlockTimestamp(provider, ts);
         await expect(owner.pool.rebalance()).to.emit(staking, "Stake");
         await owner.pool.produceBlock(0);
 
@@ -89,8 +92,6 @@ describe("StakingPoolProducer", async () => {
         const bobBalance = await bob.pool.userBalance(bob.address);
 
         expect(aliceBalance.shares.mul(9)).to.be.equal(bobBalance.shares);
-
-        await setNextBlockTimestamp(provider, ts + STAKE_LOCK + 1);
 
         // actual reward to users is the block reward - commission
         const remainingReward = reward.sub(commission);
