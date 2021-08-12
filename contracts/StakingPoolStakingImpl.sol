@@ -41,23 +41,18 @@ contract StakingPoolStakingImpl is StakingPoolStaking, StakingPoolData {
         // get amounts
         (uint256 _stake, uint256 _unstake, uint256 _withdraw) = amounts();
 
-        // only stake if it is above certain threshold
         if (_stake > 0) {
-            uint256 maturing = staking.getMaturingBalance(address(this));
-            if (maturing == 0) {
-                // avoid resetting the clock
-                // TODO: possible different strategies
-                staking.stake(_stake);
-            }
+            // we can stake
+            staking.stake(_stake);
         }
 
         if (_unstake > 0) {
-            // we need to provide liquidity, so don't use a threshold here
+            // we need to provide liquidity
             staking.unstake(_unstake);
         }
 
         if (_withdraw > 0) {
-            // we need to provide liquidity, so don't use a threshold here
+            // we need to provide liquidity
             staking.withdraw(_withdraw);
         }
     }
@@ -77,7 +72,12 @@ contract StakingPoolStakingImpl is StakingPoolStaking, StakingPoolData {
 
         if (balance > requiredLiquidity) {
             // we have spare tokens we can stake
-            stake = balance - requiredLiquidity;
+            // check if there is anything already maturing, to avoid reset the maturation clock
+            uint256 maturing = staking.getMaturingBalance(address(this));
+            if (maturing == 0) {
+                // nothing is maturing, we can stake the balance, preserving the liquidity
+                stake = balance - requiredLiquidity;
+            }
         } else if (requiredLiquidity > balance) {
             // we don't have enough tokens to provide liquidity
             uint256 missingLiquidity = requiredLiquidity - balance;

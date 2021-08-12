@@ -340,7 +340,7 @@ describe("StakingPoolUser", async () => {
         await bob.pool.deposit(stake);
 
         // unstake request liquidity
-        expect(await alice.pool.requiredLiquidity()).to.equal(stake);
+        expect(await alice.pool.requiredLiquidity()).to.equal(stake.mul(2));
         expect(await alice.pool.getWithdrawBalance()).to.equal(stake);
         await expect(alice.pool.withdraw(stake.add(1))).to.be.reverted;
     });

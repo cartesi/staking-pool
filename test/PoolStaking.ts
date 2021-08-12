@@ -23,7 +23,7 @@ const { solidity } = waffle;
 use(solidity);
 const MINUTE = 60; // seconds in a minute
 const HOUR = 60 * MINUTE; // seconds in an hour
-const STAKE_LOCK = 2 * MINUTE;
+const STAKE_LOCK = 30; // 30 seconds
 const timeToStake = 2 * MINUTE;
 const timeToRelease = 2 * MINUTE;
 
@@ -72,7 +72,7 @@ describe("StakingPoolStaking", async () => {
             .withArgs(pool.address, balance, ts + timeToRelease);
     });
 
-    it("should stake when a user joins", async () => {
+    it("should not stake when a user deposits", async () => {
         const {
             alice,
             owner: { pool },
@@ -84,16 +84,9 @@ describe("StakingPoolStaking", async () => {
         await alice.pool.deposit(stake);
 
         const amounts = await pool.amounts();
-        expect(amounts.stake).to.be.equal(stake);
+        expect(amounts.stake.toNumber()).to.be.equal(0);
         expect(amounts.unstake.toNumber()).to.be.equal(0);
         expect(amounts.withdraw.toNumber()).to.be.equal(0);
-
-        const ts = Date.now();
-        await setNextBlockTimestamp(provider, ts);
-
-        await expect(pool.rebalance())
-            .to.emit(staking, "Stake")
-            .withArgs(pool.address, stake, ts + timeToRelease);
     });
 
     it("should wait when a previous stake is maturing", async () => {
@@ -103,15 +96,22 @@ describe("StakingPoolStaking", async () => {
             contracts: { staking },
         } = await setupPool({ stakeLock: STAKE_LOCK });
 
+        const ts = Date.now();
         const stake = parseCTSI("1000");
         await alice.token.approve(pool.address, stake.mul(2));
-        await alice.pool.deposit(stake);
+        await alice.pool.deposit(stake.mul(2));
+
+        await setNextBlockTimestamp(pool.provider, ts + STAKE_LOCK + 1);
+        await alice.pool.stake(stake);
+        let amounts = await pool.amounts();
         await pool.rebalance();
 
         // second stake
-        await alice.pool.deposit(stake);
-        const amounts = await pool.amounts();
-        expect(amounts.stake).to.be.equal(stake);
+        await setNextBlockTimestamp(pool.provider, ts + STAKE_LOCK * 2 + 1);
+        await alice.pool.stake(stake);
+
+        amounts = await pool.amounts();
+        expect(amounts.stake.toNumber()).to.be.equal(0);
         expect(amounts.unstake.toNumber()).to.be.equal(0);
         expect(amounts.withdraw.toNumber()).to.be.equal(0);
 

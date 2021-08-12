@@ -48,6 +48,9 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         // reset deposit timestamp
         user.depositTimestamp = block.timestamp;
 
+        // reserve the balance as required liquidity (don't stake to Staking)
+        requiredLiquidity += _amount;
+
         // emit event containing user and amount
         emit Deposit(msg.sender, _amount, block.timestamp + lockTime);
     }
@@ -92,6 +95,9 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         // increase total shares and amount (not changing share value)
         amount += _amount;
         shares += _shares;
+
+        // remove from required liquidity, as it's moving to Staking
+        requiredLiquidity -= _amount;
 
         // emit event containing user, amount, shares and unlock time
         emit Stake(msg.sender, _amount, _shares);
