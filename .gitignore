@@ -1,7 +1,7 @@
 /artifacts
 bin
 cache
-coverage*
+/coverage*
 **/solcInputs
 deployments/localhost
 dist
