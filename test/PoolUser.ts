@@ -89,6 +89,27 @@ describe("StakingPoolUser", async () => {
         expect(balance.balance).to.equal(stake);
     });
 
+    it("should allow to withdraw right after deposit assuming no rebalance happens", async () => {
+        const {
+            alice,
+            owner: {
+                pool: { provider },
+            },
+        } = await setupPool({ stakeLock: STAKE_LOCK });
+
+        const amount = parseCTSI("1000");
+        await alice.token.approve(alice.pool.address, amount);
+
+        // deposit tokens
+        await alice.pool.deposit(amount);
+
+        // no rebalance happens...
+        // should allow withdraw
+        await expect(alice.pool.withdraw(amount))
+            .to.emit(alice.pool, "Withdraw")
+            .withArgs(alice.address, amount);
+    });
+
     it("should not stake what user don't have", async () => {
         const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         await expect(alice.pool.stake(parseCTSI("100000"))).to.be.revertedWith(
