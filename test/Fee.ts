@@ -96,6 +96,21 @@ describe("Commission Tests", async () => {
                 .to.emit(contract, "FlatRateChanged")
                 .withArgs(newCommission, nextTS + FeeRaiseTimeout);
         });
+
+        it("should fail to raise commission if timeout is not over", async () => {
+            const ts = Date.now();
+            await setNextBlockTimestamp(contract.provider, ts);
+
+            let newCommission = commission + 1;
+            await expect(contract.setRate(newCommission))
+                .to.emit(contract, "FlatRateChanged")
+                .withArgs(newCommission, ts + FeeRaiseTimeout);
+            await expect(
+                contract.setRate(newCommission + 1)
+            ).to.be.revertedWith(
+                "FlatRateCommission: the fee raise timout is not expired yet"
+            );
+        });
     });
 
     describe("GasTaxCommission", async () => {
@@ -208,7 +223,7 @@ describe("Commission Tests", async () => {
             );
         });
 
-        it("should fail to reduce commission if new value is equal or higher", async () => {
+        it("should add timeout if commission new value is equal or higher", async () => {
             const [signer] = await ethers.getSigners();
             const provider = signer.provider || ethers.getDefaultProvider();
             const gas = 100000; // 10^5
@@ -228,6 +243,27 @@ describe("Commission Tests", async () => {
                 .to.emit(contract, "GasTaxChanged")
                 .withArgs(gas + 1, nextTS + FeeRaiseTimeout);
             expect(await contract.gas()).to.be.equal(gas + 1);
+        });
+
+        it("should fail to raise commission if timeout is not over", async () => {
+            const [signer] = await ethers.getSigners();
+            const provider = signer.provider || ethers.getDefaultProvider();
+            const gas = 100000; // 10^5
+            const gasPrice = ethers.utils.parseUnits("100", "gwei");
+            const ctsiPrice = ethers.utils.parseUnits("1", 4); // 10^4
+            const ts = Date.now();
+            await setNextBlockTimestamp(provider, ts);
+            const contract = await deploy(gas, gasPrice, ctsiPrice);
+
+            const nextTS = ts + 10;
+            await setNextBlockTimestamp(contract.provider, nextTS);
+
+            await expect(contract.setGas(gas + 1))
+                .to.emit(contract, "GasTaxChanged")
+                .withArgs(gas + 1, nextTS + FeeRaiseTimeout);
+            await expect(contract.setGas(gas + 2)).to.be.revertedWith(
+                "GasTaxCommission: the fee raise timout is not expired yet"
+            );
         });
     });
 });
