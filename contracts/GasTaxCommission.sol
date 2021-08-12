@@ -20,14 +20,18 @@ import "./oracle/GasOracle.sol";
 import "./oracle/PriceOracle.sol";
 
 contract GasTaxCommission is Fee, Ownable {
+    uint256 public immutable feeRaiseTimeout = 7 days;
+    uint256 public immutable maxRaise = 20000; // 21000 is one simple tx
     GasOracle public immutable gasOracle;
 
     PriceOracle public immutable priceOracle;
+    uint256 public timeoutTimestamp;
 
     uint256 public gas;
 
     /// @notice event fired when setGas function is called and successful
-    event GasTaxChanged(uint256 newGas);
+    /// @param timeout timestamp for a new change if raising the fee
+    event GasTaxChanged(uint256 newGas, uint256 timeout);
 
     constructor(
         address _chainlinkOracle,
@@ -37,7 +41,7 @@ contract GasTaxCommission is Fee, Ownable {
         gasOracle = GasOracle(_chainlinkOracle);
         priceOracle = PriceOracle(_uniswapOracle);
         gas = _gas;
-        emit GasTaxChanged(_gas);
+        emit GasTaxChanged(_gas, timeoutTimestamp);
     }
 
     /// @notice calculates the total amount of the reward that will be directed to the PoolManager
@@ -66,11 +70,18 @@ contract GasTaxCommission is Fee, Ownable {
 
     /// @notice allows for the poolManager to reduce how much they want to charge for the block production tx
     function setGas(uint256 newGasCommission) external onlyOwner {
-        require(
-            newGasCommission < gas,
-            "newGasCommission needs to be strictly smaller than the current value."
-        );
+        if (newGasCommission > gas) {
+            require(
+                timeoutTimestamp <= block.timestamp,
+                "GasTaxCommission: the fee raise timout is not expired yet"
+            );
+            require(
+                (newGasCommission - gas) <= maxRaise,
+                "GasTaxCommission: the fee raise is over the maximum allowed gas value"
+            );
+            timeoutTimestamp = block.timestamp + feeRaiseTimeout;
+        }
         gas = newGasCommission;
-        emit GasTaxChanged(newGasCommission);
+        emit GasTaxChanged(newGasCommission, timeoutTimestamp);
     }
 }

@@ -17,19 +17,24 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/Fee.sol";
 
 contract FlatRateCommission is Fee, Ownable {
+    uint256 public immutable feeRaiseTimeout = 7 days;
+    uint256 public immutable maxRaise = 500; // 5%
     uint256 public BASE = 1E4;
     uint256 public rate;
+    uint256 public timeoutTimestamp;
 
     /// @notice Event emmited when a contract is created
     /// @param commission commission charged by the pool
     event FlatRateCommissionCreated(uint256 commission);
 
     /// @notice event fired when setRate function is called and successful
-    event FlatRateChanged(uint256 newRate);
+    /// @param newRate commission charged by the pool effective immediatly
+    /// @param timeout timestamp for a new change if raising the fee
+    event FlatRateChanged(uint256 newRate, uint256 timeout);
 
     constructor(uint256 _rate) {
         rate = _rate;
-        emit FlatRateChanged(_rate);
+        emit FlatRateChanged(_rate, timeoutTimestamp);
     }
 
     /// @notice calculates the total amount of the reward that will be directed to the PoolManager
@@ -45,11 +50,18 @@ contract FlatRateCommission is Fee, Ownable {
 
     /// @notice allows for the poolManager to reduce how much they want to charge for the block production tx
     function setRate(uint256 newRate) external onlyOwner {
-        require(
-            newRate < rate,
-            "newRate needs to be strictly smaller than current rate."
-        );
+        if (newRate > rate) {
+            require(
+                timeoutTimestamp <= block.timestamp,
+                "FlatRateCommission: the fee raise timout is not expired yet"
+            );
+            require(
+                (newRate - rate) <= maxRaise,
+                "FlatRateCommission: the fee raise is over the maximum allowed percentage value"
+            );
+            timeoutTimestamp = block.timestamp + feeRaiseTimeout;
+        }
         rate = newRate;
-        emit FlatRateChanged(newRate);
+        emit FlatRateChanged(newRate, timeoutTimestamp);
     }
 }
