@@ -17,7 +17,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/Fee.sol";
 
 contract FlatRateCommission is Fee, Ownable {
-    uint256 public immutable feeRaiseTimeout = 7 days;
+    uint256 public immutable feeRaiseTimeout;
     uint256 public immutable maxRaise = 500; // 5%
     uint256 public BASE = 1E4;
     uint256 public rate;
@@ -32,8 +32,9 @@ contract FlatRateCommission is Fee, Ownable {
     /// @param timeout timestamp for a new change if raising the fee
     event FlatRateChanged(uint256 newRate, uint256 timeout);
 
-    constructor(uint256 _rate) {
+    constructor(uint256 _rate, uint256 _feeRaiseTimeout) {
         rate = _rate;
+        feeRaiseTimeout = _feeRaiseTimeout;
         emit FlatRateChanged(_rate, timeoutTimestamp);
     }
 

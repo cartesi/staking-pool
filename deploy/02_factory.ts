@@ -13,6 +13,9 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
 const defaultNetworksChainIDs = [1, 3, 4, 5];
+const MINUTE = 60; // seconds in a minute
+const HOUR = 60 * MINUTE; // seconds in an hour
+const DAY = 24 * HOUR; // seconds in a day
 /**
  * Deploy a mock contract for a chainlink aggregator, where anyone can set the value.
  * @param hre hardhat environment
@@ -126,9 +129,22 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
         log: true,
     });
 
+    let feeRaiseTimeout;
+
+    switch (hre.network.name) {
+        case "mainnet":
+        case "ropsten":
+            feeRaiseTimeout = 7 * DAY;
+            break;
+        case "hardhat":
+        case "goerli":
+        default:
+            feeRaiseTimeout = 2 * MINUTE;
+    }
+
     // deploy pool factory
     await deploy("StakingPoolFactoryImpl", {
-        args: [GasOracle.address, uniswapV3Oracle.address],
+        args: [GasOracle.address, uniswapV3Oracle.address, feeRaiseTimeout],
         from: deployer,
         log: true,
     });

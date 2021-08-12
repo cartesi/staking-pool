@@ -25,12 +25,17 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     address public referencePool;
     address public immutable gasOracle;
     address public immutable uniswapOracle;
+    uint256 public immutable feeRaiseTimeout;
 
     event ReferencePoolChanged(address indexed pool);
 
     receive() external payable {}
 
-    constructor(address _gasOracle, address _uniswapOracle) {
+    constructor(
+        address _gasOracle,
+        address _uniswapOracle,
+        uint256 _feeRaiseTimeout
+    ) {
         require(
             _gasOracle != address(0),
             "StakingPoolFactoryImpl: parameter can not be zero address."
@@ -41,6 +46,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         );
         gasOracle = _gasOracle;
         uniswapOracle = _uniswapOracle;
+        feeRaiseTimeout = _feeRaiseTimeout;
     }
 
     /// @notice Change the pool reference implementation
@@ -63,7 +69,10 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
             referencePool != address(0),
             "StakingPoolFactoryImpl: undefined reference pool"
         );
-        FlatRateCommission fee = new FlatRateCommission(commission);
+        FlatRateCommission fee = new FlatRateCommission(
+            commission,
+            feeRaiseTimeout
+        );
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPool pool = StakingPool(deployed);
         pool.initialize(address(fee));
@@ -91,7 +100,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         GasTaxCommission fee = new GasTaxCommission(
             gasOracle,
             uniswapOracle,
-            gas
+            gas,
+            feeRaiseTimeout
         );
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPool pool = StakingPool(deployed);

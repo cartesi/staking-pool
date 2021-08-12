@@ -49,7 +49,7 @@ describe("Commission Tests", async () => {
         ): Promise<FlatRateCommission> => {
             const [signer] = await ethers.getSigners();
             const factory = new FlatRateCommission__factory(signer);
-            return factory.deploy(commission);
+            return factory.deploy(commission, FeeRaiseTimeout);
         };
 
         beforeEach(async () => {
@@ -139,7 +139,8 @@ describe("Commission Tests", async () => {
             return factory.deploy(
                 chainlinkOracle.address,
                 uniswapOracle.address,
-                gas
+                gas,
+                FeeRaiseTimeout
             );
         };
 
