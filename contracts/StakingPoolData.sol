@@ -16,11 +16,14 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
+import "./utils/WadRayMath.sol";
+
 contract StakingPoolData is
     Initializable,
     PausableUpgradeable,
     OwnableUpgradeable
 {
+    using WadRayMath for uint256;
     uint256 public shares; // total number of shares
     uint256 public amount; // amount of staked tokens (no matter where it is)
     uint256 public requiredLiquidity; // amount of required tokens for withdraw requests
@@ -36,17 +39,17 @@ contract StakingPoolData is
         // TODO: rounding errors
         if (amount == 0) {
             // no shares yet, return 1 to 1 ratio
-            return _amount;
+            return _amount.wad2ray();
         }
-        return (_amount * shares) / amount;
+        return _amount.wmul(shares).wdiv(amount);
     }
 
     function sharesToAmount(uint256 _shares) public view returns (uint256) {
         // TODO: rounding errors
         if (shares == 0) {
             // no shares yet, return 1 to 1 ratio
-            return _shares;
+            return _shares.ray2wad();
         }
-        return (_shares * amount) / shares;
+        return _shares.rmul(amount).rdiv(shares);
     }
 }

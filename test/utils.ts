@@ -15,6 +15,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { Provider } from "@ethersproject/abstract-provider";
 import { deployENS, ENS } from "@ethereum-waffle/ens";
+import { BigNumber } from "ethers";
 
 import { PoS__factory, StakingImpl__factory } from "@cartesi/pos";
 
@@ -48,6 +49,19 @@ export const advanceMultipleBlocks = async (
     for (let i = 0; i < numOfBlocks; i++) {
         await advanceBlock(provider);
     }
+};
+
+export const WAD = ethers.BigNumber.from(10).pow(18);
+export const RAY = ethers.BigNumber.from(10).pow(27);
+export const WAD_RAY_RATIO = ethers.BigNumber.from(10).pow(9);
+
+export const ray2wad = (a: BigNumber) => {
+    const halfRatio = WAD_RAY_RATIO.div(2);
+    return halfRatio.add(a).div(WAD_RAY_RATIO);
+};
+
+export const wad2ray = (a: BigNumber) => {
+    return a.mul(WAD_RAY_RATIO);
 };
 
 export interface PoolProps {

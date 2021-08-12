@@ -10,15 +10,11 @@
 // specific language governing permissions and limitations under the License.
 
 import { expect, use } from "chai";
-import { waffle } from "hardhat";
+import { waffle, ethers } from "hardhat";
 
-import {
-    advanceTime,
-    setNextBlockTimestamp,
-    setupPool,
-    parseCTSI,
-} from "./utils";
+import { setNextBlockTimestamp, setupPool, parseCTSI, wad2ray } from "./utils";
 const { solidity } = waffle;
+const { BigNumber } = ethers;
 
 use(solidity);
 const MINUTE = 60; // seconds in a minute
@@ -27,8 +23,6 @@ const STAKE_LOCK = 60; // seconds
 const timeToStake = 2 * MINUTE;
 
 describe("StakingPoolUser", async () => {
-    beforeEach(async () => {});
-
     it("should not allow unstake of zero shares", async () => {
         const { alice } = await setupPool({ stakeLock: STAKE_LOCK });
         await expect(alice.pool.unstake(0)).to.revertedWith(
@@ -134,13 +128,13 @@ describe("StakingPoolUser", async () => {
 
         await expect(alice.pool.stake(stake))
             .to.emit(alice.pool, "Stake")
-            .withArgs(alice.address, stake, stake);
+            .withArgs(alice.address, stake, wad2ray(stake));
 
-        // at start shares = amount
-        expect(await alice.pool.shares()).to.equal(stake);
+        // at start shares = 1e10^9 * amount
+        expect(await alice.pool.shares()).to.equal(wad2ray(stake));
         expect(await alice.pool.amount()).to.equal(stake);
         const balance = await alice.pool.userBalance(alice.address);
-        expect(balance.shares).to.equal(stake);
+        expect(balance.shares).to.equal(wad2ray(stake));
         expect(balance.depositTimestamp).to.equal(ts);
         expect(balance.balance).to.equal(0);
     });
@@ -161,7 +155,7 @@ describe("StakingPoolUser", async () => {
         await setNextBlockTimestamp(provider, nextTS);
         await alice.pool.stake(1);
         expect((await alice.pool.userBalance(alice.address)).shares).to.equal(
-            1
+            wad2ray(BigNumber.from(1))
         );
 
         // stake to staking
@@ -183,6 +177,49 @@ describe("StakingPoolUser", async () => {
         await expect(bob.pool.stake(1)).to.revertedWith(
             "StakingPoolUserImpl: stake not enough to emit 1 share"
         );
+    });
+
+    it("should allow to receive 1 share", async () => {
+        const { alice, bob, owner } = await setupPool({
+            stakeLock: STAKE_LOCK,
+        });
+        const provider = owner.pool.provider;
+
+        // stake 1e-18 tokens, earn 1e-18 shares
+        await alice.token.approve(alice.pool.address, 1);
+        const ts = Date.now();
+        await setNextBlockTimestamp(provider, ts);
+        await alice.pool.deposit(1);
+
+        let nextTS = ts + STAKE_LOCK + 1;
+        await setNextBlockTimestamp(provider, nextTS);
+        await alice.pool.stake(1);
+        expect((await alice.pool.userBalance(alice.address)).shares).to.equal(
+            wad2ray(BigNumber.from(1))
+        );
+
+        // stake to staking
+        await owner.pool.rebalance();
+
+        // advance time to mature stake
+        nextTS += timeToStake;
+        await setNextBlockTimestamp(provider, nextTS);
+
+        // produce a block
+        await owner.pool.produceBlock(0);
+
+        // bob tries to stake same as alice, but it's not enough to emit a single share
+        nextTS += 10;
+        //  ===> reward = 2610e18, so 1/2610 ~ 3.84
+        const bobStake = BigNumber.from(384).mul(BigNumber.from(10).pow(10)); // 3.84*10^12 CTSI
+        await setNextBlockTimestamp(provider, nextTS);
+        await bob.token.approve(bob.pool.address, bobStake);
+        await bob.pool.deposit(bobStake);
+        await setNextBlockTimestamp(provider, nextTS + STAKE_LOCK + 1);
+
+        await expect(bob.pool.stake(bobStake))
+            .to.emit(bob.pool, "Stake")
+            .withArgs(bob.address, bobStake, 1);
     });
 
     it("should lock user deposit", async () => {
@@ -219,17 +256,17 @@ describe("StakingPoolUser", async () => {
         await setNextBlockTimestamp(provider, nextTS);
         await alice.pool.stake(stake);
 
-        await expect(alice.pool.unstake(unstake))
+        await expect(alice.pool.unstake(wad2ray(unstake)))
             .to.emit(alice.pool, "Unstake")
-            .withArgs(alice.address, unstake, unstake);
+            .withArgs(alice.address, unstake, wad2ray(unstake));
 
         // total shares and amount should decrease
-        expect(await alice.pool.shares()).to.equal(stake.sub(unstake));
+        expect(await alice.pool.shares()).to.equal(wad2ray(stake.sub(unstake)));
         expect(await alice.pool.amount()).to.equal(stake.sub(unstake));
 
         // user shares and amount should decrease
         const balance = await alice.pool.userBalance(alice.address);
-        expect(balance.shares).to.equal(stake.sub(unstake));
+        expect(balance.shares).to.equal(wad2ray(stake.sub(unstake)));
 
         // relesed should increase
         expect(balance.balance).to.equal(unstake);
@@ -264,7 +301,7 @@ describe("StakingPoolUser", async () => {
         await setNextBlockTimestamp(alice.pool.provider, nextTS);
         await alice.pool.stake(stake);
 
-        await alice.pool.unstake(stake);
+        await alice.pool.unstake(wad2ray(stake));
 
         // unstake request liquidity
         expect(await alice.pool.requiredLiquidity()).to.equal(stake);
@@ -332,7 +369,7 @@ describe("StakingPoolUser", async () => {
         await setNextBlockTimestamp(alice.pool.provider, nextTS);
         await alice.pool.stake(stake);
 
-        await alice.pool.unstake(stake);
+        await alice.pool.unstake(wad2ray(stake));
 
         // we also add bob balance so the pool has enough CTSI under control
         // to execute user focused control (vs global balance control)
