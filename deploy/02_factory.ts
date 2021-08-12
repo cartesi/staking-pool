@@ -144,7 +144,13 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
 
     // deploy pool factory
     await deploy("StakingPoolFactoryImpl", {
-        args: [GasOracle.address, uniswapV3Oracle.address, feeRaiseTimeout],
+        args: [
+            GasOracle.address,
+            uniswapV3Oracle.address,
+            feeRaiseTimeout,
+            20000,
+            500,
+        ],
         from: deployer,
         log: true,
     });

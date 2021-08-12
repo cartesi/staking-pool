@@ -18,7 +18,7 @@ import "./interfaces/Fee.sol";
 
 contract FlatRateCommission is Fee, Ownable {
     uint256 public immutable feeRaiseTimeout;
-    uint256 public immutable maxRaise = 500; // 5%
+    uint256 public immutable maxRaise; // 500 = 5%
     uint256 public BASE = 1E4;
     uint256 public rate;
     uint256 public timeoutTimestamp;
@@ -32,9 +32,14 @@ contract FlatRateCommission is Fee, Ownable {
     /// @param timeout timestamp for a new change if raising the fee
     event FlatRateChanged(uint256 newRate, uint256 timeout);
 
-    constructor(uint256 _rate, uint256 _feeRaiseTimeout) {
+    constructor(
+        uint256 _rate,
+        uint256 _feeRaiseTimeout,
+        uint256 _maxRaise
+    ) {
         rate = _rate;
         feeRaiseTimeout = _feeRaiseTimeout;
+        maxRaise = _maxRaise;
         emit FlatRateChanged(_rate, timeoutTimestamp);
     }
 

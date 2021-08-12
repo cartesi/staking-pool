@@ -21,7 +21,7 @@ import "./oracle/PriceOracle.sol";
 
 contract GasTaxCommission is Fee, Ownable {
     uint256 public immutable feeRaiseTimeout;
-    uint256 public immutable maxRaise = 20000; // 21000 is one simple tx
+    uint256 public immutable maxRaise; // 21000 is one simple tx
     GasOracle public immutable gasOracle;
 
     PriceOracle public immutable priceOracle;
@@ -37,12 +37,14 @@ contract GasTaxCommission is Fee, Ownable {
         address _chainlinkOracle,
         address _uniswapOracle,
         uint256 _gas,
-        uint256 _feeRaiseTimeout
+        uint256 _feeRaiseTimeout,
+        uint256 _maxRaise
     ) {
         gasOracle = GasOracle(_chainlinkOracle);
         priceOracle = PriceOracle(_uniswapOracle);
         gas = _gas;
         feeRaiseTimeout = _feeRaiseTimeout;
+        maxRaise = _maxRaise;
         emit GasTaxChanged(_gas, timeoutTimestamp);
     }
 

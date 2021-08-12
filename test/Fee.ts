@@ -31,6 +31,8 @@ const HOUR = 60 * MINUTE; // seconds in an hour
 const DAY = 24 * HOUR; // seconds in a day
 
 const FeeRaiseTimeout = 7 * DAY;
+const maxFeeRaise = 500;
+const maxGasRaise = 20000;
 
 describe("Commission Tests", async () => {
     beforeEach(async () => {
@@ -49,7 +51,7 @@ describe("Commission Tests", async () => {
         ): Promise<FlatRateCommission> => {
             const [signer] = await ethers.getSigners();
             const factory = new FlatRateCommission__factory(signer);
-            return factory.deploy(commission, FeeRaiseTimeout);
+            return factory.deploy(commission, FeeRaiseTimeout, maxFeeRaise);
         };
 
         beforeEach(async () => {
@@ -111,6 +113,16 @@ describe("Commission Tests", async () => {
                 "FlatRateCommission: the fee raise timout is not expired yet"
             );
         });
+
+        it("should fail to raise commission if over max", async () => {
+            const ts = Date.now();
+            await setNextBlockTimestamp(contract.provider, ts);
+
+            let newCommission = commission + maxFeeRaise + 1;
+            await expect(contract.setRate(newCommission)).to.revertedWith(
+                "FlatRateCommission: the fee raise is over the maximum allowed percentage value"
+            );
+        });
     });
 
     describe("GasTaxCommission", async () => {
@@ -140,7 +152,8 @@ describe("Commission Tests", async () => {
                 chainlinkOracle.address,
                 uniswapOracle.address,
                 gas,
-                FeeRaiseTimeout
+                FeeRaiseTimeout,
+                maxGasRaise
             );
         };
 
@@ -264,6 +277,18 @@ describe("Commission Tests", async () => {
                 .withArgs(gas + 1, nextTS + FeeRaiseTimeout);
             await expect(contract.setGas(gas + 2)).to.be.revertedWith(
                 "GasTaxCommission: the fee raise timout is not expired yet"
+            );
+        });
+
+        it("should fail to raise commission if over max", async () => {
+            const gas = 100000; // 10^5
+            const gasPrice = ethers.utils.parseUnits("100", "gwei");
+            const ctsiPrice = ethers.utils.parseUnits("1", 4); // 10^4
+            const contract = await deploy(gas, gasPrice, ctsiPrice);
+            await expect(
+                contract.setGas(gas + maxGasRaise + 1)
+            ).to.be.revertedWith(
+                "GasTaxCommission: the fee raise is over the maximum allowed gas value"
             );
         });
     });

@@ -26,6 +26,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     address public immutable gasOracle;
     address public immutable uniswapOracle;
     uint256 public immutable feeRaiseTimeout;
+    uint256 public immutable maxGasRaise;
+    uint256 public immutable maxFeePercentageRaise;
 
     event ReferencePoolChanged(address indexed pool);
 
@@ -34,7 +36,9 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     constructor(
         address _gasOracle,
         address _uniswapOracle,
-        uint256 _feeRaiseTimeout
+        uint256 _feeRaiseTimeout,
+        uint256 _maxGasRaise,
+        uint256 _maxFeePercentageRaise
     ) {
         require(
             _gasOracle != address(0),
@@ -47,6 +51,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         gasOracle = _gasOracle;
         uniswapOracle = _uniswapOracle;
         feeRaiseTimeout = _feeRaiseTimeout;
+        maxGasRaise = _maxGasRaise;
+        maxFeePercentageRaise = _maxFeePercentageRaise;
     }
 
     /// @notice Change the pool reference implementation
@@ -71,7 +77,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         );
         FlatRateCommission fee = new FlatRateCommission(
             commission,
-            feeRaiseTimeout
+            feeRaiseTimeout,
+            maxFeePercentageRaise
         );
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPool pool = StakingPool(deployed);
@@ -101,7 +108,8 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
             gasOracle,
             uniswapOracle,
             gas,
-            feeRaiseTimeout
+            feeRaiseTimeout,
+            maxGasRaise
         );
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPool pool = StakingPool(deployed);
