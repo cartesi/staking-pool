@@ -27,7 +27,8 @@ task("pool:create", "Create a staking pool")
         const { deployments, ethers } = hre;
         const { StakingPoolFactoryImpl__factory } =
             await require("../types/factories/StakingPoolFactoryImpl__factory");
-        const { StakingPoolImpl, StakingPoolFactoryImpl } = await deployments.all();
+        const { StakingPoolImpl, StakingPoolFactoryImpl } =
+            await deployments.all();
         const [deployer] = await ethers.getSigners();
 
         const poolFactory = StakingPoolFactoryImpl__factory.connect(
@@ -41,7 +42,9 @@ task("pool:create", "Create a staking pool")
             console.log(
                 `setting up reference pool to ${StakingPoolImpl.address}`
             );
-            const tx = await poolFactory.setReferencePool(StakingPoolImpl.address);
+            const tx = await poolFactory.setReferencePool(
+                StakingPoolImpl.address
+            );
             await tx.wait(1);
         }
 
@@ -183,10 +186,8 @@ task("pool:verify", "Verify a pool on etherscan")
     .addPositionalParam("address", "Pool address", undefined, types.string)
     .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { deployments, ethers } = hre;
-        const {
-            ChainlinkGasOracle,
-            UniswapV3PriceOracle,
-        } = await deployments.all();
+        const { ChainlinkGasOracle, UniswapV3PriceOracle } =
+            await deployments.all();
 
         const { StakingPoolImpl__factory } =
             await require("../types/factories/StakingPoolImpl__factory");
