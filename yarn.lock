@@ -34,6 +34,31 @@
   optionalDependencies:
     fsevents "^2.3.2"
 
+"@cartesi/solidity-coverage@^0.7.16-patch-2":
+  version "0.7.16-patch-2"
+  resolved "https://registry.yarnpkg.com/@cartesi/solidity-coverage/-/solidity-coverage-0.7.16-patch-2.tgz#f2c6ac6473d1af10ad209d6d3ab2c40f65a1d36d"
+  integrity sha512-c0oJ0piztXE01sPE5pR0fnZerzvVAOSB5sFX//tIudlb0Iy5Q61b01Mn/nyw9ZAQySkMT/UwwWaTFcx6BzzMhg==
+  dependencies:
+    "@solidity-parser/parser" "^0.12.0"
+    "@truffle/provider" "^0.2.24"
+    chalk "^2.4.2"
+    death "^1.1.0"
+    detect-port "^1.3.0"
+    fs-extra "^8.1.0"
+    ganache-cli "^6.11.0"
+    ghost-testrpc "^0.0.2"
+    global-modules "^2.0.0"
+    globby "^10.0.1"
+    jsonschema "^1.2.4"
+    lodash "^4.17.15"
+    node-emoji "^1.10.0"
+    pify "^4.0.1"
+    recursive-readdir "^2.2.2"
+    sc-istanbul "^0.4.5"
+    semver "^7.3.4"
+    shelljs "^0.8.3"
+    web3-utils "^1.3.0"
+
 "@cartesi/token@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@cartesi/token/-/token-1.3.0.tgz#b4ef208263320281761b6ed5676f1081ef3a2a8b"
@@ -2593,9 +2618,9 @@ camelcase@^5.0.0:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30000844:
-  version "1.0.30001250"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001250.tgz#7719197e30f567bc9deb9988c358ed0ab68bf158"
-  integrity sha512-98wdsAAUhKX0YquKnbpIcJScvv0dEgWZeflZ07ah2PnhwgMGvKi4yaxQ+CM0XUT9bqzMB9RrwoHWhmkOZSM/og==
+  version "1.0.30001251"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001251.tgz#6853a606ec50893115db660f82c094d18f096d85"
+  integrity sha512-HOe1r+9VkU4TFmnU70z+r7OLmtR+/chB1rdcJUeQlAinjEeb0cKL20tlAtOagNZhbrtLnCvV19B4FmF1rgzl6A==
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -5671,9 +5696,11 @@ is-arrayish@^0.2.1:
   integrity sha1-d8mYQFJ6qOyxqLppe4BkWnqSap0=
 
 is-bigint@^1.0.1:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/is-bigint/-/is-bigint-1.0.3.tgz#fc9d9e364210480675653ddaea0518528d49a581"
-  integrity sha512-ZU538ajmYJmzysE5yU4Y7uIrPQ2j704u+hXFiIPQExpqzzUbpe5jCPdTfmz7jXRxZdvjY3KZ3ZNenoXQovX+Dg==
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/is-bigint/-/is-bigint-1.0.4.tgz#08147a1875bc2b32005d41ccd8291dffc6691df3"
+  integrity sha512-zB9CruMamjym81i2JZ3UMn54PKGsQzsJeo6xvN3HJJ4CAsQNB6iRutp2To77OfCNuoxspsIhzaPoO1zyCEhFOg==
+  dependencies:
+    has-bigints "^1.0.1"
 
 is-binary-path@^1.0.0:
   version "1.0.1"
@@ -8948,31 +8975,6 @@ solidity-comments-extractor@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/solidity-comments-extractor/-/solidity-comments-extractor-0.0.7.tgz#99d8f1361438f84019795d928b931f4e5c39ca19"
   integrity sha512-wciNMLg/Irp8OKGrh3S2tfvZiZ0NEyILfcRCXCD4mp7SgK/i9gzLfhY2hY7VMCQJ3kH9UB9BzNdibIVMchzyYw==
-
-solidity-coverage@^0.7.16:
-  version "0.7.16"
-  resolved "https://registry.yarnpkg.com/solidity-coverage/-/solidity-coverage-0.7.16.tgz#c8c8c46baa361e2817bbf275116ddd2ec90a55fb"
-  integrity sha512-ttBOStywE6ZOTJmmABSg4b8pwwZfYKG8zxu40Nz+sRF5bQX7JULXWj/XbX0KXps3Fsp8CJXg8P29rH3W54ipxw==
-  dependencies:
-    "@solidity-parser/parser" "^0.12.0"
-    "@truffle/provider" "^0.2.24"
-    chalk "^2.4.2"
-    death "^1.1.0"
-    detect-port "^1.3.0"
-    fs-extra "^8.1.0"
-    ganache-cli "^6.11.0"
-    ghost-testrpc "^0.0.2"
-    global-modules "^2.0.0"
-    globby "^10.0.1"
-    jsonschema "^1.2.4"
-    lodash "^4.17.15"
-    node-emoji "^1.10.0"
-    pify "^4.0.1"
-    recursive-readdir "^2.2.2"
-    sc-istanbul "^0.4.5"
-    semver "^7.3.4"
-    shelljs "^0.8.3"
-    web3-utils "^1.3.0"
 
 solium-plugin-security@0.1.1:
   version "0.1.1"
