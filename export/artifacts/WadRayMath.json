@@ -1,0 +1,57 @@
+{
+  "contractName": "WadRayMath",
+  "sourceName": "contracts/utils/WadRayMath.sol",
+  "abi": [],
+  "bytecode": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122097846d635c1af4169c709a3db2be15bc85a2858b2e0351e6cee822af1c45d0ef64736f6c63430008060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122097846d635c1af4169c709a3db2be15bc85a2858b2e0351e6cee822af1c45d0ef64736f6c63430008060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "bytecode": {
+      "functionDebugData": {},
+      "generatedSources": [],
+      "linkReferences": {},
+      "opcodes": "PUSH1 0x56 PUSH1 0x37 PUSH1 0xB DUP3 DUP3 DUP3 CODECOPY DUP1 MLOAD PUSH1 0x0 BYTE PUSH1 0x73 EQ PUSH1 0x2A JUMPI PUSH4 0x4E487B71 PUSH1 0xE0 SHL PUSH1 0x0 MSTORE PUSH1 0x0 PUSH1 0x4 MSTORE PUSH1 0x24 PUSH1 0x0 REVERT JUMPDEST ADDRESS PUSH1 0x0 MSTORE PUSH1 0x73 DUP2 MSTORE8 DUP3 DUP2 RETURN INVALID PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 SWAP8 DUP5 PUSH14 0x635C1AF4169C709A3DB2BE15BC85 LOG2 DUP6 DUP12 0x2E SUB MLOAD 0xE6 0xCE 0xE8 0x22 0xAF SHR GASLIMIT 0xD0 0xEF PUSH5 0x736F6C6343 STOP ADDMOD MOD STOP CALLER ",
+      "sourceMap": "780:954:49:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;780:954:49;;;;;;;;;;;;;;;;;"
+    },
+    "deployedBytecode": {
+      "functionDebugData": {},
+      "generatedSources": [],
+      "immutableReferences": {},
+      "linkReferences": {},
+      "opcodes": "PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 SWAP8 DUP5 PUSH14 0x635C1AF4169C709A3DB2BE15BC85 LOG2 DUP6 DUP12 0x2E SUB MLOAD 0xE6 0xCE 0xE8 0x22 0xAF SHR GASLIMIT 0xD0 0xEF PUSH5 0x736F6C6343 STOP ADDMOD MOD STOP CALLER ",
+      "sourceMap": "780:954:49:-:0;;;;;;;;"
+    },
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "103",
+        "totalCost": "17303"
+      },
+      "internal": {
+        "ray2wad(uint256)": "infinite",
+        "rdiv(uint256,uint256)": "infinite",
+        "rmul(uint256,uint256)": "infinite",
+        "wad2ray(uint256)": "infinite",
+        "wdiv(uint256,uint256)": "infinite",
+        "wmul(uint256,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  },
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/utils/WadRayMath.sol\":\"WadRayMath\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/utils/WadRayMath.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Wad and Ray Math library\\n/// @dev Math operations for wads (fixed point with 18 digits) and rays (fixed points with 27 digits)\\npragma solidity ^0.8.0;\\n\\nlibrary WadRayMath {\\n    uint256 internal constant WAD = 1e18;\\n    uint256 internal constant RAY = 1e27;\\n    uint256 internal constant RATIO = 1e9;\\n\\n    function wmul(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return ((WAD / 2) + (a * b)) / WAD;\\n    }\\n\\n    function wdiv(uint256 a, uint256 b) internal pure returns (uint256) {\\n        uint256 halfB = b / 2;\\n        return (halfB + (a * WAD)) / b;\\n    }\\n\\n    function rmul(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return ((RAY / 2) + (a * b)) / RAY;\\n    }\\n\\n    function rdiv(uint256 a, uint256 b) internal pure returns (uint256) {\\n        uint256 halfB = b / 2;\\n        return (halfB + (a * RAY)) / b;\\n    }\\n\\n    function ray2wad(uint256 a) internal pure returns (uint256) {\\n        uint256 halfRatio = RATIO / 2;\\n        return (halfRatio + a) / RATIO;\\n    }\\n\\n    function wad2ray(uint256 a) internal pure returns (uint256) {\\n        return a * RATIO;\\n    }\\n}\\n\",\"keccak256\":\"0x1adf36cd91770f989f5700c4fa44c3c08f8bf1df12b9c8816723193e9751a65e\",\"license\":\"Apache-2.0\"}},\"version\":1}",
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
