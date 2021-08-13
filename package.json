@@ -1,6 +1,6 @@
 {
     "name": "@cartesi/staking-pool",
-    "version": "1.0.0-alpha.4",
+    "version": "1.0.0-beta.0",
     "description": "PoS Staking Pools",
     "scripts": {
         "build": "hardhat compile && tsc",
@@ -64,7 +64,7 @@
         "@types/chai": "^4.2.21",
         "@types/keccak": "^3.0.1",
         "@types/mocha": "^9.0.0",
-        "@types/node": "^16.4.13",
+        "@types/node": "^16.6.1",
         "chai": "^4.3.4",
         "copyfiles": "^2.4.1",
         "ethereum-waffle": "^3.4.0",
