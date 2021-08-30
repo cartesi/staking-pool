@@ -7,8 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0-beta.1] - 2021-08-30
+
 ### Changed
 
+-   Update OpenZeppelin to 4.3.1
+
+## [1.0.0-beta.0] - 2021-08-23
+
+### Changed
+
+-   Refactored pool implementation, spliting implementation in 5 different facets
+-   Allow increasing of commission under new rules (one increase per week, cap to a maximum change)
+-   Reduced gas of block production
+-   Added deposit operation for users prior to staking
 -   Decoupling pool factory from reference pool deployment
 -   Allow pool factory to change reference pool implementation
 
