@@ -190,7 +190,7 @@
       ]
     },
     "StakingPoolFactoryImpl": {
-      "address": "0xD2d8D131Dd04a81DA5Db8A012E07cf722636447c",
+      "address": "0xDf1444b36A9f35e67BB54d606dF3C0d548690147",
       "abi": [
         {
           "inputs": [
@@ -515,7 +515,7 @@
       ]
     },
     "StakingPoolImpl": {
-      "address": "0xa66DdDa2761D1EbF98c30919b70F19a8F4289056",
+      "address": "0x329de1954f3e0ddaBa3B57Cc5F79CDFF7197d915",
       "abi": [
         {
           "inputs": [
