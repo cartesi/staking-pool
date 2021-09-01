@@ -52,8 +52,7 @@
         "@chainlink/contracts": "^0.2.1",
         "@ensdomains/ens-contracts": "^0.0.7",
         "@openzeppelin/contracts": "^4.3.1",
-        "@openzeppelin/contracts-upgradeable": "^4.3.1",
-        "@uniswap/v3-periphery": "^1.1.1"
+        "@openzeppelin/contracts-upgradeable": "^4.3.1"
     },
     "devDependencies": {
         "@nomiclabs/hardhat-ethers": "^2.0.2",

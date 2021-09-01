@@ -17,7 +17,7 @@ import { FlatRateCommission } from "../src/types/FlatRateCommission";
 import { FlatRateCommission__factory } from "../src/types/factories/FlatRateCommission__factory";
 import { GasTaxCommission } from "../src/types/GasTaxCommission";
 import { GasTaxCommission__factory } from "../src/types/factories/GasTaxCommission__factory";
-import { UniswapV3PriceOracle__factory } from "../src/types/factories/UniswapV3PriceOracle__factory";
+import { ChainlinkPriceOracle__factory } from "../src/types/factories/ChainlinkPriceOracle__factory";
 import { ChainlinkGasOracle__factory } from "../src/types/factories/ChainlinkGasOracle__factory";
 
 import { setNextBlockTimestamp } from "./utils";
@@ -134,23 +134,23 @@ describe("Commission Tests", async () => {
             const [signer] = await ethers.getSigners();
 
             // build a chainlink oracle mock returning the specified gas price
-            const chainlinkOracle = await deployMockContract(
+            const gasOracle = await deployMockContract(
                 signer,
                 ChainlinkGasOracle__factory.abi
             );
-            chainlinkOracle.mock.getGasPrice.returns(gasPrice);
+            gasOracle.mock.getGasPrice.returns(gasPrice);
 
-            const uniswapOracle = await deployMockContract(
+            const priceOracle = await deployMockContract(
                 signer,
-                UniswapV3PriceOracle__factory.abi
+                ChainlinkPriceOracle__factory.abi
             );
-            uniswapOracle.mock.getPrice.returns(ctsiPrice);
+            priceOracle.mock.getPrice.returns(ctsiPrice);
 
             // deploy the contract
             const factory = new GasTaxCommission__factory(signer);
             return factory.deploy(
-                chainlinkOracle.address,
-                uniswapOracle.address,
+                gasOracle.address,
+                priceOracle.address,
                 gas,
                 FeeRaiseTimeout,
                 maxGasRaise

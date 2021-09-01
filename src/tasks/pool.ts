@@ -186,7 +186,7 @@ task("pool:verify", "Verify a pool on etherscan")
     .addPositionalParam("address", "Pool address", undefined, types.string)
     .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { deployments, ethers } = hre;
-        const { ChainlinkGasOracle, UniswapV3PriceOracle } =
+        const { ChainlinkGasOracle, ChainlinkPriceOracle } =
             await deployments.all();
 
         const { StakingPoolImpl__factory } =
@@ -209,7 +209,7 @@ task("pool:verify", "Verify a pool on etherscan")
             );
             const gas = await fee.gas();
             const gasOracle = ChainlinkGasOracle.address;
-            const priceOracle = UniswapV3PriceOracle.address;
+            const priceOracle = ChainlinkPriceOracle.address;
             return [gasOracle, priceOracle, gas];
         };
 

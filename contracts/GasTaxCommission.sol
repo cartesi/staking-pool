@@ -10,7 +10,7 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the
 // specific language governing permissions and limitations under the License.
 
-/// @title Interface staking contract
+/// @title Gas tax based commission model
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -34,14 +34,14 @@ contract GasTaxCommission is Fee, Ownable {
     event GasTaxChanged(uint256 newGas, uint256 timeout);
 
     constructor(
-        address _chainlinkOracle,
-        address _uniswapOracle,
+        address _gasOracle,
+        address _priceOracle,
         uint256 _gas,
         uint256 _feeRaiseTimeout,
         uint256 _maxRaise
     ) {
-        gasOracle = GasOracle(_chainlinkOracle);
-        priceOracle = PriceOracle(_uniswapOracle);
+        gasOracle = GasOracle(_gasOracle);
+        priceOracle = PriceOracle(_priceOracle);
         gas = _gas;
         feeRaiseTimeout = _feeRaiseTimeout;
         maxRaise = _maxRaise;

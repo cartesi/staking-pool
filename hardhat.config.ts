@@ -59,14 +59,6 @@ const config: HardhatUserConfig = {
     solidity: {
         compilers: [
             {
-                version: "0.7.4",
-                settings: {
-                    optimizer: {
-                        enabled: true,
-                    },
-                },
-            },
-            {
                 version: "0.8.6",
                 settings: {
                     optimizer: {
@@ -75,40 +67,6 @@ const config: HardhatUserConfig = {
                 },
             },
         ],
-        overrides: {
-            "contracts/oracle/UniswapV3PriceOracle.sol": {
-                version: "0.7.4",
-                settings: {
-                    optimizer: {
-                        enabled: true,
-                    },
-                },
-            },
-            "@uniswap/v3-core/contracts/libraries/FullMath.sol": {
-                version: "0.7.4",
-                settings: {
-                    optimizer: {
-                        enabled: true,
-                    },
-                },
-            },
-            "@uniswap/v3-core/contracts/libraries/TickMath.sol": {
-                version: "0.7.4",
-                settings: {
-                    optimizer: {
-                        enabled: true,
-                    },
-                },
-            },
-            "@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol": {
-                version: "0.7.4",
-                settings: {
-                    optimizer: {
-                        enabled: true,
-                    },
-                },
-            },
-        },
     },
     paths: {
         artifacts: "artifacts",

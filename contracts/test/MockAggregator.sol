@@ -10,17 +10,23 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the
 // specific language governing permissions and limitations under the License.
 
-/// @title Interface staking contract
+/// @title Mock implementation of Chainlink aggregator, for testnet
 pragma solidity ^0.8.0;
 
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol";
 
 contract MockAggregator is AggregatorInterface {
+    string public name;
+
     uint256 _round;
 
     mapping(uint256 => int256) _answers;
 
     mapping(uint256 => uint256) _timestamps;
+
+    constructor(string memory _name) {
+        name = _name;
+    }
 
     function setAnswer(int256 answer) external {
         _round++;

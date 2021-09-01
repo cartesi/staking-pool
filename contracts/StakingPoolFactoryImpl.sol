@@ -10,7 +10,7 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the
 // specific language governing permissions and limitations under the License.
 
-/// @title Interface staking contract
+/// @title Factory of staking pools
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -24,7 +24,7 @@ import "./GasTaxCommission.sol";
 contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     address public referencePool;
     address public immutable gasOracle;
-    address public immutable uniswapOracle;
+    address public immutable priceOracle;
     uint256 public immutable feeRaiseTimeout;
     uint256 public immutable maxGasRaise;
     uint256 public immutable maxFeePercentageRaise;
@@ -35,7 +35,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
 
     constructor(
         address _gasOracle,
-        address _uniswapOracle,
+        address _priceOracle,
         uint256 _feeRaiseTimeout,
         uint256 _maxGasRaise,
         uint256 _maxFeePercentageRaise
@@ -45,11 +45,11 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
             "StakingPoolFactoryImpl: parameter can not be zero address."
         );
         require(
-            _uniswapOracle != address(0),
+            _priceOracle != address(0),
             "StakingPoolFactoryImpl: parameter can not be zero address."
         );
         gasOracle = _gasOracle;
-        uniswapOracle = _uniswapOracle;
+        priceOracle = _priceOracle;
         feeRaiseTimeout = _feeRaiseTimeout;
         maxGasRaise = _maxGasRaise;
         maxFeePercentageRaise = _maxFeePercentageRaise;
@@ -106,7 +106,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         );
         GasTaxCommission fee = new GasTaxCommission(
             gasOracle,
-            uniswapOracle,
+            priceOracle,
             gas,
             feeRaiseTimeout,
             maxGasRaise
