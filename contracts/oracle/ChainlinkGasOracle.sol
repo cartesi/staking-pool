@@ -24,7 +24,7 @@ contract ChainlinkGasOracle is GasOracle {
 
     /// @notice Returns current network gas price
     /// @return value of gas price
-    function getGasPrice() public view override returns (uint256) {
+    function getGasPrice() external view override returns (uint256) {
         // get gas price from chainlink oracle
         // https://data.chain.link/fast-gas-gwei
         return uint256(oracle.latestAnswer());

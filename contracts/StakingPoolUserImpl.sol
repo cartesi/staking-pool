@@ -28,7 +28,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         lockTime = _lockTime;
     }
 
-    function deposit(uint256 _amount) public override whenNotPaused {
+    function deposit(uint256 _amount) external override whenNotPaused {
         // transfer tokens from caller to this contract
         // user must have approved the transfer a priori
         // tokens will be lying around, until actually staked by pool owner at a later time
@@ -57,7 +57,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
 
     /// @notice Stake an amount of tokens, immediately earning pool shares in returns
     /// @param _amount amount of tokens to convert from user's balance
-    function stake(uint256 _amount) public override whenNotPaused {
+    function stake(uint256 _amount) external override whenNotPaused {
         // get user balance
         UserBalance storage user = userBalance[msg.sender];
 
@@ -105,7 +105,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
 
     /// @notice allow for users to defined exactly how many shares they
     /// want to unstake. Estimated value is then emitted on Unstake event
-    function unstake(uint256 _shares) public override {
+    function unstake(uint256 _shares) external override {
         UserBalance storage user = userBalance[msg.sender];
 
         // check if shares is valid value
@@ -139,7 +139,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
 
     /// @notice Transfer tokens back to calling user wallet
     /// @dev this will transfer all free tokens for the calling user
-    function withdraw(uint256 _amount) public override {
+    function withdraw(uint256 _amount) external override {
         UserBalance storage user = userBalance[msg.sender];
 
         // check user released value
@@ -148,14 +148,14 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
             "StakingPoolUserImpl: no balance to withdraw"
         );
 
+        // clear user released value
+        user.balance -= _amount; // if _amount >  user.balance this will revert
+
         // transfer token back to user
         require(
             ctsi.transfer(msg.sender, _amount),
             "StakingPoolUserImpl: failed to transfer tokens"
         );
-
-        // clear user released value
-        user.balance -= _amount; // if _amount >  user.balance this will revert
 
         // decrease required liquidity
         requiredLiquidity -= _amount; // if _amount >  requiredLiquidity this will revert
@@ -164,7 +164,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         emit Withdraw(msg.sender, _amount);
     }
 
-    function getWithdrawBalance() public view override returns (uint256) {
+    function getWithdrawBalance() external view override returns (uint256) {
         UserBalance storage user = userBalance[msg.sender];
 
         // get maximum amount user can withdraw (his balance)

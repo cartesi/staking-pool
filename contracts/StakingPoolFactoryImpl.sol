@@ -56,7 +56,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     }
 
     /// @notice Change the pool reference implementation
-    function setReferencePool(address _referencePool) public onlyOwner {
+    function setReferencePool(address _referencePool) external onlyOwner {
         referencePool = _referencePool;
         emit ReferencePoolChanged(_referencePool);
     }
@@ -65,7 +65,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     /// emits NewStakingPool with the parameters of the new pool
     /// @return new pool address
     function createFlatRateCommission(uint256 commission)
-        public
+        external
         payable
         override
         whenNotPaused
@@ -85,16 +85,18 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         pool.initialize(address(fee));
         pool.transferOwnership(msg.sender);
         fee.transferOwnership(msg.sender);
-        pool.selfhire{value: msg.value}();
+        // sends msg.value to complete hiring process
+        pool.selfhire{value: msg.value}(); //@dev: ignore reentrancy guard warning
 
-        payable(msg.sender).transfer(msg.value);
+        // returns unused user payment
+        payable(msg.sender).transfer(msg.value); //@dev: ignore reentrancy guard warning
 
         emit NewFlatRateCommissionStakingPool(address(pool), address(fee));
         return address(pool);
     }
 
     function createGasTaxCommission(uint256 gas)
-        public
+        external
         payable
         override
         whenNotPaused
@@ -116,19 +118,21 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         pool.initialize(address(fee));
         pool.transferOwnership(msg.sender);
         fee.transferOwnership(msg.sender);
-        pool.selfhire{value: msg.value}();
+        // sends msg.value to complete hiring process
+        pool.selfhire{value: msg.value}(); //@dev: ignore reentrancy guard warning
 
-        payable(msg.sender).transfer(msg.value);
+        // returns unused user payment
+        payable(msg.sender).transfer(msg.value); //@dev: ignore reentrancy guard warning
 
         emit NewGasTaxCommissionStakingPool(address(pool), address(fee));
         return address(pool);
     }
 
-    function pause() public whenNotPaused onlyOwner {
+    function pause() external whenNotPaused onlyOwner {
         _pause();
     }
 
-    function unpause() public whenPaused onlyOwner {
+    function unpause() external whenPaused onlyOwner {
         _unpause();
     }
 }

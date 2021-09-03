@@ -344,9 +344,7 @@ describe("StakingPoolUser", async () => {
         // should not have balance
         expect(await alice.pool.getWithdrawBalance()).to.equal(0);
 
-        await expect(alice.pool.withdraw(unstake)).to.be.revertedWith(
-            "ERC20: transfer amount exceeds balance"
-        );
+        await expect(alice.pool.withdraw(unstake)).to.be.reverted;
     });
 
     it("should not withdraw with over user balance", async () => {

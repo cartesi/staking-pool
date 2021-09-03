@@ -47,7 +47,7 @@ contract StakingPoolManagementImpl is StakingPoolManagement, StakingPoolData {
     }
 
     /// @notice pauses new staking on the pool
-    function pause() public override onlyOwner {
+    function pause() external override onlyOwner {
         _pause();
     }
 

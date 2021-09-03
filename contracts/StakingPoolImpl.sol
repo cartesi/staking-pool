@@ -44,7 +44,7 @@ contract StakingPoolImpl is
         StakingPoolWorkerImpl(_workerManager, _pos)
     {}
 
-    function initialize(address _fee) public override initializer {
+    function initialize(address _fee) external override initializer {
         __Pausable_init();
         __Ownable_init();
         __StakingPoolProducer_init(_fee);

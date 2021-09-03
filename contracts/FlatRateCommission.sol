@@ -19,7 +19,7 @@ import "./interfaces/Fee.sol";
 contract FlatRateCommission is Fee, Ownable {
     uint256 public immutable feeRaiseTimeout;
     uint256 public immutable maxRaise; // 500 = 5%
-    uint256 public BASE = 1E4;
+    uint256 public constant BASE = 1E4;
     uint256 public rate;
     uint256 public timeoutTimestamp;
 

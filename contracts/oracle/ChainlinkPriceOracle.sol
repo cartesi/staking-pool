@@ -24,7 +24,7 @@ contract ChainlinkPriceOracle is PriceOracle {
 
     /// @notice Returns latest ETH/CTSI price
     /// @return value of CTSI price in ETH
-    function getPrice() public view override returns (uint256) {
+    function getPrice() external view override returns (uint256) {
         // get gas price from chainlink oracle
         // https://data.chain.link/ethereum/mainnet/crypto-eth/ctsi-eth
         return uint256(oracle.latestAnswer());
