@@ -28,9 +28,9 @@ const deployChainlink = async (
     const { deployments, getNamedAccounts, ethers, network } = hre;
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
-    const deployment = await deploy("MockAggregator", {
-        args: [name],
+    const deployment = await deploy(name, {
         from: deployer,
+        contract: "MockAggregator",
         log: true,
     });
     return deployment.address;

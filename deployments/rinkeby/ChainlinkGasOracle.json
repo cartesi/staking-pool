@@ -1,5 +1,5 @@
 {
-  "address": "0xd51750d14AA853ce94D6e7F83E42DCF4A37ce918",
+  "address": "0x90835345F77dC3DA2CB95aF7D747CCF7b6876A3c",
   "abi": [
     {
       "inputs": [
@@ -39,24 +39,24 @@
       "type": "function"
     }
   ],
-  "transactionHash": "0x195d90c7cd2989561cd0c5ba0688b1a2d0ceec88dcff570fde52b66d357919ba",
+  "transactionHash": "0x20b763c84c447b6b5d49783b5c5332ab145b8f20c24b8f24340529175d376ca4",
   "receipt": {
     "to": null,
     "from": "0x18930e8a66a1DbE21D00581216789AAB7460Afd0",
-    "contractAddress": "0xd51750d14AA853ce94D6e7F83E42DCF4A37ce918",
-    "transactionIndex": 22,
+    "contractAddress": "0x90835345F77dC3DA2CB95aF7D747CCF7b6876A3c",
+    "transactionIndex": 48,
     "gasUsed": "137063",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "blockHash": "0x8c1fc40360a859041e883a6c001f13c07999bddf13541e18981d9c48d17054f4",
-    "transactionHash": "0x195d90c7cd2989561cd0c5ba0688b1a2d0ceec88dcff570fde52b66d357919ba",
+    "blockHash": "0x96633adc3dfb635410347407ba8eda008a832d955189e4fe715d63ac11312524",
+    "transactionHash": "0x20b763c84c447b6b5d49783b5c5332ab145b8f20c24b8f24340529175d376ca4",
     "logs": [],
-    "blockNumber": 10964865,
-    "cumulativeGasUsed": "7481277",
+    "blockNumber": 9228848,
+    "cumulativeGasUsed": "27312358",
     "status": 1,
     "byzantium": true
   },
   "args": [
-    "0x4F0499E78f2815E63Cb0AAfc675bEfbeBd5c0a7F"
+    "0xd1B3C6e76943CaAb28d35e614480CEFd8E17898A"
   ],
   "solcInputHash": "85dbea9097cd8afef05a23bb24c383ad",
   "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_oracle\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"getGasPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"oracle\",\"outputs\":[{\"internalType\":\"contract AggregatorInterface\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"getGasPrice()\":{\"returns\":{\"_0\":\"value of gas price\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"getGasPrice()\":{\"notice\":\"Returns current network gas price\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/oracle/ChainlinkGasOracle.sol\":\"ChainlinkGasOracle\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ninterface AggregatorInterface {\\n  function latestAnswer()\\n    external\\n    view\\n    returns (\\n      int256\\n    );\\n  \\n  function latestTimestamp()\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  function latestRound()\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  function getAnswer(\\n    uint256 roundId\\n  )\\n    external\\n    view\\n    returns (\\n      int256\\n    );\\n\\n  function getTimestamp(\\n    uint256 roundId\\n  )\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  event AnswerUpdated(\\n    int256 indexed current,\\n    uint256 indexed roundId,\\n    uint256 updatedAt\\n  );\\n\\n  event NewRound(\\n    uint256 indexed roundId,\\n    address indexed startedBy,\\n    uint256 startedAt\\n  );\\n}\\n\",\"keccak256\":\"0x1a5dc81544a6479f64437a8aca22c869769dd54ee3522c7ef5ebae0d329a28f0\",\"license\":\"MIT\"},\"contracts/oracle/ChainlinkGasOracle.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol\\\";\\nimport \\\"./GasOracle.sol\\\";\\n\\ncontract ChainlinkGasOracle is GasOracle {\\n    AggregatorInterface public immutable oracle;\\n\\n    constructor(address _oracle) {\\n        oracle = AggregatorInterface(_oracle);\\n    }\\n\\n    /// @notice Returns current network gas price\\n    /// @return value of gas price\\n    function getGasPrice() public view override returns (uint256) {\\n        // get gas price from chainlink oracle\\n        // https://data.chain.link/fast-gas-gwei\\n        return uint256(oracle.latestAnswer());\\n    }\\n}\\n\",\"keccak256\":\"0xa4fb65df865371768b786839c164244228e52a35eff2cad4e8e0ff1748fd6992\",\"license\":\"Apache-2.0\"},\"contracts/oracle/GasOracle.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface staking contract\\npragma solidity ^0.8.0;\\n\\ninterface GasOracle {\\n    /// @notice Returns current network gas price\\n    /// @return value of gas price\\n    function getGasPrice() external view returns (uint256);\\n}\\n\",\"keccak256\":\"0x7ad0683de70d2fbb8dd0f9fafeea8e05d1c9ca872f53296456ad615d75051e79\",\"license\":\"Apache-2.0\"}},\"version\":1}",

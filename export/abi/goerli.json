@@ -3,7 +3,7 @@
   "chainId": "5",
   "contracts": {
     "ChainlinkGasOracle": {
-      "address": "0x6d06fb344cf6bb49cf867F0ffF599e44b9BEAdC8",
+      "address": "0x1612aFDF28BB39f425e59dD3037B961B668d06B9",
       "abi": [
         {
           "inputs": [
@@ -44,8 +44,364 @@
         }
       ]
     },
+    "ChainlinkPriceOracle": {
+      "address": "0x90AFF0D0aD260F4b6EbAc0b384212Fcb0D6D0591",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_oracle",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [],
+          "name": "getPrice",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "oracle",
+          "outputs": [
+            {
+              "internalType": "contract AggregatorInterface",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        }
+      ]
+    },
+    "GasAggregator": {
+      "address": "0x7448590B8C53b01b97a3b799208c889Ff10D31F7",
+      "abi": [
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "int256",
+              "name": "current",
+              "type": "int256"
+            },
+            {
+              "indexed": true,
+              "internalType": "uint256",
+              "name": "roundId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "updatedAt",
+              "type": "uint256"
+            }
+          ],
+          "name": "AnswerUpdated",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "uint256",
+              "name": "roundId",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "startedBy",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "startedAt",
+              "type": "uint256"
+            }
+          ],
+          "name": "NewRound",
+          "type": "event"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "roundId",
+              "type": "uint256"
+            }
+          ],
+          "name": "getAnswer",
+          "outputs": [
+            {
+              "internalType": "int256",
+              "name": "",
+              "type": "int256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "roundId",
+              "type": "uint256"
+            }
+          ],
+          "name": "getTimestamp",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "latestAnswer",
+          "outputs": [
+            {
+              "internalType": "int256",
+              "name": "",
+              "type": "int256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "latestRound",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "latestTimestamp",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "int256",
+              "name": "answer",
+              "type": "int256"
+            }
+          ],
+          "name": "setAnswer",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ]
+    },
     "MockAggregator": {
-      "address": "0xc6D457842E21D2bC05ddf09FbF5202dAACa7A43b",
+      "address": "0xB66CdB410D7422E1cda4e82b964bD88edD7E28d7",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_name",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "int256",
+              "name": "current",
+              "type": "int256"
+            },
+            {
+              "indexed": true,
+              "internalType": "uint256",
+              "name": "roundId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "updatedAt",
+              "type": "uint256"
+            }
+          ],
+          "name": "AnswerUpdated",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "uint256",
+              "name": "roundId",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "startedBy",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "startedAt",
+              "type": "uint256"
+            }
+          ],
+          "name": "NewRound",
+          "type": "event"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "roundId",
+              "type": "uint256"
+            }
+          ],
+          "name": "getAnswer",
+          "outputs": [
+            {
+              "internalType": "int256",
+              "name": "",
+              "type": "int256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "roundId",
+              "type": "uint256"
+            }
+          ],
+          "name": "getTimestamp",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "latestAnswer",
+          "outputs": [
+            {
+              "internalType": "int256",
+              "name": "",
+              "type": "int256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "latestRound",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "latestTimestamp",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "name",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "int256",
+              "name": "answer",
+              "type": "int256"
+            }
+          ],
+          "name": "setAnswer",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ]
+    },
+    "PriceAggregator": {
+      "address": "0xA3e03533359C32017439e9336A9947c9A5BD2D75",
       "abi": [
         {
           "anonymous": false,
@@ -190,7 +546,7 @@
       ]
     },
     "StakingPoolFactoryImpl": {
-      "address": "0xDf1444b36A9f35e67BB54d606dF3C0d548690147",
+      "address": "0x5e193079E1513dE73fad798097973cDcfBAEb4A8",
       "abi": [
         {
           "inputs": [
@@ -201,7 +557,7 @@
             },
             {
               "internalType": "address",
-              "name": "_uniswapOracle",
+              "name": "_priceOracle",
               "type": "address"
             },
             {
@@ -444,6 +800,19 @@
         },
         {
           "inputs": [],
+          "name": "priceOracle",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
           "name": "referencePool",
           "outputs": [
             {
@@ -490,19 +859,6 @@
         },
         {
           "inputs": [],
-          "name": "uniswapOracle",
-          "outputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
           "name": "unpause",
           "outputs": [],
           "stateMutability": "nonpayable",
@@ -515,7 +871,7 @@
       ]
     },
     "StakingPoolImpl": {
-      "address": "0x329de1954f3e0ddaBa3B57Cc5F79CDFF7197d915",
+      "address": "0xEFDC9f03493d9DFbA5adB0629c5Fe31d0f629886",
       "abi": [
         {
           "inputs": [

@@ -1,6 +1,17 @@
 {
-  "address": "0xc6D457842E21D2bC05ddf09FbF5202dAACa7A43b",
+  "address": "0xB66CdB410D7422E1cda4e82b964bD88edD7E28d7",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_name",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
     {
       "anonymous": false,
       "inputs": [
@@ -129,6 +140,19 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "int256",
@@ -142,27 +166,29 @@
       "type": "function"
     }
   ],
-  "transactionHash": "0xaad10dcb90165e23636b8d10b6fc3d49f92763c65a7108b3393f3390b7e99bca",
+  "transactionHash": "0x0caa10951696579fd75b98abb6d127a5f2b150358524557ff9f8aa494f6d153f",
   "receipt": {
     "to": null,
     "from": "0x18930e8a66a1DbE21D00581216789AAB7460Afd0",
-    "contractAddress": "0xc6D457842E21D2bC05ddf09FbF5202dAACa7A43b",
-    "transactionIndex": 4,
-    "gasUsed": "171319",
+    "contractAddress": "0xB66CdB410D7422E1cda4e82b964bD88edD7E28d7",
+    "transactionIndex": 23,
+    "gasUsed": "277261",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "blockHash": "0xab886759659b062c0aa8b72d2dfeb56cee45bdb9211724d5cfd8d17b8e3d362c",
-    "transactionHash": "0xaad10dcb90165e23636b8d10b6fc3d49f92763c65a7108b3393f3390b7e99bca",
+    "blockHash": "0x5bbe53e7919bc65360f26aa7fd4d1b7f37471176f6a7fd32a776e5f6fb5dd4ef",
+    "transactionHash": "0x0caa10951696579fd75b98abb6d127a5f2b150358524557ff9f8aa494f6d153f",
     "logs": [],
-    "blockNumber": 5051265,
-    "cumulativeGasUsed": "360296",
+    "blockNumber": 5434088,
+    "cumulativeGasUsed": "6610427",
     "status": 1,
     "byzantium": true
   },
-  "args": [],
-  "solcInputHash": "a2db77ccf663f13c899232604d70a49b",
-  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"int256\",\"name\":\"current\",\"type\":\"int256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"updatedAt\",\"type\":\"uint256\"}],\"name\":\"AnswerUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"startedBy\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startedAt\",\"type\":\"uint256\"}],\"name\":\"NewRound\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"getAnswer\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"getTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestAnswer\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestRound\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int256\",\"name\":\"answer\",\"type\":\"int256\"}],\"name\":\"setAnswer\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/test/MockAggregator.sol\":\"MockAggregator\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ninterface AggregatorInterface {\\n  function latestAnswer()\\n    external\\n    view\\n    returns (\\n      int256\\n    );\\n  \\n  function latestTimestamp()\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  function latestRound()\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  function getAnswer(\\n    uint256 roundId\\n  )\\n    external\\n    view\\n    returns (\\n      int256\\n    );\\n\\n  function getTimestamp(\\n    uint256 roundId\\n  )\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  event AnswerUpdated(\\n    int256 indexed current,\\n    uint256 indexed roundId,\\n    uint256 updatedAt\\n  );\\n\\n  event NewRound(\\n    uint256 indexed roundId,\\n    address indexed startedBy,\\n    uint256 startedAt\\n  );\\n}\\n\",\"keccak256\":\"0x1a5dc81544a6479f64437a8aca22c869769dd54ee3522c7ef5ebae0d329a28f0\",\"license\":\"MIT\"},\"contracts/test/MockAggregator.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface staking contract\\npragma solidity ^0.8.0;\\n\\nimport \\\"@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol\\\";\\n\\ncontract MockAggregator is AggregatorInterface {\\n    uint256 _round;\\n\\n    mapping(uint256 => int256) _answers;\\n\\n    mapping(uint256 => uint256) _timestamps;\\n\\n    function setAnswer(int256 answer) external {\\n        _round++;\\n        _answers[_round] = answer;\\n        _timestamps[_round] = block.timestamp;\\n\\n        emit NewRound(_round, msg.sender, block.timestamp);\\n        emit AnswerUpdated(answer, _round, block.timestamp);\\n    }\\n\\n    function latestAnswer() external view override returns (int256) {\\n        return _answers[_round];\\n    }\\n\\n    function latestTimestamp() external view override returns (uint256) {\\n        return _timestamps[_round];\\n    }\\n\\n    function latestRound() external view override returns (uint256) {\\n        return _round;\\n    }\\n\\n    function getAnswer(uint256 roundId)\\n        external\\n        view\\n        override\\n        returns (int256)\\n    {\\n        return _answers[roundId];\\n    }\\n\\n    function getTimestamp(uint256 roundId)\\n        external\\n        view\\n        override\\n        returns (uint256)\\n    {\\n        return _timestamps[roundId];\\n    }\\n}\\n\",\"keccak256\":\"0x1bdd0cf395b8b23e8dbaeea91c9f194780787e62568315f3a1427e123ea39022\",\"license\":\"Apache-2.0\"}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50610223806100206000396000f3fe608060405234801561001057600080fd5b50600436106100625760003560e01c806350d25bcd14610067578063668a0f021461008a5780638205bf6a1461009257806399213cd8146100a7578063b5ab58dc146100bc578063b633620c146100dc575b600080fd5b600080548152600160205260409020545b60405190815260200160405180910390f35b600054610078565b60008054815260026020526040902054610078565b6100ba6100b53660046101ab565b6100fc565b005b6100786100ca3660046101ab565b60009081526001602052604090205490565b6100786100ea3660046101ab565b60009081526002602052604090205490565b60008054908061010b836101c4565b90915550506000805481526001602090815260408083208490558254835260028252808320429081905592549051928352339290917f0109fc6f55cf40689f02fbaad7af7fe7bbac8a3d2186600afc7d3e10cac60271910160405180910390a3600054817f0559884fd3a460db3073b7fc896cc77986f16e378210ded43186175bf646fc5f426040516101a091815260200190565b60405180910390a350565b6000602082840312156101bd57600080fd5b5035919050565b60006000198214156101e657634e487b7160e01b600052601160045260246000fd5b506001019056fea26469706673582212207b201ea7c1938c5c51bb59199fb47c867bbc6e271532c2bc53b7a6ce76c281e964736f6c63430008060033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100625760003560e01c806350d25bcd14610067578063668a0f021461008a5780638205bf6a1461009257806399213cd8146100a7578063b5ab58dc146100bc578063b633620c146100dc575b600080fd5b600080548152600160205260409020545b60405190815260200160405180910390f35b600054610078565b60008054815260026020526040902054610078565b6100ba6100b53660046101ab565b6100fc565b005b6100786100ca3660046101ab565b60009081526001602052604090205490565b6100786100ea3660046101ab565b60009081526002602052604090205490565b60008054908061010b836101c4565b90915550506000805481526001602090815260408083208490558254835260028252808320429081905592549051928352339290917f0109fc6f55cf40689f02fbaad7af7fe7bbac8a3d2186600afc7d3e10cac60271910160405180910390a3600054817f0559884fd3a460db3073b7fc896cc77986f16e378210ded43186175bf646fc5f426040516101a091815260200190565b60405180910390a350565b6000602082840312156101bd57600080fd5b5035919050565b60006000198214156101e657634e487b7160e01b600052601160045260246000fd5b506001019056fea26469706673582212207b201ea7c1938c5c51bb59199fb47c867bbc6e271532c2bc53b7a6ce76c281e964736f6c63430008060033",
+  "args": [
+    "PriceAggregator"
+  ],
+  "solcInputHash": "a0ff16a277cbbc3bb556eafe231b50ee",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"int256\",\"name\":\"current\",\"type\":\"int256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"updatedAt\",\"type\":\"uint256\"}],\"name\":\"AnswerUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"startedBy\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startedAt\",\"type\":\"uint256\"}],\"name\":\"NewRound\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"getAnswer\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"getTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestAnswer\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestRound\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int256\",\"name\":\"answer\",\"type\":\"int256\"}],\"name\":\"setAnswer\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/test/MockAggregator.sol\":\"MockAggregator\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ninterface AggregatorInterface {\\n  function latestAnswer()\\n    external\\n    view\\n    returns (\\n      int256\\n    );\\n  \\n  function latestTimestamp()\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  function latestRound()\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  function getAnswer(\\n    uint256 roundId\\n  )\\n    external\\n    view\\n    returns (\\n      int256\\n    );\\n\\n  function getTimestamp(\\n    uint256 roundId\\n  )\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  event AnswerUpdated(\\n    int256 indexed current,\\n    uint256 indexed roundId,\\n    uint256 updatedAt\\n  );\\n\\n  event NewRound(\\n    uint256 indexed roundId,\\n    address indexed startedBy,\\n    uint256 startedAt\\n  );\\n}\\n\",\"keccak256\":\"0x1a5dc81544a6479f64437a8aca22c869769dd54ee3522c7ef5ebae0d329a28f0\",\"license\":\"MIT\"},\"contracts/test/MockAggregator.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Mock implementation of Chainlink aggregator, for testnet\\npragma solidity ^0.8.0;\\n\\nimport \\\"@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol\\\";\\n\\ncontract MockAggregator is AggregatorInterface {\\n    string public name;\\n\\n    uint256 _round;\\n\\n    mapping(uint256 => int256) _answers;\\n\\n    mapping(uint256 => uint256) _timestamps;\\n\\n    constructor(string memory _name) {\\n        name = _name;\\n    }\\n\\n    function setAnswer(int256 answer) external {\\n        _round++;\\n        _answers[_round] = answer;\\n        _timestamps[_round] = block.timestamp;\\n\\n        emit NewRound(_round, msg.sender, block.timestamp);\\n        emit AnswerUpdated(answer, _round, block.timestamp);\\n    }\\n\\n    function latestAnswer() external view override returns (int256) {\\n        return _answers[_round];\\n    }\\n\\n    function latestTimestamp() external view override returns (uint256) {\\n        return _timestamps[_round];\\n    }\\n\\n    function latestRound() external view override returns (uint256) {\\n        return _round;\\n    }\\n\\n    function getAnswer(uint256 roundId)\\n        external\\n        view\\n        override\\n        returns (int256)\\n    {\\n        return _answers[roundId];\\n    }\\n\\n    function getTimestamp(uint256 roundId)\\n        external\\n        view\\n        override\\n        returns (uint256)\\n    {\\n        return _timestamps[roundId];\\n    }\\n}\\n\",\"keccak256\":\"0x51561315d6cb2c62f55d1ce15e9d9fa93429dae78d99984cf10ba446db98a2f3\",\"license\":\"Apache-2.0\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060405161058e38038061058e83398101604081905261002f916100e2565b8051610042906000906020840190610049565b5050610202565b828054610055906101b1565b90600052602060002090601f01602090048101928261007757600085556100bd565b82601f1061009057805160ff19168380011785556100bd565b828001600101855582156100bd579182015b828111156100bd5782518255916020019190600101906100a2565b506100c99291506100cd565b5090565b5b808211156100c957600081556001016100ce565b600060208083850312156100f557600080fd5b82516001600160401b038082111561010c57600080fd5b818501915085601f83011261012057600080fd5b815181811115610132576101326101ec565b604051601f8201601f19908116603f0116810190838211818310171561015a5761015a6101ec565b81604052828152888684870101111561017257600080fd5b600093505b828410156101945784840186015181850187015292850192610177565b828411156101a55760008684830101525b98975050505050505050565b600181811c908216806101c557607f821691505b602082108114156101e657634e487b7160e01b600052602260045260246000fd5b50919050565b634e487b7160e01b600052604160045260246000fd5b61037d806102116000396000f3fe608060405234801561001057600080fd5b506004361061007d5760003560e01c80638205bf6a1161005b5780638205bf6a146100c957806399213cd8146100e0578063b5ab58dc146100f5578063b633620c1461011557600080fd5b806306fdde031461008257806350d25bcd146100a0578063668a0f02146100c1575b600080fd5b61008a610135565b604051610097919061028e565b60405180910390f35b6001546000908152600260205260409020545b604051908152602001610097565b6001546100b3565b6001546000908152600360205260409020546100b3565b6100f36100ee366004610275565b6101c3565b005b6100b3610103366004610275565b60009081526002602052604090205490565b6100b3610123366004610275565b60009081526003602052604090205490565b60008054610142906102e3565b80601f016020809104026020016040519081016040528092919081815260200182805461016e906102e3565b80156101bb5780601f10610190576101008083540402835291602001916101bb565b820191906000526020600020905b81548152906001019060200180831161019e57829003601f168201915b505050505081565b600180549060006101d38361031e565b909155505060018054600090815260026020908152604080832085905583548352600382529182902042908190559254915192835233927f0109fc6f55cf40689f02fbaad7af7fe7bbac8a3d2186600afc7d3e10cac60271910160405180910390a3600154817f0559884fd3a460db3073b7fc896cc77986f16e378210ded43186175bf646fc5f4260405161026a91815260200190565b60405180910390a350565b60006020828403121561028757600080fd5b5035919050565b600060208083528351808285015260005b818110156102bb5785810183015185820160400152820161029f565b818111156102cd576000604083870101525b50601f01601f1916929092016040019392505050565b600181811c908216806102f757607f821691505b6020821081141561031857634e487b7160e01b600052602260045260246000fd5b50919050565b600060001982141561034057634e487b7160e01b600052601160045260246000fd5b506001019056fea2646970667358221220934a918690c04d7ae9fbaa65926b15e3efcf21ad36b46d076b456b77ca24771964736f6c63430008060033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061007d5760003560e01c80638205bf6a1161005b5780638205bf6a146100c957806399213cd8146100e0578063b5ab58dc146100f5578063b633620c1461011557600080fd5b806306fdde031461008257806350d25bcd146100a0578063668a0f02146100c1575b600080fd5b61008a610135565b604051610097919061028e565b60405180910390f35b6001546000908152600260205260409020545b604051908152602001610097565b6001546100b3565b6001546000908152600360205260409020546100b3565b6100f36100ee366004610275565b6101c3565b005b6100b3610103366004610275565b60009081526002602052604090205490565b6100b3610123366004610275565b60009081526003602052604090205490565b60008054610142906102e3565b80601f016020809104026020016040519081016040528092919081815260200182805461016e906102e3565b80156101bb5780601f10610190576101008083540402835291602001916101bb565b820191906000526020600020905b81548152906001019060200180831161019e57829003601f168201915b505050505081565b600180549060006101d38361031e565b909155505060018054600090815260026020908152604080832085905583548352600382529182902042908190559254915192835233927f0109fc6f55cf40689f02fbaad7af7fe7bbac8a3d2186600afc7d3e10cac60271910160405180910390a3600154817f0559884fd3a460db3073b7fc896cc77986f16e378210ded43186175bf646fc5f4260405161026a91815260200190565b60405180910390a350565b60006020828403121561028757600080fd5b5035919050565b600060208083528351808285015260005b818110156102bb5785810183015185820160400152820161029f565b818111156102cd576000604083870101525b50601f01601f1916929092016040019392505050565b600181811c908216806102f757607f821691505b6020821081141561031857634e487b7160e01b600052602260045260246000fd5b50919050565b600060001982141561034057634e487b7160e01b600052601160045260246000fd5b506001019056fea2646970667358221220934a918690c04d7ae9fbaa65926b15e3efcf21ad36b46d076b456b77ca24771964736f6c63430008060033",
   "devdoc": {
     "kind": "dev",
     "methods": {},
@@ -176,27 +202,35 @@
   "storageLayout": {
     "storage": [
       {
-        "astId": 4439,
+        "astId": 3661,
+        "contract": "contracts/test/MockAggregator.sol:MockAggregator",
+        "label": "name",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_string_storage"
+      },
+      {
+        "astId": 3663,
         "contract": "contracts/test/MockAggregator.sol:MockAggregator",
         "label": "_round",
         "offset": 0,
-        "slot": "0",
+        "slot": "1",
         "type": "t_uint256"
       },
       {
-        "astId": 4443,
+        "astId": 3667,
         "contract": "contracts/test/MockAggregator.sol:MockAggregator",
         "label": "_answers",
         "offset": 0,
-        "slot": "1",
+        "slot": "2",
         "type": "t_mapping(t_uint256,t_int256)"
       },
       {
-        "astId": 4447,
+        "astId": 3671,
         "contract": "contracts/test/MockAggregator.sol:MockAggregator",
         "label": "_timestamps",
         "offset": 0,
-        "slot": "2",
+        "slot": "3",
         "type": "t_mapping(t_uint256,t_uint256)"
       }
     ],
@@ -219,6 +253,11 @@
         "label": "mapping(uint256 => uint256)",
         "numberOfBytes": "32",
         "value": "t_uint256"
+      },
+      "t_string_storage": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
       },
       "t_uint256": {
         "encoding": "inplace",

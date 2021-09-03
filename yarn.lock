@@ -1143,10 +1143,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.19.tgz#538e61fc220f77ae4a4663c3d8c3cb391365c209"
   integrity sha512-niAuZrwrjKck4+XhoCw6AAVQBENHftpXw9F4ryk66fTgYaKQ53R4FI7c9vUGGw5vQis1HKBHDR1gcYI/Bq1xvw==
 
-"@types/node@^16.7.8":
-  version "16.7.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.7.8.tgz#2448be5f24fe6b77114632b6350fcd219334651e"
-  integrity sha512-8upnoQU0OPzbIkm+ZMM0zCeFCkw2s3mS0IWdx0+AAaWqm4fkBb0UJp8Edl7FVKRamYbpJC/aVsHpKWBIbiC7Zg==
+"@types/node@^16.7.10":
+  version "16.7.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.7.10.tgz#7aa732cc47341c12a16b7d562f519c2383b6d4fc"
+  integrity sha512-S63Dlv4zIPb8x6MMTgDq5WWRJQe56iBEY0O3SOFA9JrRienkOVDXSXBjjJw6HTNQYSE2JI6GMCR6LVbIMHJVvA==
 
 "@types/pbkdf2@^3.0.0":
   version "3.1.0"
@@ -5290,10 +5290,10 @@ hardhat@^2.0.4:
     uuid "^3.3.2"
     ws "^7.4.6"
 
-hardhat@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.6.1.tgz#4553ca555c1ba8ed7c3c5a5a93e6082a2869b3ae"
-  integrity sha512-0LozdYbPsiTc6ZXsfDQUTV3L0p4CMO5TRbd5qmeWiCYGmhd+7Mvdg4N+nA8w0g3gZ2OKFUmHIYlAbExI488ceQ==
+hardhat@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.6.2.tgz#940d1df0a0373a6400879e1041fe0c9b746ed84d"
+  integrity sha512-83kCYIrkRq+vrsjOLIv349fbMpL7Vp/ZGpWtu+KLMH3wcAAs+aMsABZJ8W5hb5uo69+06KeF0pCHQ6y8tBAcwA==
   dependencies:
     "@ethereumjs/block" "^3.4.0"
     "@ethereumjs/blockchain" "^5.4.0"

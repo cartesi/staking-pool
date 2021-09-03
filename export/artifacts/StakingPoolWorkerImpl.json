@@ -1004,15 +1004,15 @@
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@ray2wad_3906": {
+        "@ray2wad_3894": {
           "entryPoint": 2048,
-          "id": 3906,
+          "id": 3894,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@rdiv_3885": {
+        "@rdiv_3873": {
           "entryPoint": 2158,
-          "id": 3885,
+          "id": 3873,
           "parameterSlots": 2,
           "returnSlots": 1
         },
@@ -1034,9 +1034,9 @@
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@rmul_3859": {
+        "@rmul_3847": {
           "entryPoint": 2100,
-          "id": 3859,
+          "id": 3847,
           "parameterSlots": 2,
           "returnSlots": 1
         },
@@ -1070,21 +1070,21 @@
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@wad2ray_3918": {
+        "@wad2ray_3906": {
           "entryPoint": 2307,
-          "id": 3918,
+          "id": 3906,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@wdiv_3836": {
+        "@wdiv_3824": {
           "entryPoint": 2363,
-          "id": 3836,
+          "id": 3824,
           "parameterSlots": 2,
           "returnSlots": 1
         },
-        "@wmul_3810": {
+        "@wmul_3798": {
           "entryPoint": 2323,
-          "id": 3810,
+          "id": 3798,
           "parameterSlots": 2,
           "returnSlots": 1
         },
