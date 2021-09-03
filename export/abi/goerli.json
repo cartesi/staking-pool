@@ -3,7 +3,7 @@
   "chainId": "5",
   "contracts": {
     "ChainlinkGasOracle": {
-      "address": "0x1612aFDF28BB39f425e59dD3037B961B668d06B9",
+      "address": "0xDcE4E31b323f5776B09d6e032c22Cc7b3ab8e903",
       "abi": [
         {
           "inputs": [
@@ -45,7 +45,7 @@
       ]
     },
     "ChainlinkPriceOracle": {
-      "address": "0x90AFF0D0aD260F4b6EbAc0b384212Fcb0D6D0591",
+      "address": "0xC8644379B99EAEe1590d863549417710D305313D",
       "abi": [
         {
           "inputs": [
@@ -87,7 +87,7 @@
       ]
     },
     "GasAggregator": {
-      "address": "0x7448590B8C53b01b97a3b799208c889Ff10D31F7",
+      "address": "0xB5F89791E79Fa5DbaF4C2bFE81dCe855D9a00211",
       "abi": [
         {
           "anonymous": false,
@@ -401,7 +401,7 @@
       ]
     },
     "PriceAggregator": {
-      "address": "0xA3e03533359C32017439e9336A9947c9A5BD2D75",
+      "address": "0x886668810afF5fd9776CfD3D98c39a7dFF1a1BD4",
       "abi": [
         {
           "anonymous": false,
@@ -546,7 +546,7 @@
       ]
     },
     "StakingPoolFactoryImpl": {
-      "address": "0x5e193079E1513dE73fad798097973cDcfBAEb4A8",
+      "address": "0xbc22C8177c14AF180Cd36556C469F332F6637df1",
       "abi": [
         {
           "inputs": [
@@ -871,7 +871,7 @@
       ]
     },
     "StakingPoolImpl": {
-      "address": "0xEFDC9f03493d9DFbA5adB0629c5Fe31d0f629886",
+      "address": "0x1F18e51F9fF916972309195D689158AffAE3B509",
       "abi": [
         {
           "inputs": [
