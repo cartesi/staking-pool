@@ -36,7 +36,6 @@ contract StakingPoolData is
     mapping(address => UserBalance) public userBalance;
 
     function amountToShares(uint256 _amount) public view returns (uint256) {
-        // TODO: rounding errors
         if (amount == 0) {
             // no shares yet, return 1 to 1 ratio
             return _amount.wad2ray();
@@ -45,7 +44,6 @@ contract StakingPoolData is
     }
 
     function sharesToAmount(uint256 _shares) public view returns (uint256) {
-        // TODO: rounding errors
         if (shares == 0) {
             // no shares yet, return 1 to 1 ratio
             return _shares.ray2wad();
