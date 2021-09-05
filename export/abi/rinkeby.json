@@ -3,7 +3,7 @@
   "chainId": "4",
   "contracts": {
     "ChainlinkGasOracle": {
-      "address": "0xbe49D17C73a6C0bA0304A6b633C88CDB7B70A296",
+      "address": "0x23aed0F095577c009e1Dad729C9E4eF68F3d268f",
       "abi": [
         {
           "inputs": [
@@ -45,7 +45,7 @@
       ]
     },
     "ChainlinkPriceOracle": {
-      "address": "0xd9788EC690f96205284C93384F4E9818Ceb23836",
+      "address": "0x48471bEa75aD3794542B1640E442914e49995bDf",
       "abi": [
         {
           "inputs": [
@@ -546,7 +546,7 @@
       ]
     },
     "StakingPoolFactoryImpl": {
-      "address": "0x957041298dcAA4Dfb82B5E1295B3D5ECeB8D6118",
+      "address": "0xdf4D163F2F74758A6CB6a901a52c66250C1e6360",
       "abi": [
         {
           "inputs": [
@@ -871,7 +871,7 @@
       ]
     },
     "StakingPoolImpl": {
-      "address": "0x02949D181ad6Bc3829CDa6285Ea9d6F615f93541",
+      "address": "0x827B87243aCf12eDcB8d8a176a7E2A3Ac5EbA7e0",
       "abi": [
         {
           "inputs": [
