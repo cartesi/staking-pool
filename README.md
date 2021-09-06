@@ -4,12 +4,12 @@
 
 This repository hosts smart contracts that enable individuals or institutions to create Staking Pools on top of [Cartesi Proof of Stake system](https://github.com/cartesi/pos-dlib).
 
-The `StakingPool` acts as a regular user of the Cartesi Proof of Stake system, so it's interesting to know how it works before managing a pool. This pool system is also integrated on the [Noether Node](https://github.com/cartesi/noether). Read more on the [node section](##node) of this documentation.
+The `StakingPool` acts as a regular user of the Cartesi Proof of Stake system, so it's interesting to know how it works before managing a pool. [Noether Node](https://github.com/cartesi/noether) also integrates this pool system.
 
 In order to improve maintainability and auditing, the pool contract is composed of five facets:
 
 -   [Staking](#staking)
--   [User](#user-controls)
+-   [User](#user)
 -   [Worker](#worker)
 -   [Management](#management)
 -   [Block producer](#block-producer)
@@ -38,7 +38,8 @@ Here is a diagram displaying this logic. The middle column represents the PoS St
 
 <p align="center"><img src="staking.png" alt="staking diagram" title= "staking diagram" width="80%" /></p>
 
-The requirement to call the `rebalance()` function is checked by default every 30 seconds by the pool Noether Node. But if the pool node is not working as it should any user can call the `rebalance()` function, meaning it's permissionless. This is important to guarantee that users can exit the pool even if the pool is abandoned by its owner.
+The requirement to call the `rebalance()` function is checked by default every 30 seconds by the pool Noether Node. But if the pool node is not working as it should, any user can call the `rebalance()` function, meaning it's permissionless. This is important to guarantee that users can exit the pool even if its owner abandons the pool.
+
 ## User
 
 This section is responsible for exposing controls for the users to join and exit the pool. It implements the following actions: deposit, stake, unstake, and withdraw.
@@ -46,9 +47,9 @@ This section is responsible for exposing controls for the users to join and exit
 The first step to join the pool is to `deposit()` some CTSI tokens. The user should set an allowance on the ERC20 CTSI contract and then call `deposit()` with the desired stake amount. This action will transfer the tokens to the
 pool contract and start a timeout timer for the next step.
 
-> We define a timeout between `deposit()` and `stake()` steps so the pool is protected against possible exploits. An attacker tries to predict what pool will be the next selected to produce a block and attempts to join it just before it happens so they can participate in the reward without having to wait.
+> We define a timeout between `deposit()` and `stake()` steps, so the pool is protected against possible exploits. An attacker tries to predict what pool will be the next selected to produce a block and attempts to join it just before it happens so they can participate in the reward without waiting.
 
-After a wait time of 6 hours, the user can call `stake()`, which will decrease their internal balance with the pool in exchange for pool shares. The shares are issued at the current rate of parity between all shares vs all pool-staked balances.
+After a wait time of 6 hours, the user can call `stake()`, which will decrease their internal balance with the pool in exchange for pool shares. The shares are issued at the current rate of parity between all shares vs. all pool-staked balances.
 The user participates in rewards right away.
 
 As a secondary effect, after a call to `stake()` happens, the contract will be ready to stake this new available balance on the Cartesi PoS system, as described in the previous section.
@@ -59,7 +60,8 @@ to also unstake CTSI on the Cartesi PoS, so later it's available for the user to
 > NOTE: if there is an influx of users at the same time someone tries to leave, that will make the pool contract liquid without calling unstake on Cartesi PoS contracts. As a result, this hypothetical user will be able to exit the pool faster.
 
 Finally, whenever the user has a free balance (after a `deposit` or after calling `unstake`), and the pool also has the required liquidity (active balance on the ERC20 CTSI contract), they are allowed to call `withdraw()` for how much they want to have transferred back to their wallets.
-The diagram below illustrates the 4 operations described above and how that affects the pool data and the user data.
+The diagram below illustrates the four operations described above and how they affect the pool and user data.
+
 <p align="center"><img src="user.png" alt="user flow diagram" title= "user flow diagram" width="80%"/></p>
 
 ## Worker
@@ -70,10 +72,10 @@ In addition, Noether nodes check for hiring directly on the blockchain; that's h
 
 Therefore, this section contains the necessary pieces for hiring (self hiring) and managing workers.
 
-- `selfhire()`: Not meant to be called manually, this function is part of the deployment process inside the factory. It establishes the owner-worker relationship of the pool on the Cartesi PoS system.
+-   `selfhire()`: Not meant to be called manually, this function is part of the deployment process inside the factory. It establishes the owner-worker relationship of the pool on the Cartesi PoS system.
 
-- `hire()`, `cancelHire()`, `retire()`: These functions are connected to configuring a Noether node. Here you select (hire) your node based on its address. Stop the hiring process (cancelHire). Or, retrieves your funds 
-from the node before permanently shutting it down (retire). 
+-   `hire()`, `cancelHire()`, `retire()`: These functions are connected to configuring a Noether node. Here you select (hire) your node based on its address. Stop the hiring process (cancelHire). Or, retrieves your funds
+    from the node before permanently shutting it down (retire).
 
 ## Management
 
@@ -88,25 +90,25 @@ The commission system for the pools is modular. An external contract linked to t
 
 ### FlatRateCommission
 
-Flat Rate is the simplest form of commission possible: a set % of cut of the reward. The owner sets the % they want as a cut for managing the pool systems at the time of deployment. The fee can be lowered at any time. However, it is bounded by two limits when raising the fee:
+Flat rate is the simplest form of commission possible: a set % of cut of the reward. The owner sets the % they want as a cut for managing the pool systems at the time of deployment. The fee can be lowered at any time. However, it is bounded by two limits when raising the fee:
 
--   After raising the fee once, they must wait for a predefined timeout to raise the fee again.
--   They can only raise at most `maxRaise` at a time. (eg.: maxRaise=5%, so a fee of 3% can only go to 8% in one step)
+-   After raising the fee once, they must wait for a predefined timeout to raise it again.
+-   They can only raise at most `maxRaise` at a time. (e.g.: maxRaise=5%, so a fee of 3% can only go to 8% in one step)
 
 ### GasTaxCommission
 
-The gas tax is a commission rule based on gas costs. The pool manager sets how much gas they want to be reimbursed, and then this contract makes two conversions using Chainlink oracles: gas-> ether-> ctsi. Using  oracles, it multiplies the configured gas amount by the current average gasPrice to obtain the equivalent ETH value, then it converts that ETH value to CTSI by getting the price of the ETH-CTSI pair from a price oracle. The end result is the commission taken from reward.
+The gas tax is a commission rule based on gas costs. The pool manager sets how much gas they want to be reimbursed, and then this contract makes two conversions using Chainlink oracles: gas-> ether-> ctsi. Using oracles, it multiplies the configured gas amount by the current average gasPrice to obtain the equivalent ETH value; then, it converts that ETH value to CTSI by getting the price of the ETH-CTSI pair from a price oracle. The result is the commission taken from the reward.
 
 It also follows the same rules as the FlatRate. The owner can lower the at any time, but it is bounded by two limits when raising the fee:
 
--   After raising the fee once, they must wait for a predefined timeout to raise the fee again.
+-   After raising the fee once, they must wait for a predefined timeout to raise it again.
 -   They can only raise at most `maxRaise` at a time. (e.g., maxRaise=20000, so a fee of 200000 gas can only go to 220000 in one step)
 
 ## Block Producer
 
 In this section, we handle the actual block production in a transaction started by the Noether node. The `produceBlock` function handles the PoS system call and processes the reward by taking a commission and adding the rest into the overall stake.
 
-The commission (fees) are sent directly to the pool manager's wallet. The balance of the pool gets the remaining reward and, because we don't issue new shares at this moment, the distribution automatically happens as intended, by increasing the share value.
+The commission (fees) are sent directly to the pool manager's wallet. The balance of the pool gets the remaining reward and, because we don't issue new shares at this moment, the distribution automatically happens as intended by increasing the share value.
 
 <p align="center"><img src="producer.png" alt="producer diagram" title= "producer diagram" width="60%" /></p>
 
