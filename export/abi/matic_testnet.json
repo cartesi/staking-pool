@@ -522,7 +522,7 @@
       ]
     },
     "StakingPoolFactoryImpl": {
-      "address": "0xC94581224DDCD07e334Eb64825A990650f0e1715",
+      "address": "0x423123593D44ce54d249b7cA3F2125478c0DC715",
       "abi": [
         {
           "inputs": [

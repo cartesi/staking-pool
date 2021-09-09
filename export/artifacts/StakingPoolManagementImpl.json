@@ -289,9 +289,9 @@
   "evm": {
     "bytecode": {
       "functionDebugData": {
-        "@_2412": {
+        "@_2422": {
           "entryPoint": null,
-          "id": 2412,
+          "id": 2422,
           "parameterSlots": 1,
           "returnSlots": 0
         },
@@ -1448,21 +1448,21 @@
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@amountToShares_1903": {
+        "@amountToShares_1913": {
           "entryPoint": 787,
-          "id": 1903,
+          "id": 1913,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@amount_1864": {
+        "@amount_1874": {
           "entryPoint": null,
-          "id": 1864,
+          "id": 1874,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@ens_2385": {
+        "@ens_2395": {
           "entryPoint": null,
-          "id": 2385,
+          "id": 2395,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -1472,9 +1472,9 @@
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@pause_2453": {
+        "@pause_2463": {
           "entryPoint": 737,
-          "id": 2453,
+          "id": 2463,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -1484,15 +1484,15 @@
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@ray2wad_3894": {
+        "@ray2wad_3904": {
           "entryPoint": 1561,
-          "id": 3894,
+          "id": 3904,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@rdiv_3873": {
+        "@rdiv_3883": {
           "entryPoint": 1671,
-          "id": 3873,
+          "id": 3883,
           "parameterSlots": 2,
           "returnSlots": 1
         },
@@ -1502,33 +1502,33 @@
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@requiredLiquidity_1866": {
+        "@requiredLiquidity_1876": {
           "entryPoint": null,
-          "id": 1866,
+          "id": 1876,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@rmul_3847": {
+        "@rmul_3857": {
           "entryPoint": 1613,
-          "id": 3847,
+          "id": 3857,
           "parameterSlots": 2,
           "returnSlots": 1
         },
-        "@setName_2442": {
+        "@setName_2452": {
           "entryPoint": 842,
-          "id": 2442,
+          "id": 2452,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@sharesToAmount_1928": {
+        "@sharesToAmount_1938": {
           "entryPoint": 624,
-          "id": 1928,
+          "id": 1938,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@shares_1862": {
+        "@shares_1872": {
           "entryPoint": null,
-          "id": 1862,
+          "id": 1872,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -1538,33 +1538,33 @@
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@unpause_2464": {
+        "@unpause_2474": {
           "entryPoint": 563,
-          "id": 2464,
+          "id": 2474,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@userBalance_1878": {
+        "@userBalance_1888": {
           "entryPoint": null,
-          "id": 1878,
+          "id": 1888,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@wad2ray_3906": {
+        "@wad2ray_3916": {
           "entryPoint": 1943,
-          "id": 3906,
+          "id": 3916,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@wdiv_3824": {
+        "@wdiv_3834": {
           "entryPoint": 1999,
-          "id": 3824,
+          "id": 3834,
           "parameterSlots": 2,
           "returnSlots": 1
         },
-        "@wmul_3798": {
+        "@wmul_3808": {
           "entryPoint": 1959,
-          "id": 3798,
+          "id": 3808,
           "parameterSlots": 2,
           "returnSlots": 1
         },
@@ -6229,7 +6229,7 @@
         }
       ],
       "immutableReferences": {
-        "2385": [
+        "2395": [
           {
             "length": 32,
             "start": 346
@@ -6344,7 +6344,7 @@
         "type": "t_array(t_uint256)49_storage"
       },
       {
-        "astId": 1862,
+        "astId": 1872,
         "contract": "contracts/StakingPoolManagementImpl.sol:StakingPoolManagementImpl",
         "label": "shares",
         "offset": 0,
@@ -6352,7 +6352,7 @@
         "type": "t_uint256"
       },
       {
-        "astId": 1864,
+        "astId": 1874,
         "contract": "contracts/StakingPoolManagementImpl.sol:StakingPoolManagementImpl",
         "label": "amount",
         "offset": 0,
@@ -6360,7 +6360,7 @@
         "type": "t_uint256"
       },
       {
-        "astId": 1866,
+        "astId": 1876,
         "contract": "contracts/StakingPoolManagementImpl.sol:StakingPoolManagementImpl",
         "label": "requiredLiquidity",
         "offset": 0,
@@ -6368,12 +6368,12 @@
         "type": "t_uint256"
       },
       {
-        "astId": 1878,
+        "astId": 1888,
         "contract": "contracts/StakingPoolManagementImpl.sol:StakingPoolManagementImpl",
         "label": "userBalance",
         "offset": 0,
         "slot": "154",
-        "type": "t_mapping(t_address,t_struct(UserBalance)1873_storage)"
+        "type": "t_mapping(t_address,t_struct(UserBalance)1883_storage)"
       }
     ],
     "types": {
@@ -6399,19 +6399,19 @@
         "label": "bool",
         "numberOfBytes": "1"
       },
-      "t_mapping(t_address,t_struct(UserBalance)1873_storage)": {
+      "t_mapping(t_address,t_struct(UserBalance)1883_storage)": {
         "encoding": "mapping",
         "key": "t_address",
         "label": "mapping(address => struct StakingPoolData.UserBalance)",
         "numberOfBytes": "32",
-        "value": "t_struct(UserBalance)1873_storage"
+        "value": "t_struct(UserBalance)1883_storage"
       },
-      "t_struct(UserBalance)1873_storage": {
+      "t_struct(UserBalance)1883_storage": {
         "encoding": "inplace",
         "label": "struct StakingPoolData.UserBalance",
         "members": [
           {
-            "astId": 1868,
+            "astId": 1878,
             "contract": "contracts/StakingPoolManagementImpl.sol:StakingPoolManagementImpl",
             "label": "balance",
             "offset": 0,
@@ -6419,7 +6419,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 1870,
+            "astId": 1880,
             "contract": "contracts/StakingPoolManagementImpl.sol:StakingPoolManagementImpl",
             "label": "shares",
             "offset": 0,
@@ -6427,7 +6427,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 1872,
+            "astId": 1882,
             "contract": "contracts/StakingPoolManagementImpl.sol:StakingPoolManagementImpl",
             "label": "depositTimestamp",
             "offset": 0,

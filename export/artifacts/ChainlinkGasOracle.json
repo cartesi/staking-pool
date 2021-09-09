@@ -58,9 +58,9 @@
   "evm": {
     "bytecode": {
       "functionDebugData": {
-        "@_3556": {
+        "@_3566": {
           "entryPoint": null,
-          "id": 3556,
+          "id": 3566,
           "parameterSlots": 1,
           "returnSlots": 0
         },
@@ -376,15 +376,15 @@
     },
     "deployedBytecode": {
       "functionDebugData": {
-        "@getGasPrice_3571": {
+        "@getGasPrice_3581": {
           "entryPoint": 149,
-          "id": 3571,
+          "id": 3581,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@oracle_3544": {
+        "@oracle_3554": {
           "entryPoint": null,
-          "id": 3544,
+          "id": 3554,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -803,7 +803,7 @@
         }
       ],
       "immutableReferences": {
-        "3544": [
+        "3554": [
           {
             "length": 32,
             "start": 91

@@ -58,9 +58,9 @@
   "evm": {
     "bytecode": {
       "functionDebugData": {
-        "@_3593": {
+        "@_3603": {
           "entryPoint": null,
-          "id": 3593,
+          "id": 3603,
           "parameterSlots": 1,
           "returnSlots": 0
         },
@@ -376,15 +376,15 @@
     },
     "deployedBytecode": {
       "functionDebugData": {
-        "@getPrice_3608": {
+        "@getPrice_3618": {
           "entryPoint": 149,
-          "id": 3608,
+          "id": 3618,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@oracle_3581": {
+        "@oracle_3591": {
           "entryPoint": null,
-          "id": 3581,
+          "id": 3591,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -803,7 +803,7 @@
         }
       ],
       "immutableReferences": {
-        "3581": [
+        "3591": [
           {
             "length": 32,
             "start": 64

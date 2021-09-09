@@ -695,39 +695,39 @@
   "evm": {
     "bytecode": {
       "functionDebugData": {
-        "@_2331": {
+        "@_2341": {
           "entryPoint": null,
-          "id": 2331,
+          "id": 2341,
           "parameterSlots": 6,
           "returnSlots": 0
         },
-        "@_2412": {
+        "@_2422": {
           "entryPoint": null,
-          "id": 2412,
+          "id": 2422,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@_2506": {
+        "@_2516": {
           "entryPoint": null,
-          "id": 2506,
+          "id": 2516,
           "parameterSlots": 2,
           "returnSlots": 0
         },
-        "@_2635": {
+        "@_2645": {
           "entryPoint": null,
-          "id": 2635,
+          "id": 2645,
           "parameterSlots": 2,
           "returnSlots": 0
         },
-        "@_2835": {
+        "@_2845": {
           "entryPoint": null,
-          "id": 2835,
+          "id": 2845,
           "parameterSlots": 2,
           "returnSlots": 0
         },
-        "@_3196": {
+        "@_3206": {
           "entryPoint": null,
-          "id": 3196,
+          "id": 3206,
           "parameterSlots": 2,
           "returnSlots": 0
         },
@@ -2158,9 +2158,9 @@
     },
     "deployedBytecode": {
       "functionDebugData": {
-        "@_3200": {
+        "@_3210": {
           "entryPoint": null,
-          "id": 3200,
+          "id": 3210,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -2194,15 +2194,15 @@
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@__StakingPoolProducer_init_2518": {
+        "@__StakingPoolProducer_init_2528": {
           "entryPoint": null,
-          "id": 2518,
+          "id": 2528,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@__StakingPoolStaking_init_2655": {
+        "@__StakingPoolStaking_init_2665": {
           "entryPoint": 8600,
-          "id": 2655,
+          "id": 2665,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -2230,75 +2230,75 @@
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@amountToShares_1903": {
+        "@amountToShares_1913": {
           "entryPoint": 6862,
-          "id": 1903,
+          "id": 1913,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@amount_1864": {
+        "@amount_1874": {
           "entryPoint": null,
-          "id": 1864,
+          "id": 1874,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@amounts_2801": {
+        "@amounts_2811": {
           "entryPoint": 2471,
-          "id": 2801,
+          "id": 2811,
           "parameterSlots": 0,
           "returnSlots": 3
         },
-        "@cancelHire_3288": {
+        "@cancelHire_3298": {
           "entryPoint": 6310,
-          "id": 3288,
+          "id": 3298,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@ctsi_2480": {
+        "@ctsi_2490": {
           "entryPoint": null,
-          "id": 2480,
+          "id": 2490,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@deposit_2900": {
+        "@deposit_2910": {
           "entryPoint": 6430,
-          "id": 2900,
+          "id": 2910,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@ens_2385": {
+        "@ens_2395": {
           "entryPoint": null,
-          "id": 2385,
+          "id": 2395,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@fee_2486": {
+        "@fee_2496": {
           "entryPoint": null,
-          "id": 2486,
+          "id": 2496,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@getWithdrawBalance_3143": {
+        "@getWithdrawBalance_3153": {
           "entryPoint": 3652,
-          "id": 3143,
+          "id": 3153,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@hire_3272": {
+        "@hire_3282": {
           "entryPoint": 7494,
-          "id": 3272,
+          "id": 3282,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@initialize_2353": {
+        "@initialize_2363": {
           "entryPoint": 7334,
-          "id": 2353,
+          "id": 2363,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@lockTime_2816": {
+        "@lockTime_2826": {
           "entryPoint": null,
-          "id": 2816,
+          "id": 2826,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -2308,9 +2308,9 @@
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@pause_2453": {
+        "@pause_2463": {
           "entryPoint": 4315,
-          "id": 2453,
+          "id": 2463,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -2320,33 +2320,33 @@
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@pos_2483": {
+        "@pos_2493": {
           "entryPoint": null,
-          "id": 2483,
+          "id": 2493,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@produceBlock_2597": {
+        "@produceBlock_2607": {
           "entryPoint": 4534,
-          "id": 2597,
+          "id": 2607,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@ray2wad_3894": {
+        "@ray2wad_3904": {
           "entryPoint": 7936,
-          "id": 3894,
+          "id": 3904,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@rdiv_3873": {
+        "@rdiv_3883": {
           "entryPoint": 8046,
-          "id": 3873,
+          "id": 3883,
           "parameterSlots": 2,
           "returnSlots": 1
         },
-        "@rebalance_2702": {
+        "@rebalance_2712": {
           "entryPoint": 3903,
-          "id": 2702,
+          "id": 2712,
           "parameterSlots": 0,
           "returnSlots": 0
         },
@@ -2356,57 +2356,57 @@
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@requiredLiquidity_1866": {
+        "@requiredLiquidity_1876": {
           "entryPoint": null,
-          "id": 1866,
+          "id": 1876,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@retire_3304": {
+        "@retire_3314": {
           "entryPoint": 4365,
-          "id": 3304,
+          "id": 3314,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@rmul_3847": {
+        "@rmul_3857": {
           "entryPoint": 7988,
-          "id": 3847,
+          "id": 3857,
           "parameterSlots": 2,
           "returnSlots": 1
         },
-        "@selfhire_3246": {
+        "@selfhire_3256": {
           "entryPoint": 3204,
-          "id": 3246,
+          "id": 3256,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@setName_2442": {
+        "@setName_2452": {
           "entryPoint": 6917,
-          "id": 2442,
+          "id": 2452,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@sharesToAmount_1928": {
+        "@sharesToAmount_1938": {
           "entryPoint": 2410,
-          "id": 1928,
+          "id": 1938,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@shares_1862": {
+        "@shares_1872": {
           "entryPoint": null,
-          "id": 1862,
+          "id": 1872,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@stake_2988": {
+        "@stake_2998": {
           "entryPoint": 5632,
-          "id": 2988,
+          "id": 2998,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@transferOwnership_2368": {
+        "@transferOwnership_2378": {
           "entryPoint": 7780,
-          "id": 2368,
+          "id": 2378,
           "parameterSlots": 1,
           "returnSlots": 0
         },
@@ -2416,45 +2416,45 @@
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@unpause_2464": {
+        "@unpause_2474": {
           "entryPoint": 2358,
-          "id": 2464,
+          "id": 2474,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@unstake_3056": {
+        "@unstake_3066": {
           "entryPoint": 1529,
-          "id": 3056,
+          "id": 3066,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@userBalance_1878": {
+        "@userBalance_1888": {
           "entryPoint": null,
-          "id": 1878,
+          "id": 1888,
           "parameterSlots": 0,
           "returnSlots": 0
         },
-        "@wad2ray_3906": {
+        "@wad2ray_3916": {
           "entryPoint": 8283,
-          "id": 3906,
+          "id": 3916,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@wdiv_3824": {
+        "@wdiv_3834": {
           "entryPoint": 8339,
-          "id": 3824,
+          "id": 3834,
           "parameterSlots": 2,
           "returnSlots": 1
         },
-        "@withdraw_3106": {
+        "@withdraw_3116": {
           "entryPoint": 1951,
-          "id": 3106,
+          "id": 3116,
           "parameterSlots": 1,
           "returnSlots": 0
         },
-        "@wmul_3798": {
+        "@wmul_3808": {
           "entryPoint": 8299,
-          "id": 3798,
+          "id": 3808,
           "parameterSlots": 2,
           "returnSlots": 1
         },
@@ -2560,7 +2560,7 @@
           "parameterSlots": 2,
           "returnSlots": 1
         },
-        "abi_encode_tuple_t_contract$_Fee_$3319__to_t_address__fromStack_reversed": {
+        "abi_encode_tuple_t_contract$_Fee_$3329__to_t_address__fromStack_reversed": {
           "entryPoint": null,
           "id": null,
           "parameterSlots": 2,
@@ -6571,7 +6571,7 @@
                     }
                   ]
                 },
-                "name": "abi_encode_tuple_t_contract$_Fee_$3319__to_t_address__fromStack_reversed",
+                "name": "abi_encode_tuple_t_contract$_Fee_$3329__to_t_address__fromStack_reversed",
                 "nodeType": "YulFunctionDefinition",
                 "parameters": [
                   {
@@ -12332,14 +12332,14 @@
               }
             ]
           },
-          "contents": "{\n    { }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_address_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := mload(headStart)\n        validator_revert_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_address_payable(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_bool_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := mload(headStart)\n        if iszero(eq(value, iszero(iszero(value)))) { revert(0, 0) }\n        value0 := value\n    }\n    function abi_decode_tuple_t_bytes32_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := mload(headStart)\n    }\n    function abi_decode_tuple_t_string_memory_ptr(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let offset := calldataload(headStart)\n        let _1 := 0xffffffffffffffff\n        if gt(offset, _1) { revert(0, 0) }\n        let _2 := add(headStart, offset)\n        if iszero(slt(add(_2, 0x1f), dataEnd)) { revert(0, 0) }\n        let _3 := calldataload(_2)\n        if gt(_3, _1) { panic_error_0x41() }\n        let _4 := not(31)\n        let memPtr := mload(64)\n        let newFreePtr := add(memPtr, and(add(and(add(_3, 0x1f), _4), 63), _4))\n        if or(gt(newFreePtr, _1), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n        mstore(memPtr, _3)\n        if gt(add(add(_2, _3), 32), dataEnd) { revert(0, 0) }\n        calldatacopy(add(memPtr, 32), add(_2, 32), _3)\n        mstore(add(add(memPtr, _3), 32), 0)\n        value0 := memPtr\n    }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_decode_tuple_t_uint256_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := mload(headStart)\n    }\n    function abi_encode_tuple_t_address__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_address_payable__to_t_address_payable__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_address_payable_t_address__to_t_address_t_address__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n    }\n    function abi_encode_tuple_t_address_t_address__to_t_address_t_address__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n    }\n    function abi_encode_tuple_t_address_t_address_t_uint256__to_t_address_t_address_t_uint256__fromStack_reversed(headStart, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 96)\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), value2)\n    }\n    function abi_encode_tuple_t_address_t_uint256__to_t_address_t_uint256__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n        mstore(add(headStart, 32), value1)\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_contract$_ENS_$392__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_contract$_Fee_$3319__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_contract$_IERC20_$1530__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_contract$_IPoS_$61__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        if gt(i, length)\n        {\n            mstore(add(add(headStart, length), 64), 0)\n        }\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function abi_encode_tuple_t_stringliteral_0d1d997348c4b502650619e51f7d09f80514d98b6993be5051d07f703984619a__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 20)\n        mstore(add(headStart, 64), \"Pausable: not paused\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_241f18ac42e09a22af8289c5c23735b3ba15465af7d5170b618b66162b4606fb__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 45)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: invalid amo\")\n        mstore(add(headStart, 96), \"unt of shares\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_245f15ff17f551913a7a18385165551503906a406f905ac1c2437281a7cd0cfe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 38)\n        mstore(add(headStart, 64), \"Ownable: new owner is the zero a\")\n        mstore(add(headStart, 96), \"ddress\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_3d3a4e54b74ff146e0d60e2918e0a33df941438760dc2b1788e63abd213b5e06__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 53)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: stake not e\")\n        mstore(add(headStart, 96), \"nough to emit 1 share\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_464476c2d99f0b69153e9fef4459393385eccefd615a33d966adb609fbe31e94__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 46)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: failed to t\")\n        mstore(add(headStart, 96), \"ransfer tokens\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_53d646aee149094ac0eead6b49a57a0d245426cefc1bc14fc983e382e4766ce3__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 66)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: not enough \")\n        mstore(add(headStart, 96), \"time has passed since last depos\")\n        mstore(add(headStart, 128), \"it\")\n        tail := add(headStart, 160)\n    }\n    function abi_encode_tuple_t_stringliteral_68571e1369f7a6dcdcd736cb0343b35a58ed0f64d245c2ed839c98d412744f8a__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 16)\n        mstore(add(headStart, 64), \"Pausable: paused\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_6d7a2c00a2f8c2f789d8f86a8dcb5aebc9d4b453911bbe5d12770e115b7e13f9__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: no balance \")\n        mstore(add(headStart, 96), \"to withdraw\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7a2a4e26842155ea933fe6eb6e3137eb5a296dcdf55721c552be7b4c3cc23759__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 46)\n        mstore(add(headStart, 64), \"Initializable: contract is alrea\")\n        mstore(add(headStart, 96), \"dy initialized\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_8e427e8a0b548882202ad2e27f47a3fb116c2c841cdc5eb652e87b85d698ced2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 64)\n        mstore(add(headStart, 64), \"StakingPoolProducerImpl: commiss\")\n        mstore(add(headStart, 96), \"ion is greater than block reward\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_9924ebdf1add33d25d4ef888e16131f0a5687b0580a36c21b5c301a6c462effe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Ownable: caller is not the owner\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_9a8b81ea638933243192a2238f248847b3709c57f7296cbf65fd7284427d2c5b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 40)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: insufficien\")\n        mstore(add(headStart, 96), \"t shares\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_b19c74ecf8c740f2fb5571b26a34141796e293467ab8a6af8f31490790af114c__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"Failed to approve CTSI for staki\")\n        mstore(add(headStart, 96), \"ng contract\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_c1a1d00e14f7dcedcad185589cd13b73037dedbcbd018ce541963ba3240d6eb6__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 60)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: not enough \")\n        mstore(add(headStart, 96), \"tokens available for staking\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_c6284440c8bacfdc6353766e883ccaf3e85ccc6119f36ee5f2b7faabde78ae9f__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 50)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: amount must\")\n        mstore(add(headStart, 96), \" be greater than 0\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_ca764e689c84842fa4bc8a0dbe47866fb2fd0869cf89f86e0486201c6e1e4056__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 54)\n        mstore(add(headStart, 64), \"StakingPoolProducerImpl: failed \")\n        mstore(add(headStart, 96), \"to transfer commission\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_uint256_t_uint256__to_t_uint256_t_uint256__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n    }\n    function abi_encode_tuple_t_uint256_t_uint256_t_uint256__to_t_uint256_t_uint256_t_uint256__fromStack_reversed(headStart, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 96)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        mstore(add(headStart, 64), value2)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        if gt(x, not(y)) { panic_error_0x11() }\n        sum := add(x, y)\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(0, 0x24)\n        }\n        r := div(x, y)\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        if and(iszero(iszero(x)), gt(y, div(not(0), x))) { panic_error_0x11() }\n        product := mul(x, y)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        if lt(x, y) { panic_error_0x11() }\n        diff := sub(x, y)\n    }\n    function panic_error_0x11()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x11)\n        revert(0, 0x24)\n    }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n}",
+          "contents": "{\n    { }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_address_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := mload(headStart)\n        validator_revert_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_address_payable(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_bool_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := mload(headStart)\n        if iszero(eq(value, iszero(iszero(value)))) { revert(0, 0) }\n        value0 := value\n    }\n    function abi_decode_tuple_t_bytes32_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := mload(headStart)\n    }\n    function abi_decode_tuple_t_string_memory_ptr(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let offset := calldataload(headStart)\n        let _1 := 0xffffffffffffffff\n        if gt(offset, _1) { revert(0, 0) }\n        let _2 := add(headStart, offset)\n        if iszero(slt(add(_2, 0x1f), dataEnd)) { revert(0, 0) }\n        let _3 := calldataload(_2)\n        if gt(_3, _1) { panic_error_0x41() }\n        let _4 := not(31)\n        let memPtr := mload(64)\n        let newFreePtr := add(memPtr, and(add(and(add(_3, 0x1f), _4), 63), _4))\n        if or(gt(newFreePtr, _1), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n        mstore(memPtr, _3)\n        if gt(add(add(_2, _3), 32), dataEnd) { revert(0, 0) }\n        calldatacopy(add(memPtr, 32), add(_2, 32), _3)\n        mstore(add(add(memPtr, _3), 32), 0)\n        value0 := memPtr\n    }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_decode_tuple_t_uint256_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := mload(headStart)\n    }\n    function abi_encode_tuple_t_address__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_address_payable__to_t_address_payable__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_address_payable_t_address__to_t_address_t_address__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n    }\n    function abi_encode_tuple_t_address_t_address__to_t_address_t_address__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n    }\n    function abi_encode_tuple_t_address_t_address_t_uint256__to_t_address_t_address_t_uint256__fromStack_reversed(headStart, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 96)\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), value2)\n    }\n    function abi_encode_tuple_t_address_t_uint256__to_t_address_t_uint256__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n        mstore(add(headStart, 32), value1)\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_contract$_ENS_$392__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_contract$_Fee_$3329__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_contract$_IERC20_$1530__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_contract$_IPoS_$61__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        let _1 := 32\n        mstore(headStart, _1)\n        let length := mload(value0)\n        mstore(add(headStart, _1), length)\n        let i := 0\n        for { } lt(i, length) { i := add(i, _1) }\n        {\n            mstore(add(add(headStart, i), 64), mload(add(add(value0, i), _1)))\n        }\n        if gt(i, length)\n        {\n            mstore(add(add(headStart, length), 64), 0)\n        }\n        tail := add(add(headStart, and(add(length, 31), not(31))), 64)\n    }\n    function abi_encode_tuple_t_stringliteral_0d1d997348c4b502650619e51f7d09f80514d98b6993be5051d07f703984619a__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 20)\n        mstore(add(headStart, 64), \"Pausable: not paused\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_241f18ac42e09a22af8289c5c23735b3ba15465af7d5170b618b66162b4606fb__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 45)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: invalid amo\")\n        mstore(add(headStart, 96), \"unt of shares\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_245f15ff17f551913a7a18385165551503906a406f905ac1c2437281a7cd0cfe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 38)\n        mstore(add(headStart, 64), \"Ownable: new owner is the zero a\")\n        mstore(add(headStart, 96), \"ddress\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_3d3a4e54b74ff146e0d60e2918e0a33df941438760dc2b1788e63abd213b5e06__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 53)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: stake not e\")\n        mstore(add(headStart, 96), \"nough to emit 1 share\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_464476c2d99f0b69153e9fef4459393385eccefd615a33d966adb609fbe31e94__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 46)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: failed to t\")\n        mstore(add(headStart, 96), \"ransfer tokens\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_53d646aee149094ac0eead6b49a57a0d245426cefc1bc14fc983e382e4766ce3__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 66)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: not enough \")\n        mstore(add(headStart, 96), \"time has passed since last depos\")\n        mstore(add(headStart, 128), \"it\")\n        tail := add(headStart, 160)\n    }\n    function abi_encode_tuple_t_stringliteral_68571e1369f7a6dcdcd736cb0343b35a58ed0f64d245c2ed839c98d412744f8a__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 16)\n        mstore(add(headStart, 64), \"Pausable: paused\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_6d7a2c00a2f8c2f789d8f86a8dcb5aebc9d4b453911bbe5d12770e115b7e13f9__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: no balance \")\n        mstore(add(headStart, 96), \"to withdraw\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7a2a4e26842155ea933fe6eb6e3137eb5a296dcdf55721c552be7b4c3cc23759__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 46)\n        mstore(add(headStart, 64), \"Initializable: contract is alrea\")\n        mstore(add(headStart, 96), \"dy initialized\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_8e427e8a0b548882202ad2e27f47a3fb116c2c841cdc5eb652e87b85d698ced2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 64)\n        mstore(add(headStart, 64), \"StakingPoolProducerImpl: commiss\")\n        mstore(add(headStart, 96), \"ion is greater than block reward\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_9924ebdf1add33d25d4ef888e16131f0a5687b0580a36c21b5c301a6c462effe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Ownable: caller is not the owner\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_9a8b81ea638933243192a2238f248847b3709c57f7296cbf65fd7284427d2c5b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 40)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: insufficien\")\n        mstore(add(headStart, 96), \"t shares\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_b19c74ecf8c740f2fb5571b26a34141796e293467ab8a6af8f31490790af114c__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"Failed to approve CTSI for staki\")\n        mstore(add(headStart, 96), \"ng contract\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_c1a1d00e14f7dcedcad185589cd13b73037dedbcbd018ce541963ba3240d6eb6__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 60)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: not enough \")\n        mstore(add(headStart, 96), \"tokens available for staking\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_c6284440c8bacfdc6353766e883ccaf3e85ccc6119f36ee5f2b7faabde78ae9f__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 50)\n        mstore(add(headStart, 64), \"StakingPoolUserImpl: amount must\")\n        mstore(add(headStart, 96), \" be greater than 0\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_ca764e689c84842fa4bc8a0dbe47866fb2fd0869cf89f86e0486201c6e1e4056__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 54)\n        mstore(add(headStart, 64), \"StakingPoolProducerImpl: failed \")\n        mstore(add(headStart, 96), \"to transfer commission\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_uint256_t_uint256__to_t_uint256_t_uint256__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n    }\n    function abi_encode_tuple_t_uint256_t_uint256_t_uint256__to_t_uint256_t_uint256_t_uint256__fromStack_reversed(headStart, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 96)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        mstore(add(headStart, 64), value2)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        if gt(x, not(y)) { panic_error_0x11() }\n        sum := add(x, y)\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y)\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x12)\n            revert(0, 0x24)\n        }\n        r := div(x, y)\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        if and(iszero(iszero(x)), gt(y, div(not(0), x))) { panic_error_0x11() }\n        product := mul(x, y)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        if lt(x, y) { panic_error_0x11() }\n        diff := sub(x, y)\n    }\n    function panic_error_0x11()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x11)\n        revert(0, 0x24)\n    }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n}",
           "id": 42,
           "language": "Yul",
           "name": "#utility.yul"
         }
       ],
       "immutableReferences": {
-        "2385": [
+        "2395": [
           {
             "length": 32,
             "start": 752
@@ -12349,7 +12349,7 @@
             "start": 7015
           }
         ],
-        "2480": [
+        "2490": [
           {
             "length": 32,
             "start": 917
@@ -12359,7 +12359,7 @@
             "start": 5228
           }
         ],
-        "2483": [
+        "2493": [
           {
             "length": 32,
             "start": 1390
@@ -12373,7 +12373,7 @@
             "start": 4833
           }
         ],
-        "2612": [
+        "2622": [
           {
             "length": 32,
             "start": 2509
@@ -12383,7 +12383,7 @@
             "start": 8671
           }
         ],
-        "2615": [
+        "2625": [
           {
             "length": 32,
             "start": 2667
@@ -12413,7 +12413,7 @@
             "start": 8623
           }
         ],
-        "2814": [
+        "2824": [
           {
             "length": 32,
             "start": 2117
@@ -12427,7 +12427,7 @@
             "start": 6531
           }
         ],
-        "2816": [
+        "2826": [
           {
             "length": 32,
             "start": 634
@@ -12441,7 +12441,7 @@
             "start": 6804
           }
         ],
-        "3155": [
+        "3165": [
           {
             "length": 32,
             "start": 3353
@@ -12451,7 +12451,7 @@
             "start": 7689
           }
         ],
-        "3158": [
+        "3168": [
           {
             "length": 32,
             "start": 3225
@@ -12620,7 +12620,7 @@
         "type": "t_array(t_uint256)49_storage"
       },
       {
-        "astId": 1862,
+        "astId": 1872,
         "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
         "label": "shares",
         "offset": 0,
@@ -12628,7 +12628,7 @@
         "type": "t_uint256"
       },
       {
-        "astId": 1864,
+        "astId": 1874,
         "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
         "label": "amount",
         "offset": 0,
@@ -12636,7 +12636,7 @@
         "type": "t_uint256"
       },
       {
-        "astId": 1866,
+        "astId": 1876,
         "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
         "label": "requiredLiquidity",
         "offset": 0,
@@ -12644,20 +12644,20 @@
         "type": "t_uint256"
       },
       {
-        "astId": 1878,
+        "astId": 1888,
         "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
         "label": "userBalance",
         "offset": 0,
         "slot": "154",
-        "type": "t_mapping(t_address,t_struct(UserBalance)1873_storage)"
+        "type": "t_mapping(t_address,t_struct(UserBalance)1883_storage)"
       },
       {
-        "astId": 2486,
+        "astId": 2496,
         "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
         "label": "fee",
         "offset": 0,
         "slot": "155",
-        "type": "t_contract(Fee)3319"
+        "type": "t_contract(Fee)3329"
       }
     ],
     "types": {
@@ -12683,24 +12683,24 @@
         "label": "bool",
         "numberOfBytes": "1"
       },
-      "t_contract(Fee)3319": {
+      "t_contract(Fee)3329": {
         "encoding": "inplace",
         "label": "contract Fee",
         "numberOfBytes": "20"
       },
-      "t_mapping(t_address,t_struct(UserBalance)1873_storage)": {
+      "t_mapping(t_address,t_struct(UserBalance)1883_storage)": {
         "encoding": "mapping",
         "key": "t_address",
         "label": "mapping(address => struct StakingPoolData.UserBalance)",
         "numberOfBytes": "32",
-        "value": "t_struct(UserBalance)1873_storage"
+        "value": "t_struct(UserBalance)1883_storage"
       },
-      "t_struct(UserBalance)1873_storage": {
+      "t_struct(UserBalance)1883_storage": {
         "encoding": "inplace",
         "label": "struct StakingPoolData.UserBalance",
         "members": [
           {
-            "astId": 1868,
+            "astId": 1878,
             "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
             "label": "balance",
             "offset": 0,
@@ -12708,7 +12708,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 1870,
+            "astId": 1880,
             "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
             "label": "shares",
             "offset": 0,
@@ -12716,7 +12716,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 1872,
+            "astId": 1882,
             "contract": "contracts/StakingPoolImpl.sol:StakingPoolImpl",
             "label": "depositTimestamp",
             "offset": 0,
