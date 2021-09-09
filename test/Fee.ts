@@ -159,55 +159,64 @@ describe("Commission Tests", async () => {
 
         it("should be zero if charging zero gas", async () => {
             const gasPrice = ethers.utils.parseUnits("100", "gwei");
-            const ctsiPrice = ethers.utils.parseUnits("0.1", 18);
+            const ctsiPrice = ethers.utils.parseEther("0.001");
             const contract = await deploy(0, gasPrice, ctsiPrice);
             expect(await contract.getCommission(0, 100)).to.equal(0);
         });
 
-        it("should be zero if (there is no eth reserve) price in CTSI is zero", async () => {
+        it("should be zero if CTSI price is zero", async () => {
             const gasPrice = ethers.utils.parseUnits("100", "gwei");
-            const ctsiPrice = ethers.utils.parseUnits("0", 18);
+            const ctsiPrice = ethers.utils.parseEther("0");
+            const contract = await deploy(1000000, gasPrice, ctsiPrice);
+            expect(await contract.getCommission(0, 100)).to.equal(0);
+        });
+
+        it("should be zero if gas price is zero", async () => {
+            const gasPrice = ethers.utils.parseUnits("0", "gwei");
+            const ctsiPrice = ethers.utils.parseEther("0.001");
             const contract = await deploy(1000000, gasPrice, ctsiPrice);
             expect(await contract.getCommission(0, 100)).to.equal(0);
         });
 
         it("should calculate 100% fee", async () => {
-            const reward = ethers.utils.parseUnits("100", 18); // 10^20 = 100 CTSI
+            const reward = ethers.utils.parseUnits("10", 18); // 10^19 = 10 CTSI
             const gas = 100000; // 10^5
             const gasPrice = ethers.utils.parseUnits("100", "gwei"); // 10^11
-            const ctsiPrice = ethers.utils.parseUnits("1", 4); // 10^4
+            const ctsiPrice = ethers.utils.parseEther("0.001"); // 10^15
 
             // gasFee = gasPrice * gas = 10^16
-            // gasFeeCTSI = gasFee * ctsiPrice = 10^16 * 10^4 = 10^20 = 100 CTSI
-            const contract = await deploy(gas, gasPrice, ctsiPrice);
-            expect(await contract.getCommission(0, reward)).to.equal(
-                ethers.utils.parseUnits("100", 18)
-            );
-        });
-
-        it("should calculate 10% fee for 1/10 of gas price", async () => {
-            const reward = ethers.utils.parseUnits("100", 18); // 10^20 = 100 CTSI
-            const gas = 100000; // 10^5
-            const gasPrice = ethers.utils.parseUnits("10", "gwei"); // 10^10
-            const ctsiPrice = ethers.utils.parseUnits("1", 4); // 10^4
-            // gasFee = gasPrice * gas = 10^15
-            // gasFeeCTSI = gasFee * ctsiPrice = 10^15 * 10^24 = 10^19 = 10 CTSI
+            // gasFeeCTSI = gasFee * 10^18 / ctsiPrice = 10^16 * 10^18 / 10^15 = 10^34 / 10^15 = 10^19 = 10 CTSI
             const contract = await deploy(gas, gasPrice, ctsiPrice);
             expect(await contract.getCommission(0, reward)).to.equal(
                 ethers.utils.parseUnits("10", 18)
             );
         });
 
-        it("should calculate 100% fee for 1/10 of CTSI price, cap to reward", async () => {
-            const reward = ethers.utils.parseUnits("100", 18); // 10^20 = 100 CTSI
+        it("should calculate 10% fee for 1/10 of gas price", async () => {
+            const reward = ethers.utils.parseUnits("10", 18); // 10^19 = 10 CTSI
             const gas = 100000; // 10^5
-            const gasPrice = ethers.utils.parseUnits("100", "gwei"); // 10^11
-            const ctsiPrice = ethers.utils.parseUnits("1", 4); // 10^4
-            // gasFee = gasPrice * gas = 10^16
-            // gasFeeCTSI = gasFee * ctsiPrice = 10^16 * 10^4 = 10^21 = 1000 CTSI
+            const gasPrice = ethers.utils.parseUnits("10", "gwei"); // 10^10
+            const ctsiPrice = ethers.utils.parseEther("0.001"); // 10^15
+
+            // gasFee = gasPrice * gas = 10^15
+            // gasFeeCTSI = gasFee * 10^18 / ctsiPrice = 10^15 * 10^18 / 10^15 = 10^33 / 10^15 = 10^18 = 1 CTSI
             const contract = await deploy(gas, gasPrice, ctsiPrice);
             expect(await contract.getCommission(0, reward)).to.equal(
-                ethers.utils.parseUnits("100", 18)
+                ethers.utils.parseUnits("1", 18)
+            );
+        });
+
+        it("should calculate 100% fee for 1/10 of CTSI price, cap to reward", async () => {
+            const reward = ethers.utils.parseUnits("10", 18); // 10^19 = 10 CTSI
+            const gas = 100000; // 10^5
+            const gasPrice = ethers.utils.parseUnits("100", "gwei"); // 10^11
+            const ctsiPrice = ethers.utils.parseEther("0.0001"); // 10^14
+
+            // gasFee = gasPrice * gas = 10^16
+            // gasFeeCTSI = gasFee * 10^18 / ctsiPrice = 10^16 * 10^18 / 10^14 = 10^34 / 10^14 = 10^20 = 100 CTSI
+            const contract = await deploy(gas, gasPrice, ctsiPrice);
+            expect(await contract.getCommission(0, reward)).to.equal(
+                ethers.utils.parseUnits("10", 18)
             );
         });
 

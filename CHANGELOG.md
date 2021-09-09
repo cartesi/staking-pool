@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0-beta.3] - 2021-09-10
+
+### Changed
+
+-   Fix GasTaxCommission calculation bug as the price oracle is CTSI/ETH, not ETH/CTSI
+
+## [1.0.0-beta.2] - 2021-09-05
+
+### Changed
+
+-   Outdated artifacts
+
 ## [1.0.0-beta.1] - 2021-08-30
 
 ### Changed

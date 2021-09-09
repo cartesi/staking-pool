@@ -56,17 +56,17 @@ contract GasTaxCommission is Fee, Ownable {
         override
         returns (uint256)
     {
-        // get gas price from chainlink oracle
-        // https://data.chain.link/fast-gas-gwei#operator-chainlayer
+        // get gas price (in Wei) from chainlink oracle, at https://data.chain.link/fast-gas-gwei
         uint256 gasPrice = gasOracle.getGasPrice();
 
-        // gas fee (in ETH) charged by pool manager
+        // gas fee (in Wei) charged by pool manager
         uint256 gasFee = gasPrice * gas;
 
-        // convert gas in ETH to gas in CTSI
-        uint256 ctsiETHPrice = priceOracle.getPrice();
+        // get Wei price of 1 CTSI
+        uint256 ctsiPrice = priceOracle.getPrice();
 
-        uint256 gasFeeCTSI = gasFee * ctsiETHPrice;
+        // convert gas in Wei to gas in CTSI
+        uint256 gasFeeCTSI = ctsiPrice > 0 ? gasFee * (10**18) / ctsiPrice : 0;
 
         // this is the commission, maxed by the reward
         return gasFeeCTSI > rewardAmount ? rewardAmount : gasFeeCTSI;
