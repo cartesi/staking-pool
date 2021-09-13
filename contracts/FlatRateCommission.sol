@@ -51,7 +51,10 @@ contract FlatRateCommission is Fee, Ownable {
         override
         returns (uint256)
     {
-        return (rewardAmount * rate) / BASE;
+        uint256 commission = (rewardAmount * rate) / BASE;
+
+        // cap commission to 100%
+        return commission > rewardAmount ? rewardAmount : commission;
     }
 
     /// @notice allows for the poolManager to reduce how much they want to charge for the block production tx
