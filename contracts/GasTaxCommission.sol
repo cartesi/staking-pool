@@ -66,7 +66,9 @@ contract GasTaxCommission is Fee, Ownable {
         uint256 ctsiPrice = priceOracle.getPrice();
 
         // convert gas in Wei to gas in CTSI
-        uint256 gasFeeCTSI = ctsiPrice > 0 ? gasFee * (10**18) / ctsiPrice : 0;
+        uint256 gasFeeCTSI = ctsiPrice > 0
+            ? (gasFee * (10**18)) / ctsiPrice
+            : 0;
 
         // this is the commission, maxed by the reward
         return gasFeeCTSI > rewardAmount ? rewardAmount : gasFeeCTSI;
@@ -77,7 +79,7 @@ contract GasTaxCommission is Fee, Ownable {
         if (newGasCommission > gas) {
             require(
                 timeoutTimestamp <= block.timestamp,
-                "GasTaxCommission: the fee raise timout is not expired yet"
+                "GasTaxCommission: the fee raise timeout is not expired yet"
             );
             require(
                 (newGasCommission - gas) <= maxRaise,

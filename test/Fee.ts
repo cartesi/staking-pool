@@ -110,7 +110,7 @@ describe("Commission Tests", async () => {
             await expect(
                 contract.setRate(newCommission + 1)
             ).to.be.revertedWith(
-                "FlatRateCommission: the fee raise timout is not expired yet"
+                "FlatRateCommission: the fee raise timeout is not expired yet"
             );
         });
 
@@ -285,7 +285,7 @@ describe("Commission Tests", async () => {
                 .to.emit(contract, "GasTaxChanged")
                 .withArgs(gas + 1, nextTS + FeeRaiseTimeout);
             await expect(contract.setGas(gas + 2)).to.be.revertedWith(
-                "GasTaxCommission: the fee raise timout is not expired yet"
+                "GasTaxCommission: the fee raise timeout is not expired yet"
             );
         });
 

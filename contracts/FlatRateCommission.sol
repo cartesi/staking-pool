@@ -62,7 +62,7 @@ contract FlatRateCommission is Fee, Ownable {
         if (newRate > rate) {
             require(
                 timeoutTimestamp <= block.timestamp,
-                "FlatRateCommission: the fee raise timout is not expired yet"
+                "FlatRateCommission: the fee raise timeout is not expired yet"
             );
             require(
                 (newRate - rate) <= maxRaise,
