@@ -45,7 +45,10 @@ contract StakingPoolProducerImpl is StakingPoolProducer, StakingPoolData {
         uint256 reward = rewardManager.getCurrentReward();
 
         // produce block in the PoS
-        pos.produceBlock(_index);
+        require(
+            pos.produceBlock(_index),
+            "StakingPoolProducerImpl: failed to produce block"
+        );
 
         // calculate pool commission
         // TODO: where do we require that fee is initialized?
