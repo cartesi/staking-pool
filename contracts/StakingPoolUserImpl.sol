@@ -127,7 +127,7 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         shares -= _shares;
         amount -= _amount;
 
-        // add amout user can withdraw (if available)
+        // add amount user can withdraw (if available)
         user.balance += _amount;
 
         // increase required liquidity
