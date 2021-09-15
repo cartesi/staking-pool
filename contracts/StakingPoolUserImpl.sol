@@ -36,10 +36,6 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
             _amount > 0,
             "StakingPoolUserImpl: amount must be greater than 0"
         );
-        require(
-            ctsi.transferFrom(msg.sender, address(this), _amount),
-            "StakingPoolUserImpl: failed to transfer tokens"
-        );
 
         // add tokens to user's balance
         UserBalance storage user = userBalance[msg.sender];
@@ -50,6 +46,11 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
 
         // reserve the balance as required liquidity (don't stake to Staking)
         requiredLiquidity += _amount;
+
+        require(
+            ctsi.transferFrom(msg.sender, address(this), _amount),
+            "StakingPoolUserImpl: failed to transfer tokens"
+        );
 
         // emit event containing user and amount
         emit Deposit(msg.sender, _amount, block.timestamp + lockTime);
@@ -151,14 +152,14 @@ contract StakingPoolUserImpl is StakingPoolUser, StakingPoolData {
         // clear user released value
         user.balance -= _amount; // if _amount >  user.balance this will revert
 
+        // decrease required liquidity
+        requiredLiquidity -= _amount; // if _amount >  requiredLiquidity this will revert
+
         // transfer token back to user
         require(
             ctsi.transfer(msg.sender, _amount),
             "StakingPoolUserImpl: failed to transfer tokens"
         );
-
-        // decrease required liquidity
-        requiredLiquidity -= _amount; // if _amount >  requiredLiquidity this will revert
 
         // emit event containing user and token amount
         emit Withdraw(msg.sender, _amount);

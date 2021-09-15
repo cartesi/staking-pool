@@ -58,6 +58,12 @@ contract StakingPoolProducerImpl is StakingPoolProducer, StakingPoolData {
             "StakingPoolProducerImpl: commission is greater than block reward"
         );
 
+        uint256 remainingReward = reward - commission; // this is a safety check
+        // if commission is over the reward amount, it will underflow
+
+        // increase pool amount, this will change the pool exchange rate
+        amount += remainingReward;
+
         // send commission directly to pool owner
         if (commission > 0) {
             require(
@@ -65,12 +71,6 @@ contract StakingPoolProducerImpl is StakingPoolProducer, StakingPoolData {
                 "StakingPoolProducerImpl: failed to transfer commission"
             );
         }
-
-        uint256 remainingReward = reward - commission; // this is a safety check
-        // if commission is over the reward amount, it will underflow
-
-        // increase pool amount, this will change the pool exchange rate
-        amount += remainingReward;
 
         // remainingReward is part of the balance, so it will automatically be staked by StakingPoolStakingImpl
         emit BlockProduced(reward, commission);
