@@ -51,7 +51,6 @@ contract StakingPoolProducerImpl is StakingPoolProducer, StakingPoolData {
         );
 
         // calculate pool commission
-        // TODO: where do we require that fee is initialized?
         uint256 commission = fee.getCommission(_index, reward);
         require(
             commission <= reward,
