@@ -35,7 +35,7 @@ interface StakingPool is
     StakingPoolWorker
 {
     /// @notice initialize pool (from reference)
-    function initialize(address fee) external;
+    function initialize(address fee, address _pos) external;
 
     /// @notice Transfer ownership of pool to its deployer
     function transferOwnership(address newOwner) external;

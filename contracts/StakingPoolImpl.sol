@@ -32,22 +32,25 @@ contract StakingPoolImpl is
     constructor(
         address _ctsi,
         address _staking,
-        address _pos,
         address _workerManager,
         address _ens,
         uint256 _stakeLock
     )
         StakingPoolManagementImpl(_ens)
-        StakingPoolProducerImpl(_ctsi, _pos)
+        StakingPoolProducerImpl(_ctsi)
         StakingPoolStakingImpl(_ctsi, _staking)
         StakingPoolUserImpl(_ctsi, _stakeLock)
-        StakingPoolWorkerImpl(_workerManager, _pos)
+        StakingPoolWorkerImpl(_workerManager)
     {}
 
-    function initialize(address _fee) external override initializer {
+    function initialize(address _fee, address _pos)
+        external
+        override
+        initializer
+    {
         __Pausable_init();
         __Ownable_init();
-        __StakingPoolProducer_init(_fee);
+        __StakingPoolProducer_init(_fee, _pos);
         __StakingPoolStaking_init();
         __StakingPoolManagementImpl_init();
     }

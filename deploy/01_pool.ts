@@ -20,7 +20,7 @@ const HOUR = 60 * MINUTE; // seconds in an hour
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     const { deployments, getNamedAccounts, ethers } = hre;
     const { deploy } = deployments;
-    const { CartesiToken, PoS, StakingImpl, WorkerManagerAuthManagerImpl } =
+    const { CartesiToken, StakingImpl, WorkerManagerAuthManagerImpl } =
         await deployments.all();
     const [deployer] = await ethers.getSigners();
 
@@ -49,7 +49,6 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
         args: [
             CartesiToken.address,
             StakingImpl.address,
-            PoS.address,
             WorkerManagerAuthManagerImpl.address,
             ensAddress,
             stakeLock,

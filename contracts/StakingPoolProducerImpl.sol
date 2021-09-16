@@ -23,13 +23,13 @@ contract StakingPoolProducerImpl is StakingPoolProducer, StakingPoolData {
     IERC20 public immutable ctsi;
     Fee public fee;
 
-    constructor(address _ctsi, address _pos) {
+    constructor(address _ctsi) {
         ctsi = IERC20(_ctsi);
-        pos = IPoS(_pos);
     }
 
-    function __StakingPoolProducer_init(address _fee) internal {
+    function __StakingPoolProducer_init(address _fee, address _pos) internal {
         fee = Fee(_fee);
+        pos = IPoS(_pos);
     }
 
     /// @notice routes produceBlock to POS contract and

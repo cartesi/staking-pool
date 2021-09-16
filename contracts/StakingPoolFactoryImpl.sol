@@ -93,7 +93,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         );
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPool pool = StakingPool(deployed);
-        pool.initialize(address(fee));
+        pool.initialize(address(fee), pos);
         pool.transferOwnership(msg.sender);
         fee.transferOwnership(msg.sender);
         // sends msg.value to complete hiring process
@@ -126,7 +126,7 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         );
         address payable deployed = payable(Clones.clone(referencePool));
         StakingPool pool = StakingPool(deployed);
-        pool.initialize(address(fee));
+        pool.initialize(address(fee), pos);
         pool.transferOwnership(msg.sender);
         fee.transferOwnership(msg.sender);
         // sends msg.value to complete hiring process

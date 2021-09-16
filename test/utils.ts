@@ -115,9 +115,9 @@ export const setupPool = deployments.createFixture(
         await token.transfer(alice.address, parseCTSI("10000"));
         await token.transfer(bob.address, parseCTSI("10000"));
 
-        let refereceAddress;
+        let referenceAddress;
 
-        if (stakeLock == 2 * MINUTE) refereceAddress = StakingPoolImpl.address;
+        if (stakeLock == 2 * MINUTE) referenceAddress = StakingPoolImpl.address;
         else {
             const ensSvc: ENS = await deployENS(deployer);
             await ensSvc.createTopLevelDomain("test");
@@ -126,25 +126,24 @@ export const setupPool = deployments.createFixture(
                 args: [
                     CartesiToken.address,
                     StakingImpl.address,
-                    PoS.address,
                     WorkerManagerAuthManagerImpl.address,
                     ensAddress,
                     stakeLock,
                 ],
                 from: deployer.address,
             });
-            refereceAddress = deployment.address;
+            referenceAddress = deployment.address;
         }
 
         const CloneMakerFactory = new CloneMaker__factory(deployer);
         const cloneMaker = await CloneMakerFactory.deploy();
-        const newPoolTx = await cloneMaker.clone(refereceAddress);
+        const newPoolTx = await cloneMaker.clone(referenceAddress);
         const newPoolReceipt = await newPoolTx.wait();
         if (!newPoolReceipt.events || !newPoolReceipt.events[0].args)
             throw "error on cloning deployment";
         const newPoolAddr = newPoolReceipt.events[0].args[0];
         const pool = StakingPoolImpl__factory.connect(newPoolAddr, deployer);
-        await pool.initialize(fee.address);
+        await pool.initialize(fee.address, PoS.address);
 
         // deploy a mock BlockSelector that always returns true to produceBlock
         const blockSelector = await deployMockContract(

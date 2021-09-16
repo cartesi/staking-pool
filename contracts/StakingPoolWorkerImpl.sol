@@ -20,13 +20,11 @@ contract StakingPoolWorkerImpl is StakingPoolWorker, StakingPoolData {
     IWorkerManagerAuthManager immutable workerManager;
 
     // all immutable variables can stay at the constructor
-    constructor(address _workerManager, address _pos) {
+    constructor(address _workerManager) {
         require(
             _workerManager != address(0),
             "parameter can not be zero address"
         );
-        require(_pos != address(0), "parameter can not be zero address");
-
         workerManager = IWorkerManagerAuthManager(_workerManager);
     }
 
