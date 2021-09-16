@@ -112,6 +112,32 @@ The commission (fees) are sent directly to the pool manager's wallet. The balanc
 
 <p align="center"><img src="producer.png" alt="producer diagram" title= "producer diagram" width="60%" /></p>
 
+## Shares Ratio Mathematics
+
+The system emits shares related to their initial CTSI value staked to maintain control of the balance of users. At the very first time (before rewards) CTSI value is converted in $1:10^9$ shares. It means the base value of CTSI keeps being $10^{18}$ and the shares is $10^{27}$.
+
+In other words, initially, 1 CTSI ($1*10^{18}$ units) = 1 share ($1*10^{27}$ units)
+
+However, as the contract earns rewards for producing blocks, the CTSI amount staked in the pool increases while the shares do not. Now, one share is worth more than before, and newcomers will be issued a smaller share quantity per value compared to the previous ratio.
+
+The calculation is:
+
+$SharesIssued = \frac{StakeValue * TotalShares}{TotalStakedValue}$
+
+These newly issued shares are added to `TotalShares`, and the newly staked value to `TotalStakedValue`. This behavior guarantees that newcomers won't change the ratio of shares<>ctsi.
+
+### Bounds:
+
+There will only ever be `maxSupply` of ERC20 CTSI tokens which is: $1*10^{9}$ CTSI or $1*10^{27}$ unit. The `maxSupply` is very safe for the limits of the uint256 variables that control the stakes in the pool contract.
+
+Regarding shares, at their **lowest value** ratio 1 CTSI = 1 share ($1*10^{27}$ units), if we extrapolate to stake all available CTSI tokens, we still would have: `maxSupply` => $1*10^{27}*10^{9}$ units of shares which is safe for 256 bits, as well.
+
+At the **highest value**, we would have a 1 CTSI staked being awarded `maxSupply` of tokens, creating the ratio: $1*10^{36}$ CTSI = $1*10^{27}$ of shares. In this scenario, a new stake of 1 CTSI would still be $1*10^{9}$ units of shares being that:
+
+$\frac{1*10^{18} * 10^{27}}{10^{36}}$ = $1*10^{9}$
+
+Therefore, the error margin is $1*10^{-9}$ CTSI (that's how much would be lost due to rounding errors).
+
 ## Build
 
 To get a list of all available `yarn` targets run:
