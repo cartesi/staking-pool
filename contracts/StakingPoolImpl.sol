@@ -49,6 +49,13 @@ contract StakingPoolImpl is
         __Ownable_init();
         __StakingPoolProducer_init(_fee);
         __StakingPoolStaking_init();
+        __StakingPoolManagementImpl_init();
+    }
+
+    /// @notice updates the internal settings for important pieces of the Cartesi PoS system
+    function update() external override onlyOwner {
+        address _pos = factory.updatedConfigs();
+        __StakingPoolWorkerImpl_update(_pos);
     }
 
     function transferOwnership(address newOwner)

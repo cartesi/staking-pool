@@ -16,6 +16,7 @@ import "@ensdomains/ens-contracts/contracts/registry/ReverseRegistrar.sol";
 import "@ensdomains/ens-contracts/contracts/registry/ENS.sol";
 
 import "./interfaces/StakingPoolManagement.sol";
+import "./interfaces/StakingPoolFactory.sol";
 import "./StakingPoolData.sol";
 
 contract StakingPoolManagementImpl is StakingPoolManagement, StakingPoolData {
@@ -23,6 +24,7 @@ contract StakingPoolManagementImpl is StakingPoolManagement, StakingPoolData {
         0x91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e2;
 
     ENS public immutable ens;
+    StakingPoolFactory public factory;
 
     // all immutable variables can stay at the constructor
     constructor(address _ens) initializer {
@@ -31,6 +33,10 @@ contract StakingPoolManagementImpl is StakingPoolManagement, StakingPoolData {
 
         // make sure reference code is pause so no one stake to it
         _pause();
+    }
+
+    function __StakingPoolManagementImpl_init() internal {
+        factory = StakingPoolFactory(msg.sender);
     }
 
     /// @notice sets a name for the pool using ENS service

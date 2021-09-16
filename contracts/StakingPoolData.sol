@@ -15,6 +15,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@cartesi/pos/contracts/IPoS.sol";
 
 import "./utils/WadRayMath.sol";
 
@@ -27,6 +28,8 @@ contract StakingPoolData is
     uint256 public shares; // total number of shares
     uint256 public amount; // amount of staked tokens (no matter where it is)
     uint256 public requiredLiquidity; // amount of required tokens for withdraw requests
+
+    IPoS public pos;
 
     struct UserBalance {
         uint256 balance; // amount of free tokens belonging to this user

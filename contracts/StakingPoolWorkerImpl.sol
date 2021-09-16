@@ -17,9 +17,7 @@ import "./interfaces/StakingPoolWorker.sol";
 import "./StakingPoolData.sol";
 
 contract StakingPoolWorkerImpl is StakingPoolWorker, StakingPoolData {
-    address private immutable pos;
-
-    IWorkerManagerAuthManager private immutable workerManager;
+    IWorkerManagerAuthManager immutable workerManager;
 
     // all immutable variables can stay at the constructor
     constructor(address _workerManager, address _pos) {
@@ -30,16 +28,20 @@ contract StakingPoolWorkerImpl is StakingPoolWorker, StakingPoolData {
         require(_pos != address(0), "parameter can not be zero address");
 
         workerManager = IWorkerManagerAuthManager(_workerManager);
-        pos = _pos;
     }
 
     receive() external payable {}
+
+    function __StakingPoolWorkerImpl_update(address _pos) internal {
+        workerManager.authorize(address(this), _pos);
+        pos = IPoS(_pos);
+    }
 
     /// @notice allows for the pool to act on its own behalf when producing blocks.
     function selfhire() external payable override {
         // pool needs to be both user and worker
         workerManager.hire{value: msg.value}(payable(address(this)));
-        workerManager.authorize(address(this), pos);
+        workerManager.authorize(address(this), address(pos));
         workerManager.acceptJob();
         payable(msg.sender).transfer(msg.value);
     }
@@ -53,7 +55,7 @@ contract StakingPoolWorkerImpl is StakingPoolWorker, StakingPoolData {
         onlyOwner
     {
         workerManager.hire{value: msg.value}(workerAddress);
-        workerManager.authorize(workerAddress, pos);
+        workerManager.authorize(workerAddress, address(pos));
     }
 
     /// @notice Called by the user to cancel a job offer

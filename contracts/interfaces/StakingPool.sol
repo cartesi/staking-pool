@@ -39,4 +39,7 @@ interface StakingPool is
 
     /// @notice Transfer ownership of pool to its deployer
     function transferOwnership(address newOwner) external;
+
+    /// @notice updates the internal settings for important pieces of the Cartesi PoS system
+    function update() external;
 }

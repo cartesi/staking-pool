@@ -29,13 +29,17 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
     uint256 public immutable maxGasRaise;
     uint256 public immutable maxFeePercentageRaise;
 
+    address public pos;
+
     event ReferencePoolChanged(address indexed pool);
+    event PoSAddressChanged(address indexed _pos);
 
     receive() external payable {}
 
     constructor(
         address _gasOracle,
         address _priceOracle,
+        address _pos,
         uint256 _feeRaiseTimeout,
         uint256 _maxGasRaise,
         uint256 _maxFeePercentageRaise
@@ -53,12 +57,19 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         feeRaiseTimeout = _feeRaiseTimeout;
         maxGasRaise = _maxGasRaise;
         maxFeePercentageRaise = _maxFeePercentageRaise;
+        pos = _pos;
     }
 
     /// @notice Change the pool reference implementation
     function setReferencePool(address _referencePool) external onlyOwner {
         referencePool = _referencePool;
         emit ReferencePoolChanged(_referencePool);
+    }
+
+    /// @notice Change the pos address
+    function setPoSAddress(address _pos) external onlyOwner {
+        pos = _pos;
+        emit PoSAddressChanged(_pos);
     }
 
     /// @notice Creates a new staking pool
@@ -128,7 +139,11 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         return address(pool);
     }
 
-    function pause() external whenNotPaused onlyOwner {
+    function updatedConfigs() external view override returns (address _pos) {
+        return pos;
+    }
+
+    function pause() public whenNotPaused onlyOwner {
         _pause();
     }
 

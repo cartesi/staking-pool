@@ -38,6 +38,7 @@ const deployChainlink = async (
 
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     const { deployments, getNamedAccounts, network } = hre;
+    const { PoS } = await deployments.all();
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
 
@@ -79,6 +80,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
         args: [
             gasOracle.address,
             priceOracle.address,
+            PoS.address,
             feeRaiseTimeout,
             20000,
             500,
