@@ -139,7 +139,9 @@ contract StakingPoolFactoryImpl is Ownable, Pausable, StakingPoolFactory {
         return address(pool);
     }
 
-    function updatedConfigs() external view override returns (address _pos) {
+    /// @notice Returns configuration for the working pools of the current version
+    /// @return _pos address for the PoS contract
+    function getPoS() external view override returns (address _pos) {
         return pos;
     }
 

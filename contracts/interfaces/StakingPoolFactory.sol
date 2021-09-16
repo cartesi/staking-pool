@@ -29,9 +29,9 @@ interface StakingPoolFactory {
         payable
         returns (address);
 
-    /// @notice Returns current configurations for the working pools of the current version
+    /// @notice Returns configuration for the working pools of the current version
     /// @return _pos address for the PoS contract
-    function updatedConfigs() external view returns (address _pos);
+    function getPoS() external view returns (address _pos);
 
     /// @notice Event emmited when a pool is created
     /// @param pool address of the new pool
