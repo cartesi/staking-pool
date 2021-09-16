@@ -114,29 +114,29 @@ The commission (fees) are sent directly to the pool manager's wallet. The balanc
 
 ## Shares Ratio Mathematics
 
-The system emits shares related to their initial CTSI value staked to maintain control of the balance of users. At the very first time (before rewards) CTSI value is converted in $1:10^9$ shares. It means the base value of CTSI keeps being $10^{18}$ and the shares is $10^{27}$.
+The system emits shares related to their initial CTSI value staked to maintain control of the balance of users. At the very first time (before rewards) CTSI value is converted in ![equation](https://latex.codecogs.com/svg.latex?1%3A10%5E9) shares. It means the base value of CTSI keeps being ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B18%7D) and the shares is ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D).
 
-In other words, initially, 1 CTSI ($1*10^{18}$ units) = 1 share ($1*10^{27}$ units)
+In other words, initially, 1 CTSI (![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B18%7D) units) = 1 share (![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D) units)
 
 However, as the contract earns rewards for producing blocks, the CTSI amount staked in the pool increases while the shares do not. Now, one share is worth more than before, and newcomers will be issued a smaller share quantity per value compared to the previous ratio.
 
 The calculation is:
 
-$SharesIssued = \frac{StakeValue * TotalShares}{TotalStakedValue}$
+![equation](https://latex.codecogs.com/svg.latex?SharesIssued%20%3D%20%5Cfrac%7BStakeValue%20*%20TotalShares%7D%7BTotalStakedValue%7D)
 
 These newly issued shares are added to `TotalShares`, and the newly staked value to `TotalStakedValue`. This behavior guarantees that newcomers won't change the ratio of shares<>ctsi.
 
 ### Bounds:
 
-There will only ever be `maxSupply` of ERC20 CTSI tokens which is: $1*10^{9}$ CTSI or $1*10^{27}$ unit. The `maxSupply` is very safe for the limits of the uint256 variables that control the stakes in the pool contract.
+There will only ever be `maxSupply` of ERC20 CTSI tokens which is: ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B9%7D) CTSI or ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D) units. The `maxSupply` is very safe for the limits of the uint256 variables that control the stakes in the pool contract.
 
-Regarding shares, at their **lowest value** ratio 1 CTSI = 1 share ($1*10^{27}$ units), if we extrapolate to stake all available CTSI tokens, we still would have: `maxSupply` => $1*10^{27}*10^{9}$ units of shares which is safe for 256 bits, as well.
+Regarding shares, at their **lowest value** ratio 1 CTSI = 1 share (![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D) units), if we extrapolate to stake all available CTSI tokens, we still would have: `maxSupply` => ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D*10%5E%7B9%7D) units of shares which is safe for 256 bits, as well.
 
-At the **highest value**, we would have a 1 CTSI staked being awarded `maxSupply` of tokens, creating the ratio: $1*10^{36}$ CTSI = $1*10^{27}$ of shares. In this scenario, a new stake of 1 CTSI would still be $1*10^{9}$ units of shares being that:
+At the **highest value**, we would have a 1 CTSI staked being awarded `maxSupply` of tokens, creating the ratio: ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B36%7D) CTSI = ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D) of shares. In this scenario, a new stake of 1 CTSI would still be ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B9%7D) units of shares being that:
 
-$\frac{1*10^{18} * 10^{27}}{10^{36}}$ = $1*10^{9}$
+![equation](https://latex.codecogs.com/svg.latex?%5Cfrac%7B1*10%5E%7B18%7D%20*%2010%5E%7B27%7D%7D%7B10%5E%7B36%7D%7D) = ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B9%7D)
 
-Therefore, the error margin is $1*10^{-9}$ CTSI (that's how much would be lost due to rounding errors).
+Therefore, the error margin is ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B-9%7D) CTSI (that's how much would be lost due to rounding errors).
 
 ## Build
 
