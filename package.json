@@ -1,6 +1,6 @@
 {
     "name": "@cartesi/staking-pool",
-    "version": "1.0.0-beta.4",
+    "version": "1.0.0",
     "description": "PoS Staking Pools",
     "scripts": {
         "build": "hardhat compile && tsc",

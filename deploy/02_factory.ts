@@ -54,7 +54,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
 
     const chainlinkPriceOracle =
         network.config.chainId === 1
-            ? "0x0a1d1b9847d602e789be38B802246161FFA24930" // https://data.chain.link/ethereum/mainnet/crypto-eth/ctsi-eth (TBD)
+            ? "0x0a1d1b9847d602e789be38B802246161FFA24930" // https://data.chain.link/ethereum/mainnet/crypto-eth/ctsi-eth
             : await deployChainlink(hre, "PriceAggregator");
     const priceOracle = await deploy("ChainlinkPriceOracle", {
         args: [chainlinkPriceOracle],

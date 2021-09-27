@@ -11,14 +11,13 @@
 
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-
 import { deployENS, ENS } from "@ethereum-waffle/ens";
 
 const MINUTE = 60; // seconds in a minute
 const HOUR = 60 * MINUTE; // seconds in an hour
 
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
-    const { deployments, getNamedAccounts, ethers } = hre;
+    const { deployments, ethers } = hre;
     const { deploy } = deployments;
     const { CartesiToken, StakingImpl, WorkerManagerAuthManagerImpl } =
         await deployments.all();
