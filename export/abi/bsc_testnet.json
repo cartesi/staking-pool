@@ -231,151 +231,6 @@
         }
       ]
     },
-    "MockAggregator": {
-      "address": "0xB49FB3eBC832f95f45db42888A073f8bA754729F",
-      "abi": [
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "int256",
-              "name": "current",
-              "type": "int256"
-            },
-            {
-              "indexed": true,
-              "internalType": "uint256",
-              "name": "roundId",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "updatedAt",
-              "type": "uint256"
-            }
-          ],
-          "name": "AnswerUpdated",
-          "type": "event"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "uint256",
-              "name": "roundId",
-              "type": "uint256"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "startedBy",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "startedAt",
-              "type": "uint256"
-            }
-          ],
-          "name": "NewRound",
-          "type": "event"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "roundId",
-              "type": "uint256"
-            }
-          ],
-          "name": "getAnswer",
-          "outputs": [
-            {
-              "internalType": "int256",
-              "name": "",
-              "type": "int256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "roundId",
-              "type": "uint256"
-            }
-          ],
-          "name": "getTimestamp",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "latestAnswer",
-          "outputs": [
-            {
-              "internalType": "int256",
-              "name": "",
-              "type": "int256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "latestRound",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "latestTimestamp",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "int256",
-              "name": "answer",
-              "type": "int256"
-            }
-          ],
-          "name": "setAnswer",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        }
-      ]
-    },
     "PriceAggregator": {
       "address": "0xAF3e30D9B0d77f2DB3b8bBF0E64b61F3985C750e",
       "abi": [
@@ -522,7 +377,7 @@
       ]
     },
     "StakingPoolFactoryImpl": {
-      "address": "0x7B6244B2F90eDBe0cb2e7416731dFaed64c66399",
+      "address": "0x074F92a42df49366aB6F5E52496ea5dfeEf945D1",
       "abi": [
         {
           "inputs": [
@@ -534,6 +389,11 @@
             {
               "internalType": "address",
               "name": "_priceOracle",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "_pos",
               "type": "address"
             },
             {
@@ -631,6 +491,19 @@
             {
               "indexed": true,
               "internalType": "address",
+              "name": "_pos",
+              "type": "address"
+            }
+          ],
+          "name": "PoSAddressChanged",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
               "name": "pool",
               "type": "address"
             }
@@ -717,6 +590,19 @@
         },
         {
           "inputs": [],
+          "name": "getPoS",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "_pos",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
           "name": "maxFeePercentageRaise",
           "outputs": [
             {
@@ -776,6 +662,19 @@
         },
         {
           "inputs": [],
+          "name": "pos",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
           "name": "priceOracle",
           "outputs": [
             {
@@ -803,6 +702,19 @@
         {
           "inputs": [],
           "name": "renounceOwnership",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_pos",
+              "type": "address"
+            }
+          ],
+          "name": "setPoSAddress",
           "outputs": [],
           "stateMutability": "nonpayable",
           "type": "function"
@@ -847,7 +759,7 @@
       ]
     },
     "StakingPoolImpl": {
-      "address": "0xa2C885EF2fFCdf0e5Ac64Af3d8605e9421Dd79dc",
+      "address": "0xc671D453be7c8c131eB22A3e8ba290AAAC99d583",
       "abi": [
         {
           "inputs": [
@@ -859,11 +771,6 @@
             {
               "internalType": "address",
               "name": "_staking",
-              "type": "address"
-            },
-            {
-              "internalType": "address",
-              "name": "_pos",
               "type": "address"
             },
             {
@@ -1165,6 +1072,19 @@
         },
         {
           "inputs": [],
+          "name": "factory",
+          "outputs": [
+            {
+              "internalType": "contract StakingPoolFactory",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
           "name": "fee",
           "outputs": [
             {
@@ -1207,6 +1127,11 @@
             {
               "internalType": "address",
               "name": "_fee",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "_pos",
               "type": "address"
             }
           ],
@@ -1427,6 +1352,13 @@
             }
           ],
           "name": "unstake",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "update",
           "outputs": [],
           "stateMutability": "nonpayable",
           "type": "function"

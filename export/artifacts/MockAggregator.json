@@ -162,39 +162,39 @@
     },
     "deployedBytecode": {
       "functionDebugData": {
-        "@getAnswer_3772": {
+        "@getAnswer_3871": {
           "entryPoint": null,
-          "id": 3772,
+          "id": 3871,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@getTimestamp_3785": {
+        "@getTimestamp_3884": {
           "entryPoint": null,
-          "id": 3785,
+          "id": 3884,
           "parameterSlots": 1,
           "returnSlots": 1
         },
-        "@latestAnswer_3739": {
+        "@latestAnswer_3838": {
           "entryPoint": null,
-          "id": 3739,
+          "id": 3838,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@latestRound_3759": {
+        "@latestRound_3858": {
           "entryPoint": null,
-          "id": 3759,
+          "id": 3858,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@latestTimestamp_3750": {
+        "@latestTimestamp_3849": {
           "entryPoint": null,
-          "id": 3750,
+          "id": 3849,
           "parameterSlots": 0,
           "returnSlots": 1
         },
-        "@setAnswer_3728": {
+        "@setAnswer_3827": {
           "entryPoint": 252,
-          "id": 3728,
+          "id": 3827,
           "parameterSlots": 1,
           "returnSlots": 0
         },
@@ -951,7 +951,7 @@
   "storageLayout": {
     "storage": [
       {
-        "astId": 3683,
+        "astId": 3782,
         "contract": "contracts/test/MockAggregator.sol:MockAggregator",
         "label": "_round",
         "offset": 0,
@@ -959,7 +959,7 @@
         "type": "t_uint256"
       },
       {
-        "astId": 3687,
+        "astId": 3786,
         "contract": "contracts/test/MockAggregator.sol:MockAggregator",
         "label": "_answers",
         "offset": 0,
@@ -967,7 +967,7 @@
         "type": "t_mapping(t_uint256,t_int256)"
       },
       {
-        "astId": 3691,
+        "astId": 3790,
         "contract": "contracts/test/MockAggregator.sol:MockAggregator",
         "label": "_timestamps",
         "offset": 0,
