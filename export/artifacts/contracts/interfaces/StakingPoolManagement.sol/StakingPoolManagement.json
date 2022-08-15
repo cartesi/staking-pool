@@ -1,0 +1,83 @@
+{
+  "contractName": "StakingPoolManagement",
+  "sourceName": "contracts/interfaces/StakingPoolManagement.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "StakingPoolRenamed",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "setName",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "StakingPoolRenamed(string)": {
+        "notice": "Event emmited when a pool is rename"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "pause()": {
+        "notice": "pauses new staking on the pool"
+      },
+      "setName(string)": {
+        "notice": "sets a name for the pool using ENS service"
+      },
+      "unpause()": {
+        "notice": "unpauses new staking on the pool"
+      }
+    },
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "pause()": "8456cb59",
+      "setName(string)": "c47f0027",
+      "unpause()": "3f4ba83a"
+    }
+  }
+}

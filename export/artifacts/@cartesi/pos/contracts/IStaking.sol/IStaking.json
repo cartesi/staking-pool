@@ -1,0 +1,338 @@
+{
+  "contractName": "IStaking",
+  "sourceName": "@cartesi/pos/contracts/IStaking.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "maturationDate",
+          "type": "uint256"
+        }
+      ],
+      "name": "Stake",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "maturationDate",
+          "type": "uint256"
+        }
+      ],
+      "name": "Unstake",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Withdraw",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getMaturingBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getMaturingTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getReleasingBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getReleasingTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getStakedBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "stake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "unstake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "events": {
+      "Stake(address,uint256,uint256)": {
+        "params": {
+          "amount": "amount deposited for staking",
+          "maturationDate": "date when the stake can be finalized",
+          "user": "address of msg.sender"
+        }
+      },
+      "Unstake(address,uint256,uint256)": {
+        "params": {
+          "amount": "amount of tokens to be released",
+          "maturationDate": "date when the tokens can be withdrew",
+          "user": "address of msg.sender"
+        }
+      },
+      "Withdraw(address,uint256)": {
+        "params": {
+          "amount": "amount of tokens withdrawn",
+          "user": "address of msg.sender"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "getMaturingBalance(address)": {
+        "returns": {
+          "_0": "amount that will get staked after finalization"
+        }
+      },
+      "getMaturingTimestamp(address)": {
+        "returns": {
+          "_0": "timestamp of when finalizeStakes() is callable"
+        }
+      },
+      "getReleasingBalance(address)": {
+        "returns": {
+          "_0": "amount that will get withdrew after finalization"
+        }
+      },
+      "getReleasingTimestamp(address)": {
+        "returns": {
+          "_0": "timestamp of when finalizeWithdraw() is callable"
+        }
+      },
+      "getStakedBalance(address)": {
+        "params": {
+          "_userAddress": "user to retrieve staked balance from"
+        },
+        "returns": {
+          "_0": "finalized staked of _userAddress"
+        }
+      },
+      "stake(uint256)": {
+        "params": {
+          "_amount": "The amount of tokens that are gonna be deposited."
+        }
+      },
+      "unstake(uint256)": {
+        "params": {
+          "_amount": "The amount of tokens that are gonna be unstaked."
+        }
+      },
+      "withdraw(uint256)": {
+        "params": {
+          "_amount": "The amount of tokens that are gonna be transferred."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "Stake(address,uint256,uint256)": {
+        "notice": "CTSI tokens were deposited, they count as stake after _maturationDate"
+      },
+      "Unstake(address,uint256,uint256)": {
+        "notice": "Unstake tokens, moving them to releasing structure"
+      },
+      "Withdraw(address,uint256)": {
+        "notice": "Withdraw process was finalized"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "getMaturingBalance(address)": {
+        "notice": "Returns the balance waiting/ready to be matured"
+      },
+      "getMaturingTimestamp(address)": {
+        "notice": "Returns the timestamp when next deposit can be finalized"
+      },
+      "getReleasingBalance(address)": {
+        "notice": "Returns the balance waiting/ready to be released"
+      },
+      "getReleasingTimestamp(address)": {
+        "notice": "Returns the timestamp when next withdraw can be finalized"
+      },
+      "getStakedBalance(address)": {
+        "notice": "Returns total amount of tokens counted as stake"
+      },
+      "stake(uint256)": {
+        "notice": "Deposit CTSI to be staked. The money will turn into staked         balance after timeToStake days"
+      },
+      "unstake(uint256)": {
+        "notice": "Remove tokens from staked balance. The money can         be released after timeToRelease seconds, if the         function withdraw is called."
+      },
+      "withdraw(uint256)": {
+        "notice": "Transfer tokens to user's wallet."
+      }
+    },
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "getMaturingBalance(address)": "419be624",
+      "getMaturingTimestamp(address)": "9a051545",
+      "getReleasingBalance(address)": "8e9f04b5",
+      "getReleasingTimestamp(address)": "67ba9b91",
+      "getStakedBalance(address)": "3a02a42d",
+      "stake(uint256)": "a694fc3a",
+      "unstake(uint256)": "2e17de78",
+      "withdraw(uint256)": "2e1a7d4d"
+    }
+  }
+}

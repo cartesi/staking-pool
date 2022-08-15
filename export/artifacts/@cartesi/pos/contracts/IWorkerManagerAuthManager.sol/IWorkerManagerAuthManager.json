@@ -1,0 +1,144 @@
+{
+  "contractName": "IWorkerManagerAuthManager",
+  "sourceName": "@cartesi/pos/contracts/IWorkerManagerAuthManager.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "acceptJob",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_workerAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_dappAddress",
+          "type": "address"
+        }
+      ],
+      "name": "authorize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "cancelHire",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "hire",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rejectJob",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "retire",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "authorize(address,address)": {
+        "params": {
+          "_dappAddress": "address of the dapp that permission will be given to",
+          "_workerAddress": "address of the worker node to given permission"
+        }
+      },
+      "cancelHire(address)": {
+        "params": {
+          "workerAddress": "address of the worker node"
+        }
+      },
+      "hire(address)": {
+        "params": {
+          "workerAddress": "address of the worker"
+        }
+      },
+      "retire(address)": {
+        "details": "this also removes all authorizations in place",
+        "params": {
+          "workerAddress": "address of the worker to be retired"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "acceptJob()": {
+        "notice": "Called by the worker to accept the job"
+      },
+      "authorize(address,address)": {
+        "notice": "Gives worker permission to act on a DApp"
+      },
+      "cancelHire(address)": {
+        "notice": "Called by the user to cancel a job offer"
+      },
+      "hire(address)": {
+        "notice": "Asks the worker to work for the sender. Sender needs to pay something."
+      },
+      "rejectJob()": {
+        "notice": "Called by the worker to reject a job offer"
+      },
+      "retire(address)": {
+        "notice": "Called by the user to retire his worker."
+      }
+    },
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "acceptJob()": "9b789b7e",
+      "authorize(address,address)": "2bef4595",
+      "cancelHire(address)": "b64b3bed",
+      "hire(address)": "d9d6bd86",
+      "rejectJob()": "03d6e81e",
+      "retire(address)": "9e6371ba"
+    }
+  }
+}

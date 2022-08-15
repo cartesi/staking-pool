@@ -1,0 +1,523 @@
+{
+  "contractName": "StakingPool",
+  "sourceName": "contracts/interfaces/StakingPool.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "commission",
+          "type": "uint256"
+        }
+      ],
+      "name": "BlockProduced",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stakeTimestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "Deposit",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "shares",
+          "type": "uint256"
+        }
+      ],
+      "name": "Stake",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "StakingPoolRenamed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "shares",
+          "type": "uint256"
+        }
+      ],
+      "name": "Unstake",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Withdraw",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "amounts",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stake",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "unstake",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "withdraw",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "cancelHire",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "deposit",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getWithdrawBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "hire",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "fee",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_pos",
+          "type": "address"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "produceBlock",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rebalance",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "workerAddress",
+          "type": "address"
+        }
+      ],
+      "name": "retire",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "selfhire",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "setName",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "stake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "shares",
+          "type": "uint256"
+        }
+      ],
+      "name": "unstake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "update",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Danilo Tuler",
+    "kind": "dev",
+    "methods": {
+      "amounts()": {
+        "returns": {
+          "stake": "amount of tokens that can be staked",
+          "unstake": "amount of tokens that must be unstaked to add liquidity",
+          "withdraw": "amount of tokens that can be withdrawn to add liquidity"
+        }
+      },
+      "cancelHire(address)": {
+        "params": {
+          "workerAddress": "address of the worker node"
+        }
+      },
+      "deposit(uint256)": {
+        "params": {
+          "amount": "amount of token deposited in the pool"
+        }
+      },
+      "getWithdrawBalance()": {
+        "details": "there is no way to know the exact time in the future the requested tokens will be available",
+        "returns": {
+          "_0": "the amount of tokens that can be immediately withdrawn by the calling user"
+        }
+      },
+      "hire(address)": {
+        "params": {
+          "workerAddress": "address of the worker"
+        }
+      },
+      "produceBlock(uint256)": {
+        "returns": {
+          "_0": "true when everything went fine"
+        }
+      },
+      "retire(address)": {
+        "details": "this also removes all authorizations in place",
+        "params": {
+          "workerAddress": "address of the worker to be retired"
+        }
+      },
+      "stake(uint256)": {
+        "params": {
+          "amount": "amount of tokens to convert to shares"
+        }
+      },
+      "unstake(uint256)": {
+        "details": "Shares are immediately converted to tokens, and added to the pool liquidity requirement"
+      },
+      "withdraw(uint256)": {
+        "details": "this will transfer tokens from user pool account to user's wallet"
+      }
+    },
+    "title": "Staking Pool interface",
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "BlockProduced(uint256,uint256)": {
+        "notice": "this event is emitted at every produceBlock call reward is the block reward commission is how much CTSI is directed to the pool owner"
+      },
+      "Deposit(address,uint256,uint256)": {
+        "notice": "Tokens were deposited, available for staking or withdrawal"
+      },
+      "Stake(address,uint256,uint256)": {
+        "notice": "Tokens were deposited, they count as shares immediatly"
+      },
+      "StakingPoolRenamed(string)": {
+        "notice": "Event emmited when a pool is rename"
+      },
+      "Unstake(address,uint256,uint256)": {
+        "notice": "Request to unstake tokens. Additional liquidity requested for the pool"
+      },
+      "Withdraw(address,uint256)": {
+        "notice": "Withdraw performed by a user"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "amounts()": {
+        "notice": "provide information for offchain about the amount for each staking operation on the main Staking contract"
+      },
+      "cancelHire(address)": {
+        "notice": "Called by the user to cancel a job offer"
+      },
+      "deposit(uint256)": {
+        "notice": "Deposit tokens to user pool balance"
+      },
+      "getWithdrawBalance()": {
+        "notice": "Returns the amount of tokens that can be immediately withdrawn by the calling user"
+      },
+      "hire(address)": {
+        "notice": "Asks the worker to work for the sender. Sender needs to pay something."
+      },
+      "initialize(address,address)": {
+        "notice": "initialize pool (from reference)"
+      },
+      "pause()": {
+        "notice": "pauses new staking on the pool"
+      },
+      "produceBlock(uint256)": {
+        "notice": "routes produceBlock to POS contract and updates internal states of the pool"
+      },
+      "rebalance()": {
+        "notice": "Move tokens from pool to staking or vice-versa, according to required liquidity. If the pool has more liquidity then necessary, it stakes tokens. If the pool has less liquidity then necessary, and has not started an unstake, it unstakes. If the pool has less liquity than necessary, and has started an unstake, it withdraws if possible."
+      },
+      "retire(address)": {
+        "notice": "Called by the user to retire his worker."
+      },
+      "selfhire()": {
+        "notice": "allows for the pool to act on its own behalf when producing blocks."
+      },
+      "setName(string)": {
+        "notice": "sets a name for the pool using ENS service"
+      },
+      "stake(uint256)": {
+        "notice": "Stake an amount of tokens, immediately earning pool shares in returns"
+      },
+      "transferOwnership(address)": {
+        "notice": "Transfer ownership of pool to its deployer"
+      },
+      "unpause()": {
+        "notice": "unpauses new staking on the pool"
+      },
+      "unstake(uint256)": {
+        "notice": "Unstake an specified amount of shares of the calling user"
+      },
+      "update()": {
+        "notice": "updates the internal settings for important pieces of the Cartesi PoS system"
+      },
+      "withdraw(uint256)": {
+        "notice": "Transfer tokens back to calling user wallet"
+      }
+    },
+    "notice": "This interface aggregates all facets of a staking pool. It is broken down into the following sub-interfaces: - StakingPoolManagement: management operations on the pool, called by the owner - StakingPoolProducer: operations related to block production - StakingPoolStaking: interaction between the pool and the staking contract - StakingPoolUser: interaction between the pool users and the pool - StakingPoolWorker: interaction between the pool and the worker node",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "amounts()": "6beaeeae",
+      "cancelHire(address)": "b64b3bed",
+      "deposit(uint256)": "b6b55f25",
+      "getWithdrawBalance()": "710fe6f8",
+      "hire(address)": "d9d6bd86",
+      "initialize(address,address)": "485cc955",
+      "pause()": "8456cb59",
+      "produceBlock(uint256)": "a5a6cd0b",
+      "rebalance()": "7d7c2a1c",
+      "retire(address)": "9e6371ba",
+      "selfhire()": "6ff46a6c",
+      "setName(string)": "c47f0027",
+      "stake(uint256)": "a694fc3a",
+      "transferOwnership(address)": "f2fde38b",
+      "unpause()": "3f4ba83a",
+      "unstake(uint256)": "2e17de78",
+      "update()": "a2e62045",
+      "withdraw(uint256)": "2e1a7d4d"
+    }
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "contractName": "StakingPoolFactory",
+  "sourceName": "contracts/interfaces/StakingPoolFactory.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "pool",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "fee",
+          "type": "address"
+        }
+      ],
+      "name": "NewFlatRateCommissionStakingPool",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "pool",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "fee",
+          "type": "address"
+        }
+      ],
+      "name": "NewGasTaxCommissionStakingPool",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "commission",
+          "type": "uint256"
+        }
+      ],
+      "name": "createFlatRateCommission",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "gas",
+          "type": "uint256"
+        }
+      ],
+      "name": "createGasTaxCommission",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getPoS",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "_pos",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "events": {
+      "NewFlatRateCommissionStakingPool(address,address)": {
+        "params": {
+          "fee": "address of the commission contract",
+          "pool": "address of the new pool"
+        }
+      },
+      "NewGasTaxCommissionStakingPool(address,address)": {
+        "params": {
+          "fee": "address of thhe commission contract",
+          "pool": "address of the new pool"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "createFlatRateCommission(uint256)": {
+        "returns": {
+          "_0": "new pool address"
+        }
+      },
+      "createGasTaxCommission(uint256)": {
+        "returns": {
+          "_0": "new pool address"
+        }
+      },
+      "getPoS()": {
+        "returns": {
+          "_pos": "address for the PoS contract"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "NewFlatRateCommissionStakingPool(address,address)": {
+        "notice": "Event emmited when a pool is created"
+      },
+      "NewGasTaxCommissionStakingPool(address,address)": {
+        "notice": "Event emmited when a pool is created"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "createFlatRateCommission(uint256)": {
+        "notice": "Creates a new staking pool using a flat commission model emits NewFlatRateCommissionStakingPool with the parameters of the new pool"
+      },
+      "createGasTaxCommission(uint256)": {
+        "notice": "Creates a new staking pool using a gas tax commission model emits NewGasTaxCommissionStakingPool with the parameters of the new pool"
+      },
+      "getPoS()": {
+        "notice": "Returns configuration for the working pools of the current version"
+      }
+    },
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "createFlatRateCommission(uint256)": "86f1a717",
+      "createGasTaxCommission(uint256)": "964658b6",
+      "getPoS()": "2686e29d"
+    }
+  }
+}

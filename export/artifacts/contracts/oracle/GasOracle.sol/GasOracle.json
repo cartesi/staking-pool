@@ -1,0 +1,49 @@
+{
+  "contractName": "GasOracle",
+  "sourceName": "contracts/oracle/GasOracle.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getGasPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "getGasPrice()": {
+        "returns": {
+          "_0": "value of gas price"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "getGasPrice()": {
+        "notice": "Returns current network gas price"
+      }
+    },
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "getGasPrice()": "455259cb"
+    }
+  }
+}

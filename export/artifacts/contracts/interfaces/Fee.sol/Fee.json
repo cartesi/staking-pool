@@ -1,0 +1,63 @@
+{
+  "contractName": "Fee",
+  "sourceName": "contracts/interfaces/Fee.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "posIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rewardAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "getCommission",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Danilo Tuler",
+    "kind": "dev",
+    "methods": {
+      "getCommission(uint256,uint256)": {
+        "returns": {
+          "_0": "amount of tokens taken by the pool owner as commission"
+        }
+      }
+    },
+    "title": "Calculator of pool owner commission for each block reward",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "getCommission(uint256,uint256)": {
+        "notice": "calculates the total amount of the reward that will be directed to the pool owner"
+      }
+    },
+    "notice": "This provides flexibility for different commission models",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "getCommission(uint256,uint256)": "b1fc8ad4"
+    }
+  }
+}

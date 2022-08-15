@@ -1,0 +1,90 @@
+{
+  "contractName": "IRewardManager",
+  "sourceName": "@cartesi/pos/contracts/IRewardManager.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCurrentReward",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "reward",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "reward(address,uint256)": {
+        "details": "only the pos contract can call this",
+        "params": {
+          "_address": "address be rewarded",
+          "_amount": "reward"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "getBalance()": {
+        "notice": "Get RewardManager's balance"
+      },
+      "getCurrentReward()": {
+        "notice": "Get current reward amount"
+      },
+      "reward(address,uint256)": {
+        "notice": "Rewards address"
+      }
+    },
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "getBalance()": "12065fe0",
+      "getCurrentReward()": "8aec8542",
+      "reward(address,uint256)": "21670f22"
+    }
+  }
+}

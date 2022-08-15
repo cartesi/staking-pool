@@ -1,0 +1,243 @@
+{
+  "contractName": "IPoS",
+  "sourceName": "@cartesi/pos/contracts/IPoS.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getBlockSelectorAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getBlockSelectorIndex",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getRewardManagerAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getStakingAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "getState",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "produceBlock",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "terminate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "getBlockSelectorAddress(uint256)": {
+        "params": {
+          "_index": "index of instance"
+        },
+        "returns": {
+          "_0": "address of instance's block selector"
+        }
+      },
+      "getBlockSelectorIndex(uint256)": {
+        "params": {
+          "_index": "index of instance"
+        },
+        "returns": {
+          "_0": "index of instance's block selector"
+        }
+      },
+      "getRewardManagerAddress(uint256)": {
+        "params": {
+          "_index": "index of instance"
+        },
+        "returns": {
+          "_0": "address of instance's RewardManager"
+        }
+      },
+      "getStakingAddress(uint256)": {
+        "params": {
+          "_index": "index of instance"
+        },
+        "returns": {
+          "_0": "address of instance's staking contract"
+        }
+      },
+      "getState(uint256,address)": {
+        "params": {
+          "_index": "index of instance",
+          "_user": "address of user"
+        },
+        "returns": {
+          "_0": "bool if user is eligible to produce next block",
+          "_1": "address of user that was chosen to build the block",
+          "_2": "current reward paid by the network for that block"
+        }
+      },
+      "produceBlock(uint256)": {
+        "details": "this function can only be called by a worker, user never calls it directly",
+        "params": {
+          "_index": "the index of the instance of pos you want to interact with"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "getBlockSelectorAddress(uint256)": {
+        "notice": "Get block selector address"
+      },
+      "getBlockSelectorIndex(uint256)": {
+        "notice": "Get block selector index"
+      },
+      "getRewardManagerAddress(uint256)": {
+        "notice": "Get reward manager address"
+      },
+      "getStakingAddress(uint256)": {
+        "notice": "Get staking address"
+      },
+      "getState(uint256,address)": {
+        "notice": "Get state of a particular instance"
+      },
+      "produceBlock(uint256)": {
+        "notice": "Produce a block"
+      }
+    },
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "getBlockSelectorAddress(uint256)": "902c0f06",
+      "getBlockSelectorIndex(uint256)": "f8fe50da",
+      "getRewardManagerAddress(uint256)": "85425f4f",
+      "getStakingAddress(uint256)": "5c6b6782",
+      "getState(uint256,address)": "73df1612",
+      "produceBlock(uint256)": "a5a6cd0b",
+      "terminate(uint256)": "7a828b28"
+    }
+  }
+}

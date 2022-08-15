@@ -1,0 +1,291 @@
+{
+  "contractName": "StakingPoolData",
+  "sourceName": "contracts/StakingPoolData.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint8",
+          "name": "version",
+          "type": "uint8"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Paused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Unpaused",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "amount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "amountToShares",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "paused",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pos",
+      "outputs": [
+        {
+          "internalType": "contract IPoS",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "requiredLiquidity",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "shares",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_shares",
+          "type": "uint256"
+        }
+      ],
+      "name": "sharesToAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "userBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "balance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "shares",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "depositTimestamp",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b5061055c806100206000396000f3fe608060405234801561001057600080fd5b50600436106100a95760003560e01c80638da5cb5b116100715780638da5cb5b14610147578063aa8c217c1461016c578063b811540e14610175578063c56551b614610188578063e366b7bb1461019b578063f2fde38b146101a457600080fd5b80630103c92b146100ae57806303314efa146100fd578063555d8ebb146101145780635c975abb14610127578063715018a61461013d575b600080fd5b6100dd6100bc366004610475565b609b6020526000908152604090208054600182015460029092015490919083565b604080519384526020840192909252908201526060015b60405180910390f35b61010660975481565b6040519081526020016100f4565b61010661012236600461049e565b6101b7565b60335460ff1660405190151581526020016100f4565b6101456101f4565b005b6065546001600160a01b03165b6040516001600160a01b0390911681526020016100f4565b61010660985481565b61010661018336600461049e565b610208565b609a54610154906001600160a01b031681565b61010660995481565b6101456101b2366004610475565b61023f565b6000609754600014156101d3576101cd826102bd565b92915050565b6101cd6097546101ee609854856102f190919063ffffffff16565b9061032b565b6101fc61036e565b61020660006103c8565b565b60006098546000141561021e576101cd8261041a565b6101cd6098546102396097548561042a90919063ffffffff16565b90610452565b61024761036e565b6001600160a01b0381166102b15760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b60648201526084015b60405180910390fd5b6102ba816103c8565b50565b6000806102cf6002633b9aca006104cf565b9050633b9aca006102e084836104b7565b6102ea91906104cf565b9392505050565b60006b033b2e3c9fd0803ce800000061030a83856104f1565b61032160026b033b2e3c9fd0803ce80000006104cf565b6102e091906104b7565b6000806103396002846104cf565b9050826103526b033b2e3c9fd0803ce8000000866104f1565b61035c90836104b7565b61036691906104cf565b949350505050565b6065546001600160a01b031633146102065760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e657260448201526064016102a8565b606580546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b60006101cd633b9aca00836104f1565b6000670de0b6b3a764000061043f83856104f1565b6103216002670de0b6b3a76400006104cf565b6000806104606002846104cf565b905082610352670de0b6b3a7640000866104f1565b60006020828403121561048757600080fd5b81356001600160a01b03811681146102ea57600080fd5b6000602082840312156104b057600080fd5b5035919050565b600082198211156104ca576104ca610510565b500190565b6000826104ec57634e487b7160e01b600052601260045260246000fd5b500490565b600081600019048311821515161561050b5761050b610510565b500290565b634e487b7160e01b600052601160045260246000fdfea2646970667358221220e97b285bbb5d3e6a788e1f28dd105b2a526e7c25476f1b533fa57e039dbb82cb64736f6c63430008070033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100a95760003560e01c80638da5cb5b116100715780638da5cb5b14610147578063aa8c217c1461016c578063b811540e14610175578063c56551b614610188578063e366b7bb1461019b578063f2fde38b146101a457600080fd5b80630103c92b146100ae57806303314efa146100fd578063555d8ebb146101145780635c975abb14610127578063715018a61461013d575b600080fd5b6100dd6100bc366004610475565b609b6020526000908152604090208054600182015460029092015490919083565b604080519384526020840192909252908201526060015b60405180910390f35b61010660975481565b6040519081526020016100f4565b61010661012236600461049e565b6101b7565b60335460ff1660405190151581526020016100f4565b6101456101f4565b005b6065546001600160a01b03165b6040516001600160a01b0390911681526020016100f4565b61010660985481565b61010661018336600461049e565b610208565b609a54610154906001600160a01b031681565b61010660995481565b6101456101b2366004610475565b61023f565b6000609754600014156101d3576101cd826102bd565b92915050565b6101cd6097546101ee609854856102f190919063ffffffff16565b9061032b565b6101fc61036e565b61020660006103c8565b565b60006098546000141561021e576101cd8261041a565b6101cd6098546102396097548561042a90919063ffffffff16565b90610452565b61024761036e565b6001600160a01b0381166102b15760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b60648201526084015b60405180910390fd5b6102ba816103c8565b50565b6000806102cf6002633b9aca006104cf565b9050633b9aca006102e084836104b7565b6102ea91906104cf565b9392505050565b60006b033b2e3c9fd0803ce800000061030a83856104f1565b61032160026b033b2e3c9fd0803ce80000006104cf565b6102e091906104b7565b6000806103396002846104cf565b9050826103526b033b2e3c9fd0803ce8000000866104f1565b61035c90836104b7565b61036691906104cf565b949350505050565b6065546001600160a01b031633146102065760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e657260448201526064016102a8565b606580546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b60006101cd633b9aca00836104f1565b6000670de0b6b3a764000061043f83856104f1565b6103216002670de0b6b3a76400006104cf565b6000806104606002846104cf565b905082610352670de0b6b3a7640000866104f1565b60006020828403121561048757600080fd5b81356001600160a01b03811681146102ea57600080fd5b6000602082840312156104b057600080fd5b5035919050565b600082198211156104ca576104ca610510565b500190565b6000826104ec57634e487b7160e01b600052601260045260246000fd5b500490565b600081600019048311821515161561050b5761050b610510565b500290565b634e487b7160e01b600052601160045260246000fdfea2646970667358221220e97b285bbb5d3e6a788e1f28dd105b2a526e7c25476f1b533fa57e039dbb82cb64736f6c63430008070033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "paused()": {
+        "details": "Returns true if the contract is paused, and false otherwise."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "274400",
+        "executionCost": "312",
+        "totalCost": "274712"
+      },
+      "external": {
+        "amount()": "2317",
+        "amountToShares(uint256)": "infinite",
+        "owner()": "2320",
+        "paused()": "2359",
+        "pos()": "2403",
+        "renounceOwnership()": "infinite",
+        "requiredLiquidity()": "2383",
+        "shares()": "2318",
+        "sharesToAmount(uint256)": "infinite",
+        "transferOwnership(address)": "28411",
+        "userBalance(address)": "6749"
+      }
+    },
+    "methodIdentifiers": {
+      "amount()": "aa8c217c",
+      "amountToShares(uint256)": "b811540e",
+      "owner()": "8da5cb5b",
+      "paused()": "5c975abb",
+      "pos()": "c56551b6",
+      "renounceOwnership()": "715018a6",
+      "requiredLiquidity()": "e366b7bb",
+      "shares()": "03314efa",
+      "sharesToAmount(uint256)": "555d8ebb",
+      "transferOwnership(address)": "f2fde38b",
+      "userBalance(address)": "0103c92b"
+    }
+  }
+}

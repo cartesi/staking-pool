@@ -1,0 +1,75 @@
+{
+  "contractName": "StakingPoolStaking",
+  "sourceName": "contracts/interfaces/StakingPoolStaking.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "amounts",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stake",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "unstake",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "withdraw",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rebalance",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Danilo Tuler",
+    "kind": "dev",
+    "methods": {
+      "amounts()": {
+        "returns": {
+          "stake": "amount of tokens that can be staked",
+          "unstake": "amount of tokens that must be unstaked to add liquidity",
+          "withdraw": "amount of tokens that can be withdrawn to add liquidity"
+        }
+      }
+    },
+    "title": "Interaction between a pool and the staking contract",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "amounts()": {
+        "notice": "provide information for offchain about the amount for each staking operation on the main Staking contract"
+      },
+      "rebalance()": {
+        "notice": "Move tokens from pool to staking or vice-versa, according to required liquidity. If the pool has more liquidity then necessary, it stakes tokens. If the pool has less liquidity then necessary, and has not started an unstake, it unstakes. If the pool has less liquity than necessary, and has started an unstake, it withdraws if possible."
+      }
+    },
+    "notice": "This interface models all interactions between a pool and the staking contract, including staking, unstaking and withdrawing. Tokens staked by pool users will stay at the pool until the pool owner decides to stake them in the staking contract. On the other hand, tokens unstaked by pool users are added to a required liquidity accumulator, and must be unstaked and withdrawn from the staking contract.",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "amounts()": "6beaeeae",
+      "rebalance()": "7d7c2a1c"
+    }
+  }
+}
