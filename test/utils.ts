@@ -22,8 +22,7 @@ import { PoS__factory, StakingImpl__factory } from "@cartesi/pos";
 import { WorkerManagerAuthManagerImpl__factory } from "@cartesi/util";
 
 import { CartesiToken__factory } from "@cartesi/token";
-import { StakingPoolImpl__factory } from "../src/types/factories/StakingPoolImpl__factory";
-import { CloneMaker__factory } from "../src/types/factories/CloneMaker__factory";
+import { CloneMaker__factory, StakingPoolImpl__factory } from "../src/types";
 
 const { solidity, deployMockContract } = waffle;
 export const { parseEther: parseCTSI } = ethers.utils;

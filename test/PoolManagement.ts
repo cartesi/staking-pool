@@ -13,8 +13,7 @@ import { expect, use } from "chai";
 import { waffle, ethers, network } from "hardhat";
 
 import { setNextBlockTimestamp, setupPool, parseCTSI } from "./utils";
-import { ENS__factory } from "../src/types/factories/ENS__factory";
-import { ReverseRegistrar__factory } from "../src/types/factories/ReverseRegistrar__factory";
+import { ENS__factory, ReverseRegistrar__factory } from "../src/types";
 
 import Resolver from "@ensdomains/resolver/build/contracts/Resolver.json";
 const { solidity } = waffle;

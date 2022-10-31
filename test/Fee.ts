@@ -13,12 +13,14 @@ import { expect, use } from "chai";
 import { ethers, waffle, deployments } from "hardhat";
 import { BigNumberish, Signer } from "ethers";
 
-import { FlatRateCommission } from "../src/types/FlatRateCommission";
-import { FlatRateCommission__factory } from "../src/types/factories/FlatRateCommission__factory";
-import { GasTaxCommission } from "../src/types/GasTaxCommission";
-import { GasTaxCommission__factory } from "../src/types/factories/GasTaxCommission__factory";
-import { ChainlinkPriceOracle__factory } from "../src/types/factories/ChainlinkPriceOracle__factory";
-import { ChainlinkGasOracle__factory } from "../src/types/factories/ChainlinkGasOracle__factory";
+import {
+    FlatRateCommission,
+    FlatRateCommission__factory,
+    GasTaxCommission,
+    GasTaxCommission__factory,
+    ChainlinkPriceOracle__factory,
+    ChainlinkGasOracle__factory,
+} from "../src/types";
 
 import { setNextBlockTimestamp } from "./utils";
 

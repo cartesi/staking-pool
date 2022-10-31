@@ -12,8 +12,7 @@
 import { expect, use } from "chai";
 import { ethers, waffle, deployments } from "hardhat";
 
-import { StakingPoolImpl__factory } from "../src/types/factories/StakingPoolImpl__factory";
-import { StakingPoolImpl } from "../src/types/StakingPoolImpl";
+import { StakingPoolImpl, StakingPoolImpl__factory } from "../src/types";
 
 const { solidity } = waffle;
 
