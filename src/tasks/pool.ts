@@ -25,8 +25,7 @@ task("pool:create", "Create a staking pool")
     .addOptionalParam("gas", "Gas tax commission", undefined, types.int)
     .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { deployments, ethers } = hre;
-        const { StakingPoolFactoryImpl__factory } =
-            await require("../types/factories/StakingPoolFactoryImpl__factory");
+        const { StakingPoolFactoryImpl__factory } = await require("../types");
         const { StakingPoolImpl, StakingPoolFactoryImpl } =
             await deployments.all();
         const [deployer] = await ethers.getSigners();
@@ -95,8 +94,7 @@ task("pool:create", "Create a staking pool")
 task("pool:list", "List staking pools").setAction(
     async (_args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { deployments, ethers } = hre;
-        const { StakingPoolFactory__factory } =
-            await require("../types/factories/StakingPoolFactory__factory");
+        const { StakingPoolFactory__factory } = await require("../types");
         const { StakingPoolFactoryImpl } = await deployments.all();
         const [deployer] = await ethers.getSigners();
 
@@ -117,19 +115,18 @@ task("pool:list", "List staking pools").setAction(
     }
 );
 
-task("pool:stake", "Stake CTSI to a pool")
+task("pool:deposit", "Deposit CTSI to a pool")
     .addPositionalParam("pool", "Pool address", undefined, types.string, false)
     .addPositionalParam(
         "amount",
-        "Amount to stake",
+        "Amount to deposit",
         undefined,
         types.int,
         false
     )
     .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { deployments, ethers } = hre;
-        const { StakingPool__factory } =
-            await require("../types/factories/StakingPool__factory");
+        const { StakingPool__factory } = await require("../types");
         const [deployer] = await ethers.getSigners();
         const { CartesiToken } = await deployments.all();
 
@@ -155,7 +152,91 @@ task("pool:stake", "Stake CTSI to a pool")
             console.log(receipt);
         }
 
+        const tx = await pool.deposit(amount);
+        const receipt = await tx.wait(1);
+        console.log(receipt);
+    });
+
+task("pool:stake", "Stake CTSI to a pool")
+    .addPositionalParam("pool", "Pool address", undefined, types.string, false)
+    .addPositionalParam(
+        "amount",
+        "Amount to stake",
+        undefined,
+        types.int,
+        false
+    )
+    .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
+        const { ethers } = hre;
+        const { StakingPool__factory } = await require("../types");
+        const [deployer] = await ethers.getSigners();
+
+        const amount = BigNumber.from(args.amount).mul(constants.WeiPerEther);
+        const poolAddress = args.pool;
+        const pool = StakingPool__factory.connect(poolAddress, deployer);
+
         const tx = await pool.stake(amount);
+        const receipt = await tx.wait(1);
+        console.log(receipt);
+    });
+
+task("pool:hire", "Hire a worker node for a pool")
+    .addPositionalParam("pool", "Pool address", undefined, types.string, false)
+    .addPositionalParam(
+        "worker",
+        "Worker address",
+        undefined,
+        types.string,
+        false
+    )
+    .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
+        const { ethers } = hre;
+        const { StakingPool__factory } = await require("../types");
+        const [deployer] = await ethers.getSigners();
+
+        const pool = StakingPool__factory.connect(args.pool, deployer);
+
+        console.log(`hiring worker: ${args.worker} for pool: ${args.pool}`);
+
+        const tx = await pool.hire(args.worker, {
+            value: ethers.utils.parseEther("0.02"),
+        });
+        const receipt = await tx.wait(1);
+        console.log(receipt);
+    });
+
+task("pool:setPoS", "Set PoS to new address")
+    .addPositionalParam("pos", "PoS address", undefined, types.string, false)
+    .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
+        const { deployments, ethers } = hre;
+        const { StakingPoolFactoryImpl__factory } = await require("../types");
+        const [deployer] = await ethers.getSigners();
+        const { StakingPoolFactoryImpl } = await deployments.all();
+
+        const pool = StakingPoolFactoryImpl__factory.connect(
+            StakingPoolFactoryImpl.address,
+            deployer
+        );
+
+        console.log(`setting pos to: ${args.pos} for pool factory`);
+
+        const tx = await pool.setPoSAddress(args.pos);
+        const receipt = await tx.wait(1);
+        console.log(receipt);
+    });
+
+task("pool:update", "Update PoS address from factory")
+    .addPositionalParam("pool", "Pool address", undefined, types.string, false)
+    .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
+        const { ethers } = hre;
+        const { StakingPoolImpl__factory } = await require("../types");
+        const [deployer] = await ethers.getSigners();
+
+        const pool = StakingPoolImpl__factory.connect(args.pool, deployer);
+
+        console.log(`updating pos for pool: ${args.pool}`);
+
+        const tx = await pool.update();
         const receipt = await tx.wait(1);
         console.log(receipt);
     });
@@ -171,8 +252,7 @@ task("pool:name", "Name a pool")
     )
     .setAction(async (args: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { ethers } = hre;
-        const { StakingPool__factory } =
-            await require("../types/factories/StakingPool__factory");
+        const { StakingPool__factory } = await require("../types");
         const [deployer] = await ethers.getSigners();
 
         const poolAddress = args.pool;
@@ -189,12 +269,11 @@ task("pool:verify", "Verify a pool on etherscan")
         const { ChainlinkGasOracle, ChainlinkPriceOracle } =
             await deployments.all();
 
-        const { StakingPoolImpl__factory } =
-            await require("../types/factories/StakingPoolImpl__factory");
-        const { GasTaxCommission__factory } =
-            await require("../types/factories/GasTaxCommission__factory");
-        const { FlatRateCommission__factory } =
-            await require("../types/factories/FlatRateCommission__factory");
+        const {
+            StakingPoolImpl__factory,
+            GasTaxCommission__factory,
+            FlatRateCommission__factory,
+        } = await require("../types");
 
         const pool = StakingPoolImpl__factory.connect(
             args.address,
