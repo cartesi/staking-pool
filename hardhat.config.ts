@@ -90,42 +90,53 @@ const config: HardhatUserConfig = {
                 artifacts: "node_modules/@cartesi/pos/export/artifacts",
                 deploy: "node_modules/@cartesi/pos/dist/deploy",
             },
+            {
+                artifacts: "node_modules/@cartesi/tree/export/artifacts",
+                deploy: "node_modules/@cartesi/tree/dist/deploy",
+            },
         ],
         deployments: {
             localhost: [
                 "node_modules/@cartesi/util/deployments/localhost",
                 "node_modules/@cartesi/token/deployments/localhost",
                 "node_modules/@cartesi/pos/deployments/localhost",
+                "node_modules/@cartesi/tree/deployments/localhost",
             ],
             mainnet: [
                 "node_modules/@cartesi/util/deployments/mainnet",
                 "node_modules/@cartesi/token/deployments/mainnet",
                 "node_modules/@cartesi/pos/deployments/mainnet",
+                "node_modules/@cartesi/tree/deployments/mainnet",
             ],
             goerli: [
                 "node_modules/@cartesi/util/deployments/goerli",
                 "node_modules/@cartesi/token/deployments/goerli",
                 "node_modules/@cartesi/pos/deployments/goerli",
+                "node_modules/@cartesi/tree/deployments/goerli",
             ],
             polygon_mumbai: [
                 "node_modules/@cartesi/util/deployments/polygon_mumbai",
                 "node_modules/@cartesi/token/deployments/polygon_mumbai",
                 "node_modules/@cartesi/pos/deployments/polygon_mumbai",
+                "node_modules/@cartesi/tree/deployments/polygon_mumbai",
             ],
             bsc_testnet: [
                 "node_modules/@cartesi/util/deployments/bsc_testnet",
                 "node_modules/@cartesi/token/deployments/bsc_testnet",
                 "node_modules/@cartesi/pos/deployments/bsc_testnet",
+                "node_modules/@cartesi/tree/deployments/bsc_testnet",
             ],
             optimism_goerli: [
                 "node_modules/@cartesi/util/deployments/optimism_goerli",
                 "node_modules/@cartesi/token/deployments/optimism_goerli",
                 "node_modules/@cartesi/pos/deployments/optimism_goerli",
+                "node_modules/@cartesi/tree/deployments/optimism_goerli",
             ],
             avax_testnet: [
                 "node_modules/@cartesi/util/deployments/avax_testnet",
                 "node_modules/@cartesi/token/deployments/avax_testnet",
                 "node_modules/@cartesi/pos/deployments/avax_testnet",
+                "node_modules/@cartesi/tree/deployments/avax_testnet",
             ],
         },
     },
