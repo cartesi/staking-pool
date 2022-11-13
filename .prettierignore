@@ -1,1 +1,5 @@
+contracts/interfaces/Fee.sol
+contracts/interfaces/StakingPoolFactory.sol
+contracts/interfaces/StakingPoolStaking.sol
+contracts/test/MockAggregator.sol
 src/types
