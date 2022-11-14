@@ -1,4 +1,4 @@
-// Copyright 2021 Cartesi Pte. Ltd.
+// Copyright 2022 Cartesi Pte. Ltd.
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 // this file except in compliance with the License. You may obtain a copy of the
@@ -90,6 +90,6 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     });
 };
 
+func.tags = ["PoolFactory"];
+func.dependencies = ["Staking"];
 export default func;
-export const tags = ["PoolFactory"];
-export const dependencies = ["Pool"];
