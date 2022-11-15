@@ -87,12 +87,12 @@ const config: HardhatUserConfig = {
                 deploy: "node_modules/@cartesi/util/dist/deploy",
             },
             {
-                artifacts: "node_modules/@cartesi/pos/export/artifacts",
-                deploy: "node_modules/@cartesi/pos/dist/deploy",
-            },
-            {
                 artifacts: "node_modules/@cartesi/tree/export/artifacts",
                 deploy: "node_modules/@cartesi/tree/dist/deploy",
+            },
+            {
+                artifacts: "node_modules/@cartesi/pos/export/artifacts",
+                deploy: "node_modules/@cartesi/pos/dist/deploy",
             },
         ],
         deployments: {
