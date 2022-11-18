@@ -51,7 +51,7 @@
         "@cartesi/pos": "^2.0.0",
         "@chainlink/contracts": "0.2.2",
         "@ensdomains/ens-contracts": "0.0.7",
-        "@openzeppelin/contracts": "4.3.2",
+        "@openzeppelin/contracts": "4.7.3",
         "@openzeppelin/contracts-upgradeable": "4.3.2"
     },
     "devDependencies": {
