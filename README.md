@@ -1,5 +1,3 @@
-> :warning: The Cartesi team keeps working internally on the next version of this repository, following its regular development roadmap. Whenever there's a new version ready or important fix, these are published to the public source tree as new releases.
-
 # PoS Staking Pools
 
 This repository hosts smart contracts that enable individuals or institutions to create Staking Pools on top of [Cartesi Proof of Stake system](https://github.com/cartesi/pos-dlib).
@@ -26,7 +24,7 @@ The main function responsible for managing these actions is `rebalance()` functi
 
 -   Anytime a user wants to exit the pool, we add his requested amount to the `requiredLiquidity`, which is the overall liquidity necessary to fulfill all users' requests to leave the pool.
 
--   It checks for any free balance under the contract's account on the ERC20 ledger (let's call it `balance`). If it's more than the `requiredLiquidity`, then it means it has an outstanding value that can be staked on behalf of all the pool. E.g., when a new user joins and asks to stake, then we have this free balance. As a result, the `uint256 stake` is returned with the exact value to be staked.
+-   It checks for any free balance under the contract's account on the ERC-20 ledger (let's call it `balance`). If it's more than the `requiredLiquidity`, then it means it has an outstanding value that can be staked on behalf of all the pool. E.g., when a new user joins and asks to stake, then we have this free balance. As a result, the `uint256 stake` is returned with the exact value to be staked.
 
 -   If there was a staking request in less than 6 hours (time to maturate the stake on Cartesi PoS), it won't return the value mentioned before. This prevents a clock reset that would force the previous request to wait for more than 6 hours.
 
@@ -44,7 +42,7 @@ The requirement to call the `rebalance()` function is checked by default every 3
 
 This section is responsible for exposing controls for the users to join and exit the pool. It implements the following actions: deposit, stake, unstake, and withdraw.
 
-The first step to join the pool is to `deposit()` some CTSI tokens. The user should set an allowance on the ERC20 CTSI contract and then call `deposit()` with the desired stake amount. This action will transfer the tokens to the
+The first step to join the pool is to `deposit()` some CTSI tokens. The user should set an allowance on the ERC-20 CTSI contract and then call `deposit()` with the desired stake amount. This action will transfer the tokens to the
 pool contract and start a timeout timer for the next step.
 
 > We define a timeout between `deposit()` and `stake()` steps, so the pool is protected against possible exploits. An attacker tries to predict what pool will be the next selected to produce a block and attempts to join it just before it happens so they can participate in the reward without waiting.
@@ -59,7 +57,7 @@ to also unstake CTSI on the Cartesi PoS, so later it's available for the user to
 
 > NOTE: if there is an influx of users at the same time someone tries to leave, that will make the pool contract liquid without calling unstake on Cartesi PoS contracts. As a result, this hypothetical user will be able to exit the pool faster.
 
-Finally, whenever the user has a free balance (after a `deposit` or after calling `unstake`), and the pool also has the required liquidity (active balance on the ERC20 CTSI contract), they are allowed to call `withdraw()` for how much they want to have transferred back to their wallets.
+Finally, whenever the user has a free balance (after a `deposit` or after calling `unstake`), and the pool also has the required liquidity (active balance on the ERC-20 CTSI contract), they are allowed to call `withdraw()` for how much they want to have transferred back to their wallets.
 The diagram below illustrates the four operations described above and how they affect the pool and user data.
 
 <p align="center"><img src="user.png" alt="user flow diagram" title= "user flow diagram" width="80%"/></p>
@@ -114,29 +112,33 @@ The commission (fees) are sent directly to the pool manager's wallet. The balanc
 
 ## Shares Ratio Mathematics
 
-The system emits shares related to their initial CTSI value staked to maintain control of the balance of users. At the very first time (before rewards) CTSI value is converted in ![equation](https://latex.codecogs.com/svg.latex?1%3A10%5E9) shares. It means the base value of CTSI keeps being ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B18%7D) and the shares is ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D).
+The system emits shares related to their initial CTSI value staked to maintain control of the balance of users. At the very first time (before rewards) each unit of CTSI is converted into $10^9$ shares. It means the base value of CTSI keeps being $10^{18}$ and the shares is $10^{27}$.
 
-In other words, initially, 1 CTSI (![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B18%7D) units) = 1 share (![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D) units)
+In other words, initially, 1 CTSI ($10^{18}$ units) = 1 share ($10^{27}$ units)
 
 However, as the contract earns rewards for producing blocks, the CTSI amount staked in the pool increases while the shares do not. Now, one share is worth more than before, and newcomers will be issued a smaller share quantity per value compared to the previous ratio.
 
 The calculation is:
 
-![equation](https://latex.codecogs.com/svg.latex?SharesIssued%20%3D%20%5Cfrac%7BStakeValue%20*%20TotalShares%7D%7BTotalStakedValue%7D)
+$$
+SharesIssued = \frac{StakeValue \cdot TotalShares}{TotalStakedValue}
+$$
 
-These newly issued shares are added to `TotalShares`, and the newly staked value to `TotalStakedValue`. This behavior guarantees that newcomers won't change the ratio of shares<>ctsi.
+These newly issued shares are added to $TotalShares$, and the newly staked value to $TotalStakedValue$. This behavior guarantees that newcomers won't change the ratio of CTSI/shares.
 
-### Bounds:
+### Bounds
 
-There will only ever be `maxSupply` of ERC20 CTSI tokens which is: ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B9%7D) CTSI or ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D) units. The `maxSupply` is very safe for the limits of the uint256 variables that control the stakes in the pool contract.
+There will only ever be `maxSupply` of ERC-20 CTSI tokens, which is $10^9$ CTSI or $10^{27}$ units. The `maxSupply` is very safe for the limits of the `uint256` variables that control the stakes in the pool contract.
 
-Regarding shares, at their **lowest value** ratio 1 CTSI = 1 share (![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D) units), if we extrapolate to stake all available CTSI tokens, we still would have: `maxSupply` => ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D*10%5E%7B9%7D) units of shares which is safe for 256 bits, as well.
+Regarding shares, at their **lowest value** ratio 1 CTSI = 1 share ($10^{27}$ units), if we extrapolate to stake all available CTSI tokens, we still would have $10^{36}$ units of shares which is safe for 256 bits, as well.
 
-At the **highest value**, we would have a 1 CTSI staked being awarded `maxSupply` of tokens, creating the ratio: ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B36%7D) CTSI = ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B27%7D) of shares. In this scenario, a new stake of 1 CTSI would still be ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B9%7D) units of shares being that:
+At the **highest value**, we would have a 1 CTSI staked being awarded `maxSupply` of tokens, creating the ratio $10^{36}$ CTSI = $10^{27}$ of shares. In this scenario, a new stake of 1 CTSI would still be $10^9$ units of shares being that:
 
-![equation](https://latex.codecogs.com/svg.latex?%5Cfrac%7B1*10%5E%7B18%7D%20*%2010%5E%7B27%7D%7D%7B10%5E%7B36%7D%7D) = ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B9%7D)
+$$
+\frac{10^{18} \cdot 10^{27}}{10^{36}} = 10^9
+$$
 
-Therefore, the error margin is ![equation](https://latex.codecogs.com/svg.latex?1*10%5E%7B-9%7D) CTSI (that's how much would be lost due to rounding errors).
+Therefore, the error margin is $10^{-9}$ CTSI or $10^9$ units (that's how much would be lost due to rounding errors).
 
 ## Build
 
