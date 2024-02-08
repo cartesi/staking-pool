@@ -1,6 +1,6 @@
 {
     "name": "@cartesi/staking-pool",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "PoS Staking Pools",
     "scripts": {
         "build": "run-s compile export",
@@ -8,13 +8,10 @@
         "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" dist/src",
         "compile": "hardhat compile",
         "deploy": "run-s deploy:development",
-        "deploy:bsc_testnet": "hardhat deploy --network bsc_testnet --export export/abi/bsc_testnet.json",
         "deploy:development": "hardhat deploy --network localhost",
         "deploy:goerli": "hardhat deploy --network goerli --export export/abi/goerli.json",
         "deploy:mainnet": "hardhat deploy --network mainnet --export export/abi/mainnet.json",
-        "deploy:polygon_mumbai": "hardhat deploy --network polygon_mumbai --export export/abi/polygon_mumbai.json",
-        "deploy:optimism_goerli": "hardhat deploy --network optimism_goerli --export export/abi/optimism_goerli.json",
-        "deploy:avax_testnet": "hardhat deploy --network avax_testnet --export export/abi/avax_testnet.json",
+        "deploy:sepolia": "hardhat deploy --network sepolia --export export/abi/sepolia.json",
         "deploy:testnet": "run-s deploy:goerli deploy:polygon_mumbai deploy:optimism_goerli deploy:bsc_testnet deploy:avax_testnet",
         "export": "hardhat export-artifacts export/artifacts --hide-sources --including-empty-bytecode --including-no-public-functions",
         "info": "npm-scripts-info",
@@ -31,13 +28,10 @@
         "copy-dts": "Copy TypeChain type definition files to typescript output dir",
         "clean": "Clean build artifacts, including contracts deployment information",
         "deploy": "Deploy contracts to local ganache. Requires ganache running on localhost:8545",
-        "deploy:bsc_testnet": "Deploy contracts to bsc_testnet. Requires one environment variable: MNEMONIC.",
         "deploy:development": "Deploy contracts to local node. Requires node running on localhost:8545",
         "deploy:goerli": "Deploy contracts to goerli. Requires two environment variables: PROJECT_ID and MNEMONIC.",
         "deploy:mainnet": "Deploy contracts to mainnet.",
-        "deploy:polygon_mumbai": "Deploy contracts to polygon_mumbai. Requires two environment variables: PROJECT_ID and MNEMONIC.",
-        "deploy:optimism_goerli": "Deploy contracts to optimism_goerli. Requires two environment variables: PROJECT_ID and MNEMONIC.",
-        "deploy:avax_testnet": "Deploy contracts to avax_testnet. Requires one environment variable: MNEMONIC.",
+        "deploy:sepolia": "Deploy contracts to sepolia. Requires two environment variables: PROJECT_ID and MNEMONIC.",
         "deploy:testnet": "Deploy contracts to all supported testnets. Requires two environment variables: PROJECT_ID and MNEMONIC.",
         "export": "Export artifacts in a simpler format",
         "info": "Displays information about the scripts.",
@@ -48,7 +42,7 @@
         "test:coverage": "Run test coverage report"
     },
     "dependencies": {
-        "@cartesi/pos": "^2.0.0",
+        "@cartesi/pos": "^2.1.0",
         "@chainlink/contracts": "0.2.2",
         "@ensdomains/ens-contracts": "0.0.7",
         "@openzeppelin/contracts": "4.3.2",
@@ -101,5 +95,8 @@
     "main": "./dist/src/types/index.js",
     "types": "./dist/src/types/index.d.ts",
     "author": "Danilo Tuler <danilo@cartesi.io>",
-    "license": "Apache-2.0"
+    "license": "Apache-2.0",
+    "volta": {
+        "node": "18.18.0"
+    }
 }

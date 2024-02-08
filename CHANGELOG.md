@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2024-02-08
+
+### Added
+
+-   Add sepolia network
+
+### Removed
+
+-   Removed deployments of bsc_testnet, kovan, matic_testnet, rinkeby, ropsten
+
 ## [2.0.0] - 2022-11-18
 
 ### Changed
@@ -66,13 +76,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial version
 
-[unreleased]: https://github.com/cartesi/pos-dlib/compare/v2.0.0...HEAD
-[2.0.0]: https://github.com/cartesi/pos-dlib/compare/v1.0.0...v2.0.0
-[1.0.0]: https://github.com/cartesi/pos-dlib/compare/v1.0.0-beta.3...v1.0.0
-[1.0.0-beta.3]: https://github.com/cartesi/pos-dlib/compare/v1.0.0-beta.2...v1.0.0-beta.3
-[1.0.0-beta.2]: https://github.com/cartesi/pos-dlib/compare/v1.0.0-beta.1...v1.0.0-beta.2
-[1.0.0-beta.1]: https://github.com/cartesi/pos-dlib/compare/v1.0.0-beta.0...v1.0.0-beta.1
-[1.0.0-beta.0]: https://github.com/cartesi/pos-dlib/compare/v1.0.0-alpha.2...v1.0.0-beta.0
-[1.0.0-alpha.2]: https://github.com/cartesi/pos-dlib/compare/v1.0.0-alpha.1...v1.0.0-alpha.2
-[1.0.0-alpha.1]: https://github.com/cartesi/pos-dlib/compare/v1.0.0-alpha.0...v1.0.0-alpha.1
-[1.0.0-alpha.0]: https://github.com/cartesi/pos-dlib/releases/tag/v1.0.0-alpha.0
+[unreleased]: https://github.com/cartesi/staking-pool/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/cartesi/staking-pool/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/cartesi/staking-pool/compare/v1.0.0...v2.0.0
+[1.0.0]: https://github.com/cartesi/staking-pool/compare/v1.0.0-beta.3...v1.0.0
+[1.0.0-beta.3]: https://github.com/cartesi/staking-pool/compare/v1.0.0-beta.2...v1.0.0-beta.3
+[1.0.0-beta.2]: https://github.com/cartesi/staking-pool/compare/v1.0.0-beta.1...v1.0.0-beta.2
+[1.0.0-beta.1]: https://github.com/cartesi/staking-pool/compare/v1.0.0-beta.0...v1.0.0-beta.1
+[1.0.0-beta.0]: https://github.com/cartesi/staking-pool/compare/v1.0.0-alpha.2...v1.0.0-beta.0
+[1.0.0-alpha.2]: https://github.com/cartesi/staking-pool/compare/v1.0.0-alpha.1...v1.0.0-alpha.2
+[1.0.0-alpha.1]: https://github.com/cartesi/staking-pool/compare/v1.0.0-alpha.0...v1.0.0-alpha.1
+[1.0.0-alpha.0]: https://github.com/cartesi/staking-pool/releases/tag/v1.0.0-alpha.0
