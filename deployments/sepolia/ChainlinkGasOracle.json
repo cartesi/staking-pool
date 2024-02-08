@@ -1,5 +1,5 @@
 {
-  "address": "0xcD4AC35066d5f55Dc5318F1F43d7e2a106a60F34",
+  "address": "0x451B611D38140993ec16a82E48aC720EBd0AB35C",
   "abi": [
     {
       "inputs": [
@@ -39,42 +39,27 @@
       "type": "function"
     }
   ],
-  "transactionHash": "0xe706a3de67b731daa48406334ecbe0c1b7ed7817349fed6b835b820d77262778",
+  "transactionHash": "0x2bb8f592973750707bf60cb43b81eaba7811c7f8f2cdcbcfc1e885121bf4b8fd",
   "receipt": {
     "to": null,
     "from": "0x18930e8a66a1DbE21D00581216789AAB7460Afd0",
-    "contractAddress": "0xcD4AC35066d5f55Dc5318F1F43d7e2a106a60F34",
-    "transactionIndex": 0,
-    "gasUsed": "137051",
-    "logsBloom": "0x00000000000000020000000000000000000000000000000000000020000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000800000000000000000000100000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000200000000000000020000000000000000001000000000000000000000000004000000000000000000001000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000024000100000",
-    "blockHash": "0xfa00a3c52a74118353717f3483309d847df8aba135b87613ffbc756347c13667",
-    "transactionHash": "0xe706a3de67b731daa48406334ecbe0c1b7ed7817349fed6b835b820d77262778",
-    "logs": [
-      {
-        "transactionIndex": 0,
-        "blockNumber": 18477539,
-        "transactionHash": "0xe706a3de67b731daa48406334ecbe0c1b7ed7817349fed6b835b820d77262778",
-        "address": "0x0000000000000000000000000000000000001010",
-        "topics": [
-          "0x4dfe1bbbcf077ddc3e01291eea2d5c70c2b422b415d95645b9adcfd678cb1d63",
-          "0x0000000000000000000000000000000000000000000000000000000000001010",
-          "0x00000000000000000000000018930e8a66a1dbe21d00581216789aab7460afd0",
-          "0x000000000000000000000000c26880a0af2ea0c7e8130e6ec47af756465452e8"
-        ],
-        "data": "0x000000000000000000000000000000000000000000000000000e9b6a2d22240000000000000000000000000000000000000000000000000000132e9ce40866a8000000000000000000000000000000000000000000000157418baedf90fc8e6800000000000000000000000000000000000000000000000000049332b6e642a8000000000000000000000000000000000000000000000157419a4a49be1eb268",
-        "logIndex": 0,
-        "blockHash": "0xfa00a3c52a74118353717f3483309d847df8aba135b87613ffbc756347c13667"
-      }
-    ],
-    "blockNumber": 18477539,
-    "cumulativeGasUsed": "137051",
+    "contractAddress": "0x451B611D38140993ec16a82E48aC720EBd0AB35C",
+    "transactionIndex": 114,
+    "gasUsed": "137087",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x1a44cef2647d4cf52d8675b9124b48a9511ed4151e8027723a088bc9d2c7dec4",
+    "transactionHash": "0x2bb8f592973750707bf60cb43b81eaba7811c7f8f2cdcbcfc1e885121bf4b8fd",
+    "logs": [],
+    "blockNumber": 5242281,
+    "cumulativeGasUsed": "16050564",
     "status": 1,
     "byzantium": true
   },
   "args": [
-    "0xab494BEf69bAf8DEc4fb8b6822dA2e21F0b8357F"
+    "0x4a452a5bc03D2dDa1BFD65abD85F4dA8d5f5411A"
   ],
-  "solcInputHash": "74ffb08b0b6c8130de7782a186e9be4a",
+  "numDeployments": 1,
+  "solcInputHash": "e0af42a1786a87e4c045271b4c5b79b4",
   "metadata": "{\"compiler\":{\"version\":\"0.8.7+commit.e28d00a7\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_oracle\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"getGasPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"oracle\",\"outputs\":[{\"internalType\":\"contract AggregatorInterface\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"getGasPrice()\":{\"returns\":{\"_0\":\"value of gas price\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"getGasPrice()\":{\"notice\":\"Returns current network gas price\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/oracle/ChainlinkGasOracle.sol\":\"ChainlinkGasOracle\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ninterface AggregatorInterface {\\n  function latestAnswer()\\n    external\\n    view\\n    returns (\\n      int256\\n    );\\n  \\n  function latestTimestamp()\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  function latestRound()\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  function getAnswer(\\n    uint256 roundId\\n  )\\n    external\\n    view\\n    returns (\\n      int256\\n    );\\n\\n  function getTimestamp(\\n    uint256 roundId\\n  )\\n    external\\n    view\\n    returns (\\n      uint256\\n    );\\n\\n  event AnswerUpdated(\\n    int256 indexed current,\\n    uint256 indexed roundId,\\n    uint256 updatedAt\\n  );\\n\\n  event NewRound(\\n    uint256 indexed roundId,\\n    address indexed startedBy,\\n    uint256 startedAt\\n  );\\n}\\n\",\"keccak256\":\"0x1a5dc81544a6479f64437a8aca22c869769dd54ee3522c7ef5ebae0d329a28f0\",\"license\":\"MIT\"},\"contracts/oracle/ChainlinkGasOracle.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"@chainlink/contracts/src/v0.8/interfaces/AggregatorInterface.sol\\\";\\nimport \\\"./GasOracle.sol\\\";\\n\\ncontract ChainlinkGasOracle is GasOracle {\\n    AggregatorInterface public immutable oracle;\\n\\n    constructor(address _oracle) {\\n        oracle = AggregatorInterface(_oracle);\\n    }\\n\\n    /// @notice Returns current network gas price\\n    /// @return value of gas price\\n    function getGasPrice() external view override returns (uint256) {\\n        // get gas price from chainlink oracle\\n        // https://data.chain.link/fast-gas-gwei\\n        return uint256(oracle.latestAnswer());\\n    }\\n}\\n\",\"keccak256\":\"0xe0bb1a961b267b252be95b9c2612dfddcd0dc614aea120f5bd60f91f1f97429c\",\"license\":\"Apache-2.0\"},\"contracts/oracle/GasOracle.sol\":{\"content\":\"// Copyright 2021 Cartesi Pte. Ltd.\\n\\n// SPDX-License-Identifier: Apache-2.0\\n// Licensed under the Apache License, Version 2.0 (the \\\"License\\\"); you may not use\\n// this file except in compliance with the License. You may obtain a copy of the\\n// License at http://www.apache.org/licenses/LICENSE-2.0\\n\\n// Unless required by applicable law or agreed to in writing, software distributed\\n// under the License is distributed on an \\\"AS IS\\\" BASIS, WITHOUT WARRANTIES OR\\n// CONDITIONS OF ANY KIND, either express or implied. See the License for the\\n// specific language governing permissions and limitations under the License.\\n\\n/// @title Interface staking contract\\npragma solidity ^0.8.0;\\n\\ninterface GasOracle {\\n    /// @notice Returns current network gas price\\n    /// @return value of gas price\\n    function getGasPrice() external view returns (uint256);\\n}\\n\",\"keccak256\":\"0x7ad0683de70d2fbb8dd0f9fafeea8e05d1c9ca872f53296456ad615d75051e79\",\"license\":\"Apache-2.0\"}},\"version\":1}",
   "bytecode": "0x60a060405234801561001057600080fd5b5060405161021338038061021383398101604081905261002f91610044565b60601b6001600160601b031916608052610074565b60006020828403121561005657600080fd5b81516001600160a01b038116811461006d57600080fd5b9392505050565b60805160601c61017c61009760003960008181605b01526099015261017c6000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c8063455259cb1461003b5780637dc0d1d014610056575b600080fd5b610043610095565b6040519081526020015b60405180910390f35b61007d7f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b03909116815260200161004d565b60007f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03166350d25bcd6040518163ffffffff1660e01b815260040160206040518083038186803b1580156100f057600080fd5b505afa158015610104573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610128919061012d565b905090565b60006020828403121561013f57600080fd5b505191905056fea264697066735822122012c449e1089fe361c35e94300318180138a9e3662628bfb6009666b888fa1fc864736f6c63430008070033",
   "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100365760003560e01c8063455259cb1461003b5780637dc0d1d014610056575b600080fd5b610043610095565b6040519081526020015b60405180910390f35b61007d7f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b03909116815260200161004d565b60007f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03166350d25bcd6040518163ffffffff1660e01b815260040160206040518083038186803b1580156100f057600080fd5b505afa158015610104573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610128919061012d565b905090565b60006020828403121561013f57600080fd5b505191905056fea264697066735822122012c449e1089fe361c35e94300318180138a9e3662628bfb6009666b888fa1fc864736f6c63430008070033",

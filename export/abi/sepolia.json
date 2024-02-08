@@ -1,9 +1,9 @@
 {
-  "name": "ropsten",
-  "chainId": "3",
+  "name": "sepolia",
+  "chainId": "11155111",
   "contracts": {
     "ChainlinkGasOracle": {
-      "address": "0x28eEA70F271983444f71bb26839a71938f85df4C",
+      "address": "0x451B611D38140993ec16a82E48aC720EBd0AB35C",
       "abi": [
         {
           "inputs": [
@@ -45,7 +45,7 @@
       ]
     },
     "ChainlinkPriceOracle": {
-      "address": "0x4562391BDd881E7344E28f0De765cf1074dD0dd3",
+      "address": "0xD304De7988a4285c8b49eC4dB751F28b1f1465B0",
       "abi": [
         {
           "inputs": [
@@ -87,7 +87,7 @@
       ]
     },
     "GasAggregator": {
-      "address": "0x2Bb7042a8f5E60f47f5f3B939ef4e2Ff8315D43D",
+      "address": "0x4a452a5bc03D2dDa1BFD65abD85F4dA8d5f5411A",
       "abi": [
         {
           "anonymous": false,
@@ -232,7 +232,7 @@
       ]
     },
     "PriceAggregator": {
-      "address": "0xC0597f4F01a2b38520ad063f3c845A02d7734a0a",
+      "address": "0xE41CeAA87523E7ebFe34aE310F5E576C26e824C1",
       "abi": [
         {
           "anonymous": false,
@@ -377,7 +377,7 @@
       ]
     },
     "StakingPoolFactoryImpl": {
-      "address": "0xebd366c1ba67aa943f90fb29476E08F12608f3EE",
+      "address": "0x692e8Dc1CdAda8559cc29AdBC9699583592603ff",
       "abi": [
         {
           "inputs": [
@@ -759,7 +759,7 @@
       ]
     },
     "StakingPoolImpl": {
-      "address": "0x3FE29723652b1AA435Ad6534AAEcb4bAc25caCC8",
+      "address": "0xA3355eAff2feE04FB4E3dE9a90e469784F1dDAFe",
       "abi": [
         {
           "inputs": [
@@ -1411,8 +1411,12 @@
         }
       ]
     },
-    "BitsManipulationLibrary": {
-      "address": "0x377B3a0870a904874D8eD43CEAc66b53963c0111",
+    "Bitmask": {
+      "address": "0x3F62ccC0e41287ea4d28dce6582a215B75bB43fd",
+      "abi": []
+    },
+    "BitsManipulation": {
+      "address": "0x91E780568A1FEdd5d01E1c1E4cAed68E3a849345",
       "abi": [
         {
           "inputs": [
@@ -1502,8 +1506,218 @@
         }
       ]
     },
+    "BitsManipulationLibrary": {
+      "address": "0x302311FF8A135c0FC8703Cb4769EAa1604A4A515",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "int32",
+              "name": "number",
+              "type": "int32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "wordSize",
+              "type": "uint32"
+            }
+          ],
+          "name": "int32SignExtension",
+          "outputs": [
+            {
+              "internalType": "int32",
+              "name": "",
+              "type": "int32"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint32",
+              "name": "num",
+              "type": "uint32"
+            }
+          ],
+          "name": "uint32SwapEndian",
+          "outputs": [
+            {
+              "internalType": "uint32",
+              "name": "",
+              "type": "uint32"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint64",
+              "name": "number",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "wordSize",
+              "type": "uint64"
+            }
+          ],
+          "name": "uint64SignExtension",
+          "outputs": [
+            {
+              "internalType": "uint64",
+              "name": "",
+              "type": "uint64"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint64",
+              "name": "num",
+              "type": "uint64"
+            }
+          ],
+          "name": "uint64SwapEndian",
+          "outputs": [
+            {
+              "internalType": "uint64",
+              "name": "",
+              "type": "uint64"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        }
+      ]
+    },
+    "CartesiMathV2": {
+      "address": "0x7db3A9BdA16D1C295b23B94a61808EFf82288269",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_num",
+              "type": "uint256"
+            }
+          ],
+          "name": "clz",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_num",
+              "type": "uint256"
+            }
+          ],
+          "name": "ctz",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_num",
+              "type": "uint256"
+            }
+          ],
+          "name": "getLog2Floor",
+          "outputs": [
+            {
+              "internalType": "uint8",
+              "name": "",
+              "type": "uint8"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_num",
+              "type": "uint256"
+            }
+          ],
+          "name": "getLog2TableTimes1M",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_num",
+              "type": "uint256"
+            }
+          ],
+          "name": "isPowerOf2",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_num",
+              "type": "uint256"
+            }
+          ],
+          "name": "log2ApproxTimes1M",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        }
+      ]
+    },
     "Merkle": {
-      "address": "0x4EAA9603EF57709aB92CE09F02240844632B4076",
+      "address": "0x7CD2b2F951BAc762BF7affd73689A3e1198596AB",
       "abi": [
         {
           "inputs": [
@@ -1646,8 +1860,162 @@
         }
       ]
     },
+    "MerkleV2": {
+      "address": "0x353439934aCC3C435A2627954835241ab9FacBF8",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32[]",
+              "name": "hashes",
+              "type": "bytes32[]"
+            }
+          ],
+          "name": "calculateRootFromPowerOfTwo",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_index",
+              "type": "uint256"
+            }
+          ],
+          "name": "getEmptyTreeHashAtIndex",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "_data",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_wordIndex",
+              "type": "uint256"
+            }
+          ],
+          "name": "getHashOfWordAtIndex",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "_data",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_log2Size",
+              "type": "uint256"
+            }
+          ],
+          "name": "getMerkleRootFromBytes",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_position",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_logSizeOfReplacement",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_logSizeOfFullDrive",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "_replacement",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32[]",
+              "name": "siblings",
+              "type": "bytes32[]"
+            }
+          ],
+          "name": "getRootAfterReplacementInDrive",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        }
+      ]
+    },
+    "UnrolledCordic": {
+      "address": "0x9F7EBA84FfED559c7C63Bdf4DB6a1C6eB763ffb3",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "val",
+              "type": "uint256"
+            }
+          ],
+          "name": "log2Times1e18",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        }
+      ]
+    },
     "WorkerAuthManagerImpl": {
-      "address": "0xeE156390b68c01aF14cD581dfc4f45b8555916F0",
+      "address": "0x50bEFaEfD3AAaFac11Fd936A8dfEB1050eC5Cf00",
       "abi": [
         {
           "inputs": [
@@ -1792,7 +2160,7 @@
       ]
     },
     "WorkerManagerAuthManagerImpl": {
-      "address": "0x67bCf226F2Ca830e463a697be09ba97a89B37D3F",
+      "address": "0x89f1f1bc37Ef872ff0073bee7eE6d6B0D94Fd166",
       "abi": [
         {
           "anonymous": false,
@@ -2168,7 +2536,7 @@
       ]
     },
     "WorkerManagerImpl": {
-      "address": "0x96aEbc275B3c3693b1B7367CA62c3f784568D332",
+      "address": "0xdeCac9ff6b588642887414e85dfdDE740A797F56",
       "abi": [
         {
           "anonymous": false,
@@ -2416,7 +2784,7 @@
       ]
     },
     "CartesiToken": {
-      "address": "0x20d9Fe4FbE713500EeE487B828576A8c7A0522B9",
+      "address": "0xdfC2e94264261a1F9d2a754Cf20055Bc6287AE5b",
       "abi": [
         {
           "constant": true,
@@ -2864,7 +3232,7 @@
       ]
     },
     "MineTimelock": {
-      "address": "0x8db22d926Cff5Ff2B67cf9E3bC475BF65EA3b789",
+      "address": "0x39a0525d3aEe9568Aa4DAAE1D3C7FaEcC55989cf",
       "abi": [
         {
           "constant": true,
@@ -3033,7 +3401,7 @@
       ]
     },
     "SimpleFaucet": {
-      "address": "0x0F3D7Dbaf7125885D8dd80dA4327feF54A030fe5",
+      "address": "0x57b843Ea7c2dC7099ABEa65390C27eA90116D097",
       "abi": [
         {
           "constant": true,
@@ -3119,7 +3487,7 @@
       ]
     },
     "BlockSelector": {
-      "address": "0x812aAe0735F4E921A9CDb0468Ff4A501cc4b5Ba9",
+      "address": "0x13aFB26C65b707AA7819eC0C169Df628754813c4",
       "abi": [
         {
           "anonymous": false,
@@ -3518,8 +3886,91 @@
         }
       ]
     },
+    "Difficulty": {
+      "address": "0x7D4B014eEd39b5f4253b46B9f7Cc145A903E66e2",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_minDifficulty",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_difficulty",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_difficultyAdjustmentParameter",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_targetInterval",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_blocksPassed",
+              "type": "uint256"
+            }
+          ],
+          "name": "getNewDifficulty",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function"
+        }
+      ]
+    },
+    "Eligibility": {
+      "address": "0xfaF200FEa349cb800eb5Cd6691eBBBE1538797dD",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_difficulty",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_ethBlockStamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "_user",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_weight",
+              "type": "uint256"
+            }
+          ],
+          "name": "whenCanProduceBlock",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        }
+      ]
+    },
     "PoS": {
-      "address": "0x9650F4A4ABd237659d1378415fddBdC17442efFd",
+      "address": "0x19A8FB7d7C4D53713327cEb6ba1293d1F364c502",
       "abi": [
         {
           "anonymous": false,
@@ -4011,8 +4462,202 @@
         }
       ]
     },
+    "PoSV2FactoryImpl": {
+      "address": "0x98C9109C6c1a9bA2Ec0fb69D7413825267036B3D",
+      "abi": [
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "pos",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "ctsiAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "stakingAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "workerAuthAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint128",
+              "name": "initialDifficulty",
+              "type": "uint128"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint64",
+              "name": "minDifficulty",
+              "type": "uint64"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "difficultyAdjustmentParameter",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "targetInterval",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "rewardValue",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "rewardDelay",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "version",
+              "type": "uint32"
+            }
+          ],
+          "name": "NewChain",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_ctsiAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "_stakingAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "_workerAuthAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "uint128",
+              "name": "_initialDifficulty",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint64",
+              "name": "_minDifficulty",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint32",
+              "name": "_difficultyAdjustmentParameter",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "_targetInterval",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_rewardValue",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint32",
+              "name": "_rewardDelay",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "_version",
+              "type": "uint32"
+            }
+          ],
+          "name": "createNewChain",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "owner",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "renounceOwnership",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "transferOwnership",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ]
+    },
     "StakingImpl": {
-      "address": "0x329f000E4195823418ff2eCC7cb6f4ca1530Ca4f",
+      "address": "0xbF0b2b6b549A5E7b8675007eB7428a4a5b74B4C7",
       "abi": [
         {
           "inputs": [
@@ -4237,6 +4882,24 @@
           "outputs": [],
           "stateMutability": "nonpayable",
           "type": "function"
+        }
+      ]
+    },
+    "Tree": {
+      "address": "0xF2E10fc34998626B2289D67cb5c5C5c8688f5FC7",
+      "abi": [
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_parent",
+              "type": "uint256"
+            }
+          ],
+          "name": "VertexInserted",
+          "type": "event"
         }
       ]
     }
